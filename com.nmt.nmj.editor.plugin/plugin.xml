@@ -14,10 +14,19 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="RCP Perspective"
-            class="com.nmt.nmj.editor.Perspective"
+            name="NMJ Editor Perspective"
+            class="com.nmt.nmj.editor.perspective.Perspective"
             id="com.nmt.nmj.editor.plugin.perspective">
       </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="com.nmt.nmj.editor.view.EditorView"
+            id="com.nmt.nmj.editor.editorView"
+            name="Editor View"
+            restorable="true">
+      </view>
    </extension>
 
 </plugin>

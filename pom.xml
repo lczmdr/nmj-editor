@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.nmt.nmj</groupId>
   <artifactId>nmj-editor</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  
-    <repositories>
+
+  <repositories>
     <repository>
       <id>helios</id>
       <layout>p2</layout>
       <url>http://download.eclipse.org/releases/helios</url>
     </repository>
   </repositories>
-  
+
   <modules>
     <module>com.nmt.nmj.editor.feature</module>
     <module>com.nmt.nmj.editor.plugin</module>
     <module>com.nmt.nmj.editor</module>
   </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.xerial</groupId>
+        <artifactId>sqlite-jdbc</artifactId>
+        <version>3.6.16</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <plugins>
@@ -43,14 +53,14 @@
           </environments>
         </configuration>
       </plugin>
-       <plugin>
-            <groupId>org.sonatype.tycho</groupId>
-            <artifactId>target-platform-configuration</artifactId>
-            <version>0.10.0</version>
-            <configuration>
-              <resolver>p2</resolver>
-            </configuration>
-          </plugin>
+      <plugin>
+        <groupId>org.sonatype.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>0.10.0</version>
+        <configuration>
+          <resolver>p2</resolver>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -62,5 +72,5 @@
       </plugin>
     </plugins>
   </build>
-  
+
 </project>

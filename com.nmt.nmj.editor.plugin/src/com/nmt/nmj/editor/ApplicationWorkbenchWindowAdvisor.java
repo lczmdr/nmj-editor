@@ -8,6 +8,8 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
+    private static final String APP_TITLE = "Networked Media Jukebos Editor";
+
     public ApplicationWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
         super(configurer);
     }
@@ -15,12 +17,13 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     public ActionBarAdvisor createActionBarAdvisor(IActionBarConfigurer configurer) {
         return new ApplicationActionBarAdvisor(configurer);
     }
-    
+
     public void preWindowOpen() {
         IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
-        configurer.setInitialSize(new Point(400, 300));
-        configurer.setShowCoolBar(false);
-        configurer.setShowStatusLine(false);
-        configurer.setTitle("Hello RCP"); //$NON-NLS-1$
+        configurer.setTitle(APP_TITLE);
+        configurer.setShowCoolBar(true);
+        configurer.setShowStatusLine(true);
+        configurer.setInitialSize(new Point(1024, 768));
+        configurer.setShowProgressIndicator(true);
     }
 }
