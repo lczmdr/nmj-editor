@@ -1,0 +1,5 @@
+.classpath
+.project
+.settings/
+target/
+com.nmt.nmj.editor.plugin/lib/
