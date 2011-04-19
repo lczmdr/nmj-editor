@@ -20,6 +20,13 @@
       </perspective>
    </extension>
    <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="nmj.editor.openDatabase"
+            name="nmj.editor.openDatabase">
+      </command>
+   </extension>
+   <extension
          point="org.eclipse.ui.views">
       <view
             class="com.nmt.nmj.editor.view.EditorView"

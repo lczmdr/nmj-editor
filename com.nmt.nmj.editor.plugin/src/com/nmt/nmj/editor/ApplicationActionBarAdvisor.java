@@ -1,5 +1,6 @@
 package com.nmt.nmj.editor;
 
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -14,9 +15,12 @@ import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 
+import com.nmt.nmj.editor.action.OpenDatabaseAction;
+
 public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
     private IWorkbenchAction exitAction;
+    private Action openDatabaseAction;
 
     public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
         super(configurer);
@@ -28,6 +32,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
                 "/icons/exit.png"));
         exitAction.setToolTipText("Exit");
         register(exitAction);
+
+        openDatabaseAction = new OpenDatabaseAction(window, "Open Database");
+        register(openDatabaseAction);
     }
 
     protected void fillMenuBar(IMenuManager menuBar) {
@@ -36,8 +43,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     protected void fillCoolBar(ICoolBarManager coolBar) {
         IToolBarManager toolbar = new ToolBarManager(SWT.FLAT | SWT.RIGHT);
         coolBar.add(new ToolBarContributionItem(toolbar, "main"));
-        toolbar.add(exitAction);
+        toolbar.add(openDatabaseAction);
         toolbar.add(new Separator());
+        toolbar.add(exitAction);
     }
 
 }
