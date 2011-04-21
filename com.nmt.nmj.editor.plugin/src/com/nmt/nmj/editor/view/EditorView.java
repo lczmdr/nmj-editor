@@ -193,7 +193,6 @@ public class EditorView extends ViewPart {
             ResultSet rs = statement.executeQuery("SELECT * FROM VIDEO");
             List<Video> videos = new ArrayList<Video>();
             while (rs.next()) {
-                System.out.println("name = " + rs.getString("TITLE"));
                 Video video = new Video();
                 video.setId(rs.getInt("VIDEO_ID"));
                 video.setTitle(rs.getString("TITLE"));
