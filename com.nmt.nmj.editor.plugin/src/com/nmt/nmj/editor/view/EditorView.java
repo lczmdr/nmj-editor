@@ -19,6 +19,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
@@ -76,7 +77,7 @@ public class EditorView extends ViewPart {
 
         TabFolder tabFolder = new TabFolder(container, SWT.BORDER);
         GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-        gd.heightHint = 320;
+        gd.heightHint = 290;
         tabFolder.setLayoutData(gd);
 
         TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
@@ -90,7 +91,10 @@ public class EditorView extends ViewPart {
         tabItem = new TabItem(tabFolder, SWT.NULL);
         tabItem.setText("Music");
 
-        Label l = new Label(container, SWT.WRAP);
+        Group group = new Group(container, SWT.SHADOW_ETCHED_IN);
+        group.setText("Detailed information");
+        group.setLayoutData(new GridData(GridData.FILL_BOTH));
+        Label l = new Label(group, SWT.WRAP);
         l.setText("Video information area");
 
     }
@@ -190,12 +194,19 @@ public class EditorView extends ViewPart {
             Video video = new Video();
             video.setId(rs.getInt("VIDEO_ID"));
             video.setTitle(rs.getString("TITLE"));
-            video.setRuntime(rs.getInt("RUNTIME"));
+            video.setRuntime(formatIntoHHMMSS(rs.getInt("RUNTIME")));
             video.setRating(rs.getInt("RATING"));
             video.setSystem(rs.getString("SYSTEM"));
             video.setVideoCodec(rs.getString("VIDEO_CODEC"));
             videos.add(video);
         }
         return videos;
+    }
+
+    private String formatIntoHHMMSS(int secondsInput) {
+        int hours = secondsInput / 3600, remainder = secondsInput % 3600, minutes = remainder / 60, seconds = remainder % 60;
+        return ((hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":"
+                + (seconds < 10 ? "0" : "") + seconds);
+
     }
 }

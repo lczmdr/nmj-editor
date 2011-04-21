@@ -4,7 +4,7 @@ public class Video {
 
     private int id;
     private String title;
-    private int runtime;
+    private String runtime;
     private int rating;
     private String system;
     private String videoCodec;
@@ -25,11 +25,11 @@ public class Video {
         this.title = title;
     }
 
-    public int getRuntime() {
+    public String getRuntime() {
         return runtime;
     }
 
-    public void setRuntime(int runtime) {
+    public void setRuntime(String runtime) {
         this.runtime = runtime;
     }
 

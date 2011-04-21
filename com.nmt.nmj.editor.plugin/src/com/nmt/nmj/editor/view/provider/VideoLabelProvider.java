@@ -33,7 +33,7 @@ public class VideoLabelProvider extends LabelProvider implements ITableLabelProv
             result = video.getTitle();
             break;
         case 2: // Video Runtime
-            result = String.valueOf(video.getRuntime());
+            result = video.getRuntime();
             break;
         case 3: // Video Rating
             result = String.valueOf(video.getRating());
