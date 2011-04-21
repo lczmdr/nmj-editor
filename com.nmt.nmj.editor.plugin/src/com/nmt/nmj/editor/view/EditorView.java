@@ -17,7 +17,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
@@ -47,6 +49,8 @@ public class EditorView extends ViewPart {
 
     private Label informationLabel;
 
+    private VideoSorter videoSorter;
+
     public void createPartControl(Composite parent) {
 
         GridLayout layout = new GridLayout();
@@ -63,7 +67,7 @@ public class EditorView extends ViewPart {
         container.setLayout(layout);
 
         informationLabel = new Label(container, SWT.WRAP);
-        informationLabel.setText("Videos");
+        informationLabel.setText("Current Database: ");
 
         TabFolder tabFolder = new TabFolder(container, SWT.BORDER);
         GridData gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -94,15 +98,17 @@ public class EditorView extends ViewPart {
         this.table.setHeaderVisible(true);
         this.table.setLinesVisible(true);
 
+        TableColumn idTableColumn = new TableColumn(this.table, SWT.CENTER);
+        idTableColumn.setText("ID");
+        idTableColumn.setWidth(70);
+        idTableColumn.addListener(SWT.Selection, this.selChangeListenerColumn);
+
+        TableColumn titleTableColumn = new TableColumn(this.table, SWT.CENTER);
+        titleTableColumn.setText("Name");
+        titleTableColumn.setWidth(300);
+        titleTableColumn.addListener(SWT.Selection, this.selChangeListenerColumn);
+
         TableColumn tableColumn = new TableColumn(this.table, SWT.CENTER);
-        tableColumn.setText("ID");
-        tableColumn.setWidth(70);
-
-        tableColumn = new TableColumn(this.table, SWT.CENTER);
-        tableColumn.setText("Name");
-        tableColumn.setWidth(300);
-
-        tableColumn = new TableColumn(this.table, SWT.CENTER);
         tableColumn.setText("Type");
         tableColumn.pack();
 
@@ -112,6 +118,9 @@ public class EditorView extends ViewPart {
 
         tableViewer.setContentProvider(new VideoContentProvider());
         tableViewer.setLabelProvider(new VideoLabelProvider());
+
+        videoSorter = new VideoSorter(titleTableColumn);
+        tableViewer.setSorter(videoSorter);
 
         this.table.addMouseListener(new MouseAdapter() {
             public void mouseDown(MouseEvent e) {
@@ -123,6 +132,13 @@ public class EditorView extends ViewPart {
         return composite;
     }
 
+    private Listener selChangeListenerColumn = new Listener() {
+        public void handleEvent(Event event) {
+            videoSorter.setCurrentColumn((TableColumn) event.widget);
+            tableViewer.refresh();
+        }
+    };
+
     public void setFocus() {
     }
 
@@ -131,12 +147,12 @@ public class EditorView extends ViewPart {
         try {
             if (!connection.isClosed()) {
                 String fileName = Application.getSqliteConnector().getFileName();
-                informationLabel.setText("Videos - Current database: " + fileName);
+                informationLabel.setText("Current Database: " + fileName);
                 List<Video> videos = createVideoStructure(connection);
                 this.tableViewer.setInput(videos);
                 container.layout();
             } else {
-                informationLabel.setText("Videos");
+                informationLabel.setText("Current Database: ");
                 tableViewer.setInput(null);
             }
         } catch (SQLException e) {
