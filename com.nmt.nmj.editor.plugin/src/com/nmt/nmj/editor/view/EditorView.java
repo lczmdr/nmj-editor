@@ -27,6 +27,7 @@ import org.eclipse.ui.part.ViewPart;
 
 import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.model.Video;
+import com.nmt.nmj.editor.sqlite.SQLQueries;
 import com.nmt.nmj.editor.view.provider.VideoContentProvider;
 import com.nmt.nmj.editor.view.provider.VideoLabelProvider;
 
@@ -147,13 +148,12 @@ public class EditorView extends ViewPart {
     private List<Video> createVideoStructure(Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
         statement.setQueryTimeout(30);
-        ResultSet rs = statement.executeQuery("SELECT * FROM VIDEO");
+        ResultSet rs = statement.executeQuery(SQLQueries.MOVIES_QUERY);
         List<Video> videos = new ArrayList<Video>();
         while (rs.next()) {
             Video video = new Video();
             video.setId(rs.getInt("VIDEO_ID"));
             video.setTitle(rs.getString("TITLE"));
-            video.setType(rs.getString("TITLE_TYPE"));
             videos.add(video);
         }
         return videos;
