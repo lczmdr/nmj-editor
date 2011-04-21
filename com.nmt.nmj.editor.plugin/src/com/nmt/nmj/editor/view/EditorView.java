@@ -7,15 +7,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -26,11 +22,13 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.ui.model.IWorkbenchAdapter;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.model.Video;
+import com.nmt.nmj.editor.view.provider.VideoContentProvider;
+import com.nmt.nmj.editor.view.provider.VideoLabelProvider;
 
 public class EditorView extends ViewPart {
 
@@ -111,8 +109,8 @@ public class EditorView extends ViewPart {
         tableViewer.setUseHashlookup(true);
         tableViewer.setColumnProperties(columnNames);
 
-        tableViewer.setContentProvider(new RepeticionContentProvider());
-        tableViewer.setLabelProvider(new RepeticionLabelProvider());
+        tableViewer.setContentProvider(new VideoContentProvider());
+        tableViewer.setLabelProvider(new VideoLabelProvider());
 
         this.table.addMouseListener(new MouseAdapter() {
             public void mouseDown(MouseEvent e) {
@@ -122,62 +120,6 @@ public class EditorView extends ViewPart {
             }
         });
         return composite;
-    }
-
-    class RepeticionContentProvider implements IStructuredContentProvider {
-
-        public Object[] getElements(Object obj) {
-            List<Video> videos = (ArrayList<Video>) obj;
-            return videos.toArray();
-        }
-
-        public void dispose() {
-        }
-
-        public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-        }
-
-        public void formChanged() {
-            tableViewer.remove(table.getItems());
-            tableViewer.add(this.getElements(null));
-            tableViewer.refresh();
-        }
-
-    }
-
-    class RepeticionLabelProvider extends LabelProvider implements ITableLabelProvider {
-
-        public String getText(Object obj) {
-            return "";
-        }
-
-        public Image getImage(Object obj) {
-            return ((IWorkbenchAdapter) obj).getImageDescriptor(obj).createImage();
-        }
-
-        public Image getColumnImage(Object element, int columnIndex) {
-            return null;
-        }
-
-        public String getColumnText(Object obj, int columnIndex) {
-            Video video = (Video) obj;
-            String result = "";
-
-            switch (columnIndex) {
-            case 0: // Video ID
-                result = String.valueOf(video.getId());
-                break;
-            case 1: // Video Title
-                result = video.getTitle();
-                break;
-            case 2: // Video Type
-                result = video.getType();
-                break;
-            default:
-                break;
-            }
-            return result;
-        }
     }
 
     public void setFocus() {
@@ -197,27 +139,23 @@ public class EditorView extends ViewPart {
                 tableViewer.setInput(null);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+                    "Error reading database", "An error happened trying to read the database: \n" + e.getMessage());
         }
     }
 
-    private List<Video> createVideoStructure(Connection connection) {
-        try {
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);
-            ResultSet rs = statement.executeQuery("SELECT * FROM VIDEO");
-            List<Video> videos = new ArrayList<Video>();
-            while (rs.next()) {
-                Video video = new Video();
-                video.setId(rs.getInt("VIDEO_ID"));
-                video.setTitle(rs.getString("TITLE"));
-                video.setType(rs.getString("TITLE_TYPE"));
-                videos.add(video);
-            }
-            return videos;
-        } catch (SQLException e) {
-            e.printStackTrace();
+    private List<Video> createVideoStructure(Connection connection) throws SQLException {
+        Statement statement = connection.createStatement();
+        statement.setQueryTimeout(30);
+        ResultSet rs = statement.executeQuery("SELECT * FROM VIDEO");
+        List<Video> videos = new ArrayList<Video>();
+        while (rs.next()) {
+            Video video = new Video();
+            video.setId(rs.getInt("VIDEO_ID"));
+            video.setTitle(rs.getString("TITLE"));
+            video.setType(rs.getString("TITLE_TYPE"));
+            videos.add(video);
         }
-        return null;
+        return videos;
     }
 }
