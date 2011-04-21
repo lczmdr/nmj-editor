@@ -41,13 +41,16 @@ public class EditorView extends ViewPart {
 
     private final String VIDEO_ID = "ID";
     private final String VIDEO_TITLE = "Name";
+    private final String VIDEO_RELEASE_DATE = "Release Date";
     private final String VIDEO_RUNTIME = "Runtime";
     private final String VIDEO_RATING = "Rating";
     private final String VIDEO_SYSTEM = "System";
     private final String VIDEO_CODEC = "Video Codec";
+    private final String VIDEO_DIMENSIONS = "Dimensions";
+    private final String VIDEO_FPS = "FPS";
 
-    private String[] columnNames = new String[] { VIDEO_ID, VIDEO_TITLE, VIDEO_RUNTIME, VIDEO_RATING, VIDEO_SYSTEM,
-            VIDEO_CODEC };
+    private String[] columnNames = new String[] { VIDEO_ID, VIDEO_TITLE, VIDEO_RELEASE_DATE, VIDEO_RUNTIME, VIDEO_RATING,
+            VIDEO_SYSTEM, VIDEO_CODEC, VIDEO_DIMENSIONS, VIDEO_FPS };
 
     private Composite container;
     private Table videoTable;
@@ -119,19 +122,32 @@ public class EditorView extends ViewPart {
         titleTableColumn.addListener(SWT.Selection, this.selChangeListenerColumn);
 
         TableColumn tableColumn = new TableColumn(this.videoTable, SWT.CENTER);
+        tableColumn.setText(VIDEO_RELEASE_DATE);
+        tableColumn.setWidth(120);
+        tableColumn.setResizable(false);
+
+        tableColumn = new TableColumn(this.videoTable, SWT.CENTER);
         tableColumn.setText(VIDEO_RUNTIME);
         tableColumn.setWidth(100);
 
         tableColumn = new TableColumn(this.videoTable, SWT.CENTER);
         tableColumn.setText(VIDEO_RATING);
-        tableColumn.setWidth(100);
+        tableColumn.setWidth(80);
 
         tableColumn = new TableColumn(this.videoTable, SWT.CENTER);
         tableColumn.setText(VIDEO_SYSTEM);
-        tableColumn.setWidth(200);
+        tableColumn.setWidth(120);
 
         tableColumn = new TableColumn(this.videoTable, SWT.CENTER);
         tableColumn.setText(VIDEO_CODEC);
+        tableColumn.setWidth(100);
+
+        tableColumn = new TableColumn(this.videoTable, SWT.CENTER);
+        tableColumn.setText(VIDEO_DIMENSIONS);
+        tableColumn.setWidth(100);
+
+        tableColumn = new TableColumn(this.videoTable, SWT.CENTER);
+        tableColumn.setText(VIDEO_FPS);
         tableColumn.setWidth(100);
 
         videoTableViewer = new TableViewer(videoTable);
@@ -194,10 +210,13 @@ public class EditorView extends ViewPart {
             Video video = new Video();
             video.setId(rs.getInt("VIDEO_ID"));
             video.setTitle(rs.getString("TITLE"));
+            video.setYear(rs.getString("RELEASE_DATE"));
             video.setRuntime(formatIntoHHMMSS(rs.getInt("RUNTIME")));
             video.setRating(rs.getInt("RATING"));
             video.setSystem(rs.getString("SYSTEM"));
             video.setVideoCodec(rs.getString("VIDEO_CODEC"));
+            video.setResolution(rs.getString("RESOLUTION"));
+            video.setFps(rs.getInt("FPS"));
             videos.add(video);
         }
         return videos;

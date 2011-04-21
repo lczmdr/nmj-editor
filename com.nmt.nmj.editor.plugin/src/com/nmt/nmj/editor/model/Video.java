@@ -4,10 +4,13 @@ public class Video {
 
     private int id;
     private String title;
+    private String year;
     private String runtime;
     private int rating;
     private String system;
     private String videoCodec;
+    private String resolution;
+    private int fps;
 
     public int getId() {
         return id;
@@ -23,6 +26,14 @@ public class Video {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public String getRuntime() {
@@ -55,6 +66,22 @@ public class Video {
 
     public void setVideoCodec(String videoCodec) {
         this.videoCodec = videoCodec;
+    }
+
+    public String getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(String resolution) {
+        this.resolution = resolution;
+    }
+
+    public int getFps() {
+        return fps;
+    }
+
+    public void setFps(int fps) {
+        this.fps = fps;
     }
 
 }
