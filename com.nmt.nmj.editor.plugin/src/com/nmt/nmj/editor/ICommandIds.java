@@ -10,5 +10,6 @@ package com.nmt.nmj.editor;
 public interface ICommandIds {
 
     public static final String CMD_OPEN_DATABASE = "nmj.editor.openDatabase";
+    public static final String CMD_CLOSE_DATABASE = "nmj.editor.closeDatabase";
 
 }

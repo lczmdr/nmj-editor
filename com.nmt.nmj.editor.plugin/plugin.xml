@@ -25,6 +25,10 @@
             id="nmj.editor.openDatabase"
             name="nmj.editor.openDatabase">
       </command>
+      <command
+            id="nmj.editor.closeDatabase"
+            name="nmj.editor.closeDatabase">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.views">
