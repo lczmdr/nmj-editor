@@ -4,7 +4,10 @@ public class Video {
 
     private int id;
     private String title;
-    private String type;
+    private int runtime;
+    private int rating;
+    private String system;
+    private String videoCodec;
 
     public int getId() {
         return id;
@@ -22,12 +25,36 @@ public class Video {
         this.title = title;
     }
 
-    public String getType() {
-        return type;
+    public int getRuntime() {
+        return runtime;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public String getSystem() {
+        return system;
+    }
+
+    public void setSystem(String system) {
+        this.system = system;
+    }
+
+    public String getVideoCodec() {
+        return videoCodec;
+    }
+
+    public void setVideoCodec(String videoCodec) {
+        this.videoCodec = videoCodec;
     }
 
 }

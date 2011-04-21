@@ -32,8 +32,17 @@ public class VideoLabelProvider extends LabelProvider implements ITableLabelProv
         case 1: // Video Title
             result = video.getTitle();
             break;
-        case 2: // Video Type
-            result = video.getType();
+        case 2: // Video Runtime
+            result = String.valueOf(video.getRuntime());
+            break;
+        case 3: // Video Rating
+            result = String.valueOf(video.getRating());
+            break;
+        case 4: // Video System
+            result = video.getSystem();
+            break;
+        case 5: // Video Codec
+            result = video.getVideoCodec();
             break;
         default:
             break;
