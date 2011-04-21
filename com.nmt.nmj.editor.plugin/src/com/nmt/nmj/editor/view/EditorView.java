@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -16,12 +15,15 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.model.IWorkbenchAdapter;
@@ -61,19 +63,35 @@ public class EditorView extends ViewPart {
         layout.numColumns = 1;
         container.setLayout(layout);
 
-        Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);
-
         informationLabel = new Label(container, SWT.WRAP);
         informationLabel.setText("Videos");
-        informationLabel.setFont(boldFont);
 
-        createVideoTable();
+        TabFolder tabFolder = new TabFolder(container, SWT.BORDER);
+        GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+        gd.heightHint = 320;
+        tabFolder.setLayoutData(gd);
+
+        TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
+        tabItem.setText("Videos");
+
+        tabItem.setControl(createVideoTable(tabFolder));
+
+        tabItem = new TabItem(tabFolder, SWT.NULL);
+        tabItem.setText("TV Shows");
+
+        tabItem = new TabItem(tabFolder, SWT.NULL);
+        tabItem.setText("Music");
+
+        Label l = new Label(container, SWT.WRAP);
+        l.setText("Video information area");
 
     }
 
-    private void createVideoTable() {
-        this.table = new Table(this.container, SWT.BORDER | SWT.MULTI | SWT.SCROLL_LINE | SWT.SINGLE
-                | SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL);
+    private Control createVideoTable(TabFolder tabFolder) {
+        Composite composite = new Composite(tabFolder, SWT.NONE);
+        composite.setLayout(new FillLayout(SWT.VERTICAL));
+        this.table = new Table(composite, SWT.BORDER | SWT.MULTI | SWT.SCROLL_LINE | SWT.SINGLE | SWT.FULL_SELECTION
+                | SWT.H_SCROLL | SWT.V_SCROLL);
         this.table.setHeaderVisible(true);
         this.table.setLinesVisible(true);
 
@@ -89,10 +107,6 @@ public class EditorView extends ViewPart {
         tableColumn.setText("Type");
         tableColumn.pack();
 
-        GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-        gd.heightHint = 320;
-        this.table.setLayoutData(gd);
-
         tableViewer = new TableViewer(table);
         tableViewer.setUseHashlookup(true);
         tableViewer.setColumnProperties(columnNames);
@@ -107,6 +121,7 @@ public class EditorView extends ViewPart {
                 }
             }
         });
+        return composite;
     }
 
     class RepeticionContentProvider implements IStructuredContentProvider {
