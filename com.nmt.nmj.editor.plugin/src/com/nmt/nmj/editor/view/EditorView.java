@@ -8,11 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -49,8 +52,8 @@ public class EditorView extends ViewPart {
     private final String VIDEO_DIMENSIONS = "Dimensions";
     private final String VIDEO_FPS = "FPS";
 
-    private String[] columnNames = new String[] { VIDEO_ID, VIDEO_TITLE, VIDEO_RELEASE_DATE, VIDEO_RUNTIME, VIDEO_RATING,
-            VIDEO_SYSTEM, VIDEO_CODEC, VIDEO_DIMENSIONS, VIDEO_FPS };
+    private String[] columnNames = new String[] { VIDEO_ID, VIDEO_TITLE, VIDEO_RELEASE_DATE, VIDEO_RUNTIME,
+            VIDEO_RATING, VIDEO_SYSTEM, VIDEO_CODEC, VIDEO_DIMENSIONS, VIDEO_FPS };
 
     private Composite container;
     private Table videoTable;
@@ -59,6 +62,8 @@ public class EditorView extends ViewPart {
     private Label informationLabel;
 
     private VideoSorter videoTableSorter;
+
+    private Label movieTitle;
 
     public void createPartControl(Composite parent) {
 
@@ -94,11 +99,7 @@ public class EditorView extends ViewPart {
         tabItem = new TabItem(tabFolder, SWT.NULL);
         tabItem.setText("Music");
 
-        Group group = new Group(container, SWT.SHADOW_ETCHED_IN);
-        group.setText("Detailed information");
-        group.setLayoutData(new GridData(GridData.FILL_BOTH));
-        Label l = new Label(group, SWT.WRAP);
-        l.setText("Video information area");
+        createDetailedInformationGroup();
 
     }
 
@@ -166,10 +167,34 @@ public class EditorView extends ViewPart {
                     IStructuredSelection selection = (IStructuredSelection) videoTableViewer.getSelection();
                     Video video = (Video) selection.getFirstElement();
                     System.out.println("selected " + video.getTitle());
+                    movieTitle.setText(video.getTitle());
+                    movieTitle.pack();
                 }
             }
         });
         return composite;
+    }
+
+    private void createDetailedInformationGroup() {
+        Group group = new Group(container, SWT.SHADOW_ETCHED_IN);
+        group.setText("Detailed information");
+        group.setLayoutData(new GridData(GridData.FILL_BOTH));
+
+        GridLayout layout = new GridLayout();
+        layout.marginHeight = 5;
+        layout.marginWidth = 10;
+        layout.numColumns = 1;
+        group.setLayout(layout);
+
+        movieTitle = new Label(group, SWT.WRAP);
+        Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);
+        if (boldFont.getFontData().length == 1) {
+            // TODO: font size not working
+            FontData fontData = boldFont.getFontData()[0];
+            fontData.setHeight(16);
+            boldFont = new Font(PlatformUI.getWorkbench().getDisplay(), boldFont.getFontData()[0]);
+        }
+        movieTitle.setFont(boldFont);
     }
 
     private Listener selChangeListenerColumn = new Listener() {
@@ -212,7 +237,7 @@ public class EditorView extends ViewPart {
             video.setTitle(rs.getString("TITLE"));
             video.setYear(rs.getString("RELEASE_DATE"));
             video.setRuntime(formatIntoHHMMSS(rs.getInt("RUNTIME")));
-            video.setRating(rs.getInt("RATING"));
+            video.setRating(rs.getDouble("RATING"));
             video.setSystem(rs.getString("SYSTEM"));
             video.setVideoCodec(rs.getString("VIDEO_CODEC"));
             video.setResolution(rs.getString("RESOLUTION"));

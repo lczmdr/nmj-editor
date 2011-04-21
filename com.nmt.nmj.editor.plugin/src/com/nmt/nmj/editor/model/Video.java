@@ -6,7 +6,7 @@ public class Video {
     private String title;
     private String year;
     private String runtime;
-    private int rating;
+    private double rating;
     private String system;
     private String videoCodec;
     private String resolution;
@@ -44,11 +44,11 @@ public class Video {
         this.runtime = runtime;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
