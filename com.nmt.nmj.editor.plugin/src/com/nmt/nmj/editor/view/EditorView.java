@@ -5,20 +5,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -29,10 +34,13 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import com.nmt.nmj.editor.Application;
+import com.nmt.nmj.editor.dialog.CalendarDialog;
 import com.nmt.nmj.editor.model.Video;
 import com.nmt.nmj.editor.sqlite.SQLQueries;
 import com.nmt.nmj.editor.view.provider.VideoContentProvider;
@@ -65,7 +73,17 @@ public class EditorView extends ViewPart {
 
     private Label movieTitle;
 
+    private IWorkbenchWindow window;
+
+    private Group detailedInformationGroup;
+
+    protected Video currentVideo;
+
+    private Text releaseDateText;
+
     public void createPartControl(Composite parent) {
+
+        window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 
         GridLayout layout = new GridLayout();
         layout.marginHeight = 0;
@@ -165,10 +183,13 @@ public class EditorView extends ViewPart {
             public void mouseDown(MouseEvent e) {
                 if (e.button == 1) {
                     IStructuredSelection selection = (IStructuredSelection) videoTableViewer.getSelection();
-                    Video video = (Video) selection.getFirstElement();
-                    System.out.println("selected " + video.getTitle());
-                    movieTitle.setText(video.getTitle());
-                    movieTitle.pack();
+                    currentVideo = (Video) selection.getFirstElement();
+                    if (currentVideo != null) {
+                        movieTitle.setText(currentVideo.getTitle());
+                        movieTitle.pack();
+                        releaseDateText.setText(currentVideo.getReleaseDate());
+                        detailedInformationGroup.setEnabled(true);
+                    }
                 }
             }
         });
@@ -176,25 +197,55 @@ public class EditorView extends ViewPart {
     }
 
     private void createDetailedInformationGroup() {
-        Group group = new Group(container, SWT.SHADOW_ETCHED_IN);
-        group.setText("Detailed information");
-        group.setLayoutData(new GridData(GridData.FILL_BOTH));
+        detailedInformationGroup = new Group(container, SWT.SHADOW_ETCHED_IN);
+        detailedInformationGroup.setText("Detailed information");
+        detailedInformationGroup.setLayoutData(new GridData(GridData.FILL_BOTH));
+        detailedInformationGroup.setEnabled(false);
 
         GridLayout layout = new GridLayout();
-        layout.marginHeight = 5;
-        layout.marginWidth = 10;
         layout.numColumns = 1;
-        group.setLayout(layout);
+        detailedInformationGroup.setLayout(layout);
 
-        movieTitle = new Label(group, SWT.WRAP);
+        movieTitle = new Label(detailedInformationGroup, SWT.WRAP);
         Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);
         if (boldFont.getFontData().length == 1) {
             // TODO: font size not working
             FontData fontData = boldFont.getFontData()[0];
             fontData.setHeight(16);
-            boldFont = new Font(PlatformUI.getWorkbench().getDisplay(), boldFont.getFontData()[0]);
+            boldFont = new Font(window.getShell().getDisplay(), boldFont.getFontData()[0]);
         }
         movieTitle.setFont(boldFont);
+
+        container = new Composite(detailedInformationGroup, SWT.NONE);
+        layout = new GridLayout();
+        layout.numColumns = 3;
+        container.setLayout(layout);
+
+        Label l = new Label(container, SWT.NONE);
+        l.setText("Release Date:");
+        l.pack();
+
+        releaseDateText = new Text(container, SWT.BORDER);
+        releaseDateText.setEditable(false);
+        GridData gd = new GridData();
+        gd.widthHint = 80;
+        releaseDateText.setLayoutData(gd);
+
+        Button openCalendar = new Button(container, SWT.PUSH);
+        openCalendar.setText("...");
+        openCalendar.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                if (currentVideo != null) {
+                    Date releaseDate = CalendarDialog.convertDate(currentVideo.getReleaseDate());
+                    CalendarDialog calendarDialog = new CalendarDialog(window.getShell(), releaseDate);
+                    if (calendarDialog.open() == Window.OK) {
+                        releaseDateText.setText(calendarDialog.getSelectedDate());
+                        currentVideo.setReleaseDate(calendarDialog.getSelectedDate());
+                        System.out.println("new release date: " + currentVideo.getReleaseDate());
+                    }
+                }
+            }
+        });
     }
 
     private Listener selChangeListenerColumn = new Listener() {
@@ -219,6 +270,7 @@ public class EditorView extends ViewPart {
             } else {
                 informationLabel.setText("Current Database: ");
                 videoTableViewer.setInput(null);
+                detailedInformationGroup.setEnabled(false);
             }
         } catch (SQLException e) {
             MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
@@ -235,7 +287,7 @@ public class EditorView extends ViewPart {
             Video video = new Video();
             video.setId(rs.getInt("VIDEO_ID"));
             video.setTitle(rs.getString("TITLE"));
-            video.setYear(rs.getString("RELEASE_DATE"));
+            video.setReleaseDate(rs.getString("RELEASE_DATE"));
             video.setRuntime(formatIntoHHMMSS(rs.getInt("RUNTIME")));
             video.setRating(rs.getDouble("RATING"));
             video.setSystem(rs.getString("SYSTEM"));

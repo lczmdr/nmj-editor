@@ -4,7 +4,7 @@ public class Video {
 
     private int id;
     private String title;
-    private String year;
+    private String releaseDate;
     private String runtime;
     private double rating;
     private String system;
@@ -28,12 +28,12 @@ public class Video {
         this.title = title;
     }
 
-    public String getYear() {
-        return year;
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public String getRuntime() {

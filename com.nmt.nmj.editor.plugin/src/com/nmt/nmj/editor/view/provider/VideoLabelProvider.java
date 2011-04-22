@@ -32,8 +32,8 @@ public class VideoLabelProvider extends LabelProvider implements ITableLabelProv
         case 1: // Video Title
             result = video.getTitle();
             break;
-        case 2: // Video Year
-            result = video.getYear();
+        case 2: // Video Release Date
+            result = video.getReleaseDate();
             break;
         case 3: // Video Runtime
             result = video.getRuntime();
