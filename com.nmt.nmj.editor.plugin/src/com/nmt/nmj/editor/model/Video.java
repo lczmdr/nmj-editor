@@ -1,5 +1,8 @@
 package com.nmt.nmj.editor.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Video {
 
     private int id;
@@ -12,6 +15,10 @@ public class Video {
     private String resolution;
     private String fileName;
     private double fps;
+    private List<String> genres = new ArrayList<String>();
+    private List<String> directors = new ArrayList<String>();
+    private List<String> casting = new ArrayList<String>();
+    private List<String> keywords = new ArrayList<String>();
 
     public int getId() {
         return id;
@@ -91,6 +98,54 @@ public class Video {
 
     public void setFps(double fps) {
         this.fps = fps;
+    }
+
+    public List<String> getGenres() {
+        return genres;
+    }
+
+    public void addGenre(String genre) {
+        this.genres.add(genre);
+    }
+
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+    }
+
+    public List<String> getDirectors() {
+        return directors;
+    }
+
+    public void addDirector(String director) {
+        this.directors.add(director);
+    }
+
+    public void setDirectors(List<String> directors) {
+        this.directors = directors;
+    }
+
+    public List<String> getCasting() {
+        return casting;
+    }
+
+    public void addCasting(String casting) {
+        this.casting.add(casting);
+    }
+
+    public void setCasting(List<String> casting) {
+        this.casting = casting;
+    }
+
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    public void addKeyword(String keyword) {
+        this.keywords.add(keyword);
+    }
+
+    public void setKeywords(List<String> keywords) {
+        this.keywords = keywords;
     }
 
 }
