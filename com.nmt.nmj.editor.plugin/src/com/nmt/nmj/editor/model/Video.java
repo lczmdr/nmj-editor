@@ -10,7 +10,8 @@ public class Video {
     private String system;
     private String videoCodec;
     private String resolution;
-    private int fps;
+    private String fileName;
+    private double fps;
 
     public int getId() {
         return id;
@@ -76,11 +77,19 @@ public class Video {
         this.resolution = resolution;
     }
 
-    public int getFps() {
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public double getFps() {
         return fps;
     }
 
-    public void setFps(int fps) {
+    public void setFps(double fps) {
         this.fps = fps;
     }
 

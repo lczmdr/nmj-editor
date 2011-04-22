@@ -291,7 +291,7 @@ public class EditorView extends ViewPart {
             video.setSystem(rs.getString("SYSTEM"));
             video.setVideoCodec(rs.getString("VIDEO_CODEC"));
             video.setResolution(rs.getString("RESOLUTION"));
-            video.setFps(rs.getInt("FPS"));
+            video.setFps(rs.getDouble("FPS"));
             videos.add(video);
         }
         return videos;
