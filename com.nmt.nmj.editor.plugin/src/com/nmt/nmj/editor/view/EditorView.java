@@ -63,23 +63,17 @@ public class EditorView extends ViewPart {
     private String[] columnNames = new String[] { VIDEO_ID, VIDEO_TITLE, VIDEO_RELEASE_DATE, VIDEO_RUNTIME,
             VIDEO_RATING, VIDEO_SYSTEM, VIDEO_CODEC, VIDEO_DIMENSIONS, VIDEO_FPS };
 
+    private IWorkbenchWindow window;
     private Composite container;
     private Table videoTable;
     private TableViewer videoTableViewer;
-
     private Label informationLabel;
-
     private VideoSorter videoTableSorter;
-
     private Label movieTitle;
-
-    private IWorkbenchWindow window;
-
-    private Group detailedInformationGroup;
-
-    protected Video currentVideo;
-
+    private Video currentVideo;
     private Text releaseDateText;
+
+    private Composite detailedInformationComposite;
 
     public void createPartControl(Composite parent) {
 
@@ -188,7 +182,7 @@ public class EditorView extends ViewPart {
                         movieTitle.setText(currentVideo.getTitle());
                         movieTitle.pack();
                         releaseDateText.setText(currentVideo.getReleaseDate());
-                        detailedInformationGroup.setEnabled(true);
+                        detailedInformationComposite.setVisible(true);
                     }
                 }
             }
@@ -197,16 +191,19 @@ public class EditorView extends ViewPart {
     }
 
     private void createDetailedInformationGroup() {
-        detailedInformationGroup = new Group(container, SWT.SHADOW_ETCHED_IN);
+        Group detailedInformationGroup = new Group(container, SWT.SHADOW_ETCHED_IN);
         detailedInformationGroup.setText("Detailed information");
         detailedInformationGroup.setLayoutData(new GridData(GridData.FILL_BOTH));
-        detailedInformationGroup.setEnabled(false);
 
         GridLayout layout = new GridLayout();
         layout.numColumns = 1;
         detailedInformationGroup.setLayout(layout);
 
-        movieTitle = new Label(detailedInformationGroup, SWT.WRAP);
+        detailedInformationComposite = new Composite(detailedInformationGroup, SWT.NONE);
+        detailedInformationComposite.setLayout(layout);
+        detailedInformationComposite.setVisible(false);
+
+        movieTitle = new Label(detailedInformationComposite, SWT.WRAP);
         Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);
         if (boldFont.getFontData().length == 1) {
             // TODO: font size not working
@@ -216,7 +213,7 @@ public class EditorView extends ViewPart {
         }
         movieTitle.setFont(boldFont);
 
-        container = new Composite(detailedInformationGroup, SWT.NONE);
+        Composite container = new Composite(detailedInformationComposite, SWT.NONE);
         layout = new GridLayout();
         layout.numColumns = 3;
         container.setLayout(layout);
@@ -264,13 +261,14 @@ public class EditorView extends ViewPart {
             if (!connection.isClosed()) {
                 String fileName = Application.getSqliteConnector().getFileName();
                 informationLabel.setText("Current Database: " + fileName);
+                informationLabel.pack();
                 List<Video> videos = createVideoStructure(connection);
                 this.videoTableViewer.setInput(videos);
                 container.layout();
             } else {
                 informationLabel.setText("Current Database: ");
                 videoTableViewer.setInput(null);
-                detailedInformationGroup.setEnabled(false);
+                detailedInformationComposite.setVisible(false);
             }
         } catch (SQLException e) {
             MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
