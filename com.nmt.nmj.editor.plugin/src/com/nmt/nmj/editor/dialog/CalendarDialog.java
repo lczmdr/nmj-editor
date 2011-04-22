@@ -40,7 +40,6 @@ public class CalendarDialog extends Dialog {
                     calendar.get(Calendar.DAY_OF_MONTH));
         }
         dateTime.addDisposeListener(new DisposeListener() {
-            @Override
             public void widgetDisposed(DisposeEvent e) {
                 selectedDate = "" + dateTime.getYear() + "-" + new DecimalFormat("00").format(dateTime.getMonth())
                         + "-" + new DecimalFormat("00").format(dateTime.getDay());
@@ -49,7 +48,6 @@ public class CalendarDialog extends Dialog {
         Button todayButton = new Button(parent, SWT.PUSH);
         todayButton.setText("Today");
         todayButton.addSelectionListener(new SelectionAdapter() {
-            @Override
             public void widgetSelected(SelectionEvent e) {
                 Calendar calendar = Calendar.getInstance();
                 dateTime.setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1,
