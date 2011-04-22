@@ -1,6 +1,6 @@
 package com.nmt.nmj.editor;
 
-import org.eclipse.swt.graphics.Point;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
@@ -23,7 +23,13 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         configurer.setTitle(APP_TITLE);
         configurer.setShowCoolBar(true);
         configurer.setShowStatusLine(false);
-        configurer.setInitialSize(new Point(1024, 768));
         configurer.setShowProgressIndicator(true);
+    }
+    
+    @Override
+    public void postWindowCreate() {
+        IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
+        IWorkbenchWindow window = configurer.getWindow();
+        window.getShell().setMaximized(true);
     }
 }
