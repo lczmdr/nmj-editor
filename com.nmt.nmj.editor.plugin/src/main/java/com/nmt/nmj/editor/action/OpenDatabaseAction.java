@@ -29,6 +29,7 @@ public class OpenDatabaseAction extends Action {
     public void run() {
         if (window != null) {
             FileDialog fileDialog = new FileDialog(window.getShell(), SWT.OPEN);
+            fileDialog.setFilterPath(System.getProperty("user.home"));
             fileDialog.setText("Select the database...");
             fileDialog.setFilterExtensions(new String[] { "*.db", "*.*" });
             fileDialog.setFilterNames(new String[] { "Database Files (*.db)", "All Files (*.*)" });
