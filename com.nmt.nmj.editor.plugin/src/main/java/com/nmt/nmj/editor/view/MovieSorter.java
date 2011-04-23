@@ -11,12 +11,12 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import com.nmt.nmj.editor.model.Video;
 
-class VideoSorter extends ViewerSorter {
+class MovieSorter extends ViewerSorter {
 
     private TableColumn currentColumn = null;
     private Map<TableColumn, Boolean> sortMap = new HashMap<TableColumn, Boolean>();
 
-    public VideoSorter(TableColumn defaultColumn) {
+    public MovieSorter(TableColumn defaultColumn) {
         setCurrentColumn(defaultColumn);
     }
 

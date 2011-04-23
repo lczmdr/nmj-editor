@@ -66,7 +66,7 @@ public class EditorView extends ViewPart {
     private Composite container;
     private TableViewer videoTableViewer;
     private Label informationLabel;
-    private VideoSorter videoTableSorter;
+    private MovieSorter videoTableSorter;
     private Label movieTitle;
     private Video currentVideo;
     private Text releaseDateText;
@@ -175,7 +175,7 @@ public class EditorView extends ViewPart {
         videoTableViewer.setContentProvider(new VideoContentProvider());
         videoTableViewer.setLabelProvider(new VideoLabelProvider());
 
-        videoTableSorter = new VideoSorter(titleTableColumn);
+        videoTableSorter = new MovieSorter(titleTableColumn);
         videoTableViewer.setSorter(videoTableSorter);
 
         videoTable.addSelectionListener(new SelectionAdapter() {
