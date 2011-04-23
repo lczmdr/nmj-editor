@@ -42,8 +42,8 @@ import com.nmt.nmj.editor.dialog.CalendarDialog;
 import com.nmt.nmj.editor.exception.NmjEditorException;
 import com.nmt.nmj.editor.model.Video;
 import com.nmt.nmj.editor.sqlite.SQLQueries;
-import com.nmt.nmj.editor.view.provider.VideoContentProvider;
-import com.nmt.nmj.editor.view.provider.VideoLabelProvider;
+import com.nmt.nmj.editor.view.provider.MovieContentProvider;
+import com.nmt.nmj.editor.view.provider.MovieLabelProvider;
 
 public class EditorView extends ViewPart {
 
@@ -64,9 +64,9 @@ public class EditorView extends ViewPart {
 
     private IWorkbenchWindow window;
     private Composite container;
-    private TableViewer videoTableViewer;
+    private TableViewer movieTableViewer;
     private Label informationLabel;
-    private MovieSorter videoTableSorter;
+    private MovieSorter movieTableSorter;
     private Label movieTitle;
     private Video currentVideo;
     private Text releaseDateText;
@@ -108,7 +108,7 @@ public class EditorView extends ViewPart {
         TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
         tabItem.setText("Movies");
 
-        tabItem.setControl(createVideoTable(tabFolder));
+        tabItem.setControl(createMovieTable(tabFolder));
 
         tabItem = new TabItem(tabFolder, SWT.NULL);
         tabItem.setText("TV Shows");
@@ -120,68 +120,68 @@ public class EditorView extends ViewPart {
 
     }
 
-    private Control createVideoTable(TabFolder tabFolder) {
+    private Control createMovieTable(TabFolder tabFolder) {
         Composite composite = new Composite(tabFolder, SWT.NONE);
         composite.setLayout(new FillLayout(SWT.VERTICAL));
-        Table videoTable = new Table(composite, SWT.BORDER | SWT.MULTI | SWT.SCROLL_LINE | SWT.SINGLE
+        Table movieTable = new Table(composite, SWT.BORDER | SWT.MULTI | SWT.SCROLL_LINE | SWT.SINGLE
                 | SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL);
-        videoTable.setHeaderVisible(true);
-        videoTable.setLinesVisible(true);
+        movieTable.setHeaderVisible(true);
+        movieTable.setLinesVisible(true);
 
-        TableColumn idTableColumn = new TableColumn(videoTable, SWT.CENTER);
+        TableColumn idTableColumn = new TableColumn(movieTable, SWT.CENTER);
         idTableColumn.setText(VIDEO_ID);
         idTableColumn.setWidth(70);
         idTableColumn.setResizable(false);
         idTableColumn.addListener(SWT.Selection, this.selChangeListenerColumn);
 
-        TableColumn titleTableColumn = new TableColumn(videoTable, SWT.CENTER);
+        TableColumn titleTableColumn = new TableColumn(movieTable, SWT.CENTER);
         titleTableColumn.setText(VIDEO_TITLE);
         titleTableColumn.setWidth(300);
         titleTableColumn.addListener(SWT.Selection, this.selChangeListenerColumn);
 
-        TableColumn tableColumn = new TableColumn(videoTable, SWT.CENTER);
+        TableColumn tableColumn = new TableColumn(movieTable, SWT.CENTER);
         tableColumn.setText(VIDEO_RELEASE_DATE);
         tableColumn.setWidth(120);
         tableColumn.setResizable(false);
 
-        tableColumn = new TableColumn(videoTable, SWT.CENTER);
+        tableColumn = new TableColumn(movieTable, SWT.CENTER);
         tableColumn.setText(VIDEO_RUNTIME);
         tableColumn.setWidth(100);
 
-        tableColumn = new TableColumn(videoTable, SWT.CENTER);
+        tableColumn = new TableColumn(movieTable, SWT.CENTER);
         tableColumn.setText(VIDEO_RATING);
         tableColumn.setWidth(80);
 
-        tableColumn = new TableColumn(videoTable, SWT.CENTER);
+        tableColumn = new TableColumn(movieTable, SWT.CENTER);
         tableColumn.setText(VIDEO_SYSTEM);
         tableColumn.setWidth(120);
 
-        tableColumn = new TableColumn(videoTable, SWT.CENTER);
+        tableColumn = new TableColumn(movieTable, SWT.CENTER);
         tableColumn.setText(VIDEO_CODEC);
         tableColumn.setWidth(100);
 
-        tableColumn = new TableColumn(videoTable, SWT.CENTER);
+        tableColumn = new TableColumn(movieTable, SWT.CENTER);
         tableColumn.setText(VIDEO_DIMENSIONS);
         tableColumn.setWidth(100);
 
-        tableColumn = new TableColumn(videoTable, SWT.CENTER);
+        tableColumn = new TableColumn(movieTable, SWT.CENTER);
         tableColumn.setText(VIDEO_FPS);
         tableColumn.setWidth(100);
 
-        videoTableViewer = new TableViewer(videoTable);
-        videoTableViewer.setUseHashlookup(true);
-        videoTableViewer.setColumnProperties(columnNames);
+        movieTableViewer = new TableViewer(movieTable);
+        movieTableViewer.setUseHashlookup(true);
+        movieTableViewer.setColumnProperties(columnNames);
 
-        videoTableViewer.setContentProvider(new VideoContentProvider());
-        videoTableViewer.setLabelProvider(new VideoLabelProvider());
+        movieTableViewer.setContentProvider(new MovieContentProvider());
+        movieTableViewer.setLabelProvider(new MovieLabelProvider());
 
-        videoTableSorter = new MovieSorter(titleTableColumn);
-        videoTableViewer.setSorter(videoTableSorter);
+        movieTableSorter = new MovieSorter(titleTableColumn);
+        movieTableViewer.setSorter(movieTableSorter);
 
-        videoTable.addSelectionListener(new SelectionAdapter() {
+        movieTable.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                IStructuredSelection selection = (IStructuredSelection) videoTableViewer.getSelection();
+                IStructuredSelection selection = (IStructuredSelection) movieTableViewer.getSelection();
                 currentVideo = (Video) selection.getFirstElement();
                 if (currentVideo != null) {
                     try {
@@ -317,8 +317,8 @@ public class EditorView extends ViewPart {
 
     private Listener selChangeListenerColumn = new Listener() {
         public void handleEvent(Event event) {
-            videoTableSorter.setCurrentColumn((TableColumn) event.widget);
-            videoTableViewer.refresh();
+            movieTableSorter.setCurrentColumn((TableColumn) event.widget);
+            movieTableViewer.refresh();
         }
     };
 
@@ -333,11 +333,11 @@ public class EditorView extends ViewPart {
                 informationLabel.setText("Current Database: " + fileName);
                 informationLabel.pack();
                 List<Video> videos = createVideoStructure(connection);
-                this.videoTableViewer.setInput(videos);
+                this.movieTableViewer.setInput(videos);
                 container.layout();
             } else {
                 informationLabel.setText("Current Database: ");
-                videoTableViewer.setInput(null);
+                movieTableViewer.setInput(null);
                 detailedInformationComposite.setVisible(false);
             }
         } catch (SQLException e) {

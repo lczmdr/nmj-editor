@@ -7,7 +7,7 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 
 import com.nmt.nmj.editor.model.Video;
 
-public class VideoLabelProvider extends LabelProvider implements ITableLabelProvider {
+public class MovieLabelProvider extends LabelProvider implements ITableLabelProvider {
 
     public String getText(Object obj) {
         return "";

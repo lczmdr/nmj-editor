@@ -8,7 +8,7 @@ import org.eclipse.jface.viewers.Viewer;
 
 import com.nmt.nmj.editor.model.Video;
 
-public class VideoContentProvider implements IStructuredContentProvider {
+public class MovieContentProvider implements IStructuredContentProvider {
 
     public Object[] getElements(Object obj) {
         List<Video> videos = (ArrayList<Video>) obj;
