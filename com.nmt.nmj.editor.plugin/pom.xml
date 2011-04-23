@@ -32,7 +32,7 @@
         <executions>
           <execution>
             <id>copy-dependencies</id>
-            <phase>package</phase>
+            <phase>process-resources</phase>
             <goals>
               <goal>copy-dependencies</goal>
             </goals>
