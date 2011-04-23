@@ -39,5 +39,13 @@
             restorable="true">
       </view>
    </extension>
+   <extension
+         id="nmj_editor"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="com.nmt.nmj.plugin.application"
+            name="rcp">
+      </product>
+   </extension>
 
 </plugin>
