@@ -11,6 +11,6 @@ How to setup development environment
 * Install M2Eclipse plugin from Eclipse Marketplace. Go to Help > Eclipse Marketplace, and find "Maven Integration for Eclipse"; click on install
 * [Optional] configure local maven instalation. Go to Window > Preferences > Maven > Installations and add your local Maven Runtime
 * Import project into Eclipse. Go to File > Import > Maven > Existing Maven Projects, and select the root of your cloned repository. Click on finish.
-* Add the PDE plugin libraries doing right click in your project -> Configure -> Convert to Plug-in Proyects...
+* Add the PDE plugin libraries doing right click in your project -> Configure -> Convert to Plug-in Projects...
 * From command line go to the root of the cloned project and run 'mvn clean package' to copy the needed libraries into the libraries
 
