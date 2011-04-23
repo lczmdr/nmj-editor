@@ -3,6 +3,7 @@ package com.nmt.nmj.editor.view;
 import java.util.Date;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -13,12 +14,14 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -303,20 +306,52 @@ public class EditorView extends ViewPart {
     private org.eclipse.swt.widgets.List createListControl(Composite parent, String label) {
         Composite composite = new Composite(parent, SWT.NONE);
         GridLayout layout = new GridLayout();
-        layout.numColumns = 2;
+        layout.numColumns = 3;
         composite.setLayout(layout);
 
         Label l = new Label(composite, SWT.NONE);
         l.setText(label);
         l.pack();
 
-        org.eclipse.swt.widgets.List keywordsList = new org.eclipse.swt.widgets.List(composite, SWT.BORDER
-                | SWT.V_SCROLL);
+        final org.eclipse.swt.widgets.List list = new org.eclipse.swt.widgets.List(composite, SWT.BORDER | SWT.V_SCROLL);
         GridData gd = new GridData(SWT.BORDER);
         gd.heightHint = 70;
         gd.widthHint = 120;
-        keywordsList.setLayoutData(gd);
-        return keywordsList;
+        list.setLayoutData(gd);
+
+        Composite buttons = new Composite(composite, SWT.NONE);
+        layout = new GridLayout();
+        layout.numColumns = 1;
+        buttons.setLayout(layout);
+
+        Button addButton = new Button(buttons, SWT.PUSH);
+        Display display = buttons.getDisplay();
+        addButton.setImage(new Image(display, EditorView.class.getResourceAsStream("/icons/add.png")));
+        addButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                InputDialog input = new InputDialog(window.getShell(), "Input", "New value:", "", null);
+                if (input.open() == Window.OK) {
+                    String value = input.getValue();
+                    if (value != null && value.trim().length() > 0) {
+                        list.add(value.trim());
+                    }
+                }
+            }
+        });
+
+        Button removeButton = new Button(buttons, SWT.PUSH);
+        removeButton.setImage(new Image(display, EditorView.class.getResourceAsStream("/icons/remove.png")));
+        removeButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                if (list.getSelectionIndex() != -1) {
+                    list.remove(list.getSelectionIndex());
+                    list.setFocus();
+                }
+            }
+        });
+        return list;
     }
 
     private Listener selChangeListenerColumn = new Listener() {
