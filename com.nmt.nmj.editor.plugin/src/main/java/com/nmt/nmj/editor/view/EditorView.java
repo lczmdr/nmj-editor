@@ -63,22 +63,20 @@ public class EditorView extends ViewPart {
             VIDEO_RATING, VIDEO_SYSTEM, VIDEO_CODEC, VIDEO_DIMENSIONS, VIDEO_FPS };
 
     private IWorkbenchWindow window;
-    private Composite container;
+    private Composite mainComposite;
+    private Composite detailedInformationComposite;
     private TableViewer movieTableViewer;
     private Label informationLabel;
     private MovieSorter movieTableSorter;
     private Label movieTitle;
     private Video currentVideo;
     private Text releaseDateText;
-
-    private Composite detailedInformationComposite;
-
     private org.eclipse.swt.widgets.List keywordsList;
     private org.eclipse.swt.widgets.List directorsList;
     private org.eclipse.swt.widgets.List genresList;
     private org.eclipse.swt.widgets.List castingList;
-
     private Label fileNameLabel;
+    private Text synopsisText;
 
     public void createPartControl(Composite parent) {
 
@@ -88,21 +86,21 @@ public class EditorView extends ViewPart {
         layout.marginHeight = 0;
         layout.marginWidth = 0;
 
-        container = new Composite(parent, SWT.NONE);
-        container.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL, GridData.VERTICAL_ALIGN_BEGINNING, true,
-                false));
+        mainComposite = new Composite(parent, SWT.NONE);
+        mainComposite.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL, GridData.VERTICAL_ALIGN_BEGINNING,
+                true, false));
         layout = new GridLayout();
         layout.marginHeight = 5;
         layout.marginWidth = 10;
         layout.numColumns = 1;
-        container.setLayout(layout);
+        mainComposite.setLayout(layout);
 
-        informationLabel = new Label(container, SWT.WRAP);
+        informationLabel = new Label(mainComposite, SWT.WRAP);
         informationLabel.setText("Current Database: ");
 
-        TabFolder tabFolder = new TabFolder(container, SWT.BORDER);
+        TabFolder tabFolder = new TabFolder(mainComposite, SWT.BORDER);
         GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-        gd.heightHint = 290;
+        gd.heightHint = 260;
         tabFolder.setLayoutData(gd);
 
         TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
@@ -191,12 +189,13 @@ public class EditorView extends ViewPart {
                         releaseDateText.setText(currentVideo.getReleaseDate());
                         fileNameLabel.setText(currentVideo.getFileName());
                         fileNameLabel.pack();
-                        detailedInformationComposite.setVisible(true);
-                        detailedInformationComposite.pack();
+                        synopsisText.setText(currentVideo.getSynopsis());
                         fillInformationList(currentVideo.getGenres(), genresList);
                         fillInformationList(currentVideo.getDirectors(), directorsList);
                         fillInformationList(currentVideo.getCasting(), castingList);
                         fillInformationList(currentVideo.getKeywords(), keywordsList);
+                        detailedInformationComposite.setVisible(true);
+                        detailedInformationComposite.pack();
                     } catch (NmjEditorException e1) {
                         MessageDialog.openError(window.getShell(), "Error", e1.getMessage());
                     }
@@ -215,7 +214,7 @@ public class EditorView extends ViewPart {
     }
 
     private void createDetailedInformationGroup() {
-        Group detailedInformationGroup = new Group(container, SWT.SHADOW_ETCHED_IN);
+        Group detailedInformationGroup = new Group(mainComposite, SWT.SHADOW_ETCHED_IN);
         detailedInformationGroup.setText("Detailed information");
         detailedInformationGroup.setLayoutData(new GridData(GridData.FILL_BOTH));
 
@@ -241,10 +240,7 @@ public class EditorView extends ViewPart {
         fileNameLabel.setText("Filename:");
         fileNameLabel.pack();
 
-        // white space
-        // new Label(detailedInformationComposite, SWT.NONE);
-
-        Composite doubleColumnComposite = new Composite(detailedInformationComposite, SWT.NONE | SWT.VERTICAL);
+        Composite doubleColumnComposite = new Composite(detailedInformationComposite, SWT.NONE);
         layout = new GridLayout();
         layout.numColumns = 2;
         doubleColumnComposite.setLayout(layout);
@@ -256,22 +252,26 @@ public class EditorView extends ViewPart {
         layout.numColumns = 2;
         composite.setLayout(layout);
 
-        Label label = new Label(composite, SWT.NONE);
-        label.setText("Keywords");
-        label.pack();
-        keywordsList = createListControl(composite);
-        label = new Label(composite, SWT.NONE);
-        label.setText("Directors");
-        label.pack();
-        directorsList = createListControl(composite);
-        label = new Label(composite, SWT.NONE);
-        label.setText("Genres");
-        label.pack();
-        genresList = createListControl(composite);
-        label = new Label(composite, SWT.NONE);
-        label.setText("Casting");
-        label.pack();
-        castingList = createListControl(composite);
+        genresList = createListControl(composite, "Genres");
+        directorsList = createListControl(composite, "Directors");
+        castingList = createListControl(composite, "Casting");
+        keywordsList = createListControl(composite, "Keywords");
+
+        // white space
+        new Label(doubleColumnComposite, SWT.NONE);
+
+        Composite sinopsisComposite = new Composite(doubleColumnComposite, SWT.NONE);
+        layout = new GridLayout();
+        layout.numColumns = 2;
+        sinopsisComposite.setLayout(layout);
+
+        Label label = new Label(sinopsisComposite, SWT.NONE);
+        label.setText("Synopsis");
+        synopsisText = new Text(sinopsisComposite, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+        GridData gd = new GridData();
+        gd.widthHint = 300;
+        gd.heightHint = 70;
+        synopsisText.setLayoutData(gd);
     }
 
     private void createReleaseDateWidget(Composite parent) {
@@ -280,17 +280,17 @@ public class EditorView extends ViewPart {
         layout.numColumns = 3;
         releaseDateContainer.setLayout(layout);
 
-        Label l = new Label(releaseDateContainer, SWT.NONE | SWT.TOP);
+        Label l = new Label(releaseDateContainer, SWT.NONE);
         l.setText("Release Date:");
         l.pack();
 
-        releaseDateText = new Text(releaseDateContainer, SWT.BORDER | SWT.TOP);
+        releaseDateText = new Text(releaseDateContainer, SWT.BORDER);
         releaseDateText.setEditable(false);
         GridData gd = new GridData();
         gd.widthHint = 80;
         releaseDateText.setLayoutData(gd);
 
-        Button openCalendar = new Button(releaseDateContainer, SWT.PUSH | SWT.TOP);
+        Button openCalendar = new Button(releaseDateContainer, SWT.PUSH);
         openCalendar.setText("...");
         openCalendar.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
@@ -306,8 +306,18 @@ public class EditorView extends ViewPart {
         });
     }
 
-    private org.eclipse.swt.widgets.List createListControl(Composite parent) {
-        org.eclipse.swt.widgets.List keywordsList = new org.eclipse.swt.widgets.List(parent, SWT.BORDER | SWT.V_SCROLL);
+    private org.eclipse.swt.widgets.List createListControl(Composite parent, String label) {
+        Composite composite = new Composite(parent, SWT.NONE);
+        GridLayout layout = new GridLayout();
+        layout.numColumns = 2;
+        composite.setLayout(layout);
+
+        Label l = new Label(composite, SWT.NONE);
+        l.setText(label);
+        l.pack();
+
+        org.eclipse.swt.widgets.List keywordsList = new org.eclipse.swt.widgets.List(composite, SWT.BORDER
+                | SWT.V_SCROLL);
         GridData gd = new GridData(SWT.BORDER);
         gd.heightHint = 70;
         gd.widthHint = 120;
@@ -334,7 +344,7 @@ public class EditorView extends ViewPart {
                 informationLabel.pack();
                 List<Video> videos = createVideoStructure(connection);
                 this.movieTableViewer.setInput(videos);
-                container.layout();
+                mainComposite.layout();
             } else {
                 informationLabel.setText("Current Database: ");
                 movieTableViewer.setInput(null);
@@ -363,6 +373,11 @@ public class EditorView extends ViewPart {
                 } else if (attributeType.equals("PRINCIPAL_CAST_MEMBER")) {
                     video.addCasting(rs.getString("VALUE"));
                 }
+            }
+            rs = statement.executeQuery(SQLQueries.MOVIES_SYNOPSIS_QUERY + video.getId());
+            while (rs.next()) {
+                String synopsis = rs.getString("CONTENT");
+                video.setSynopsis(synopsis);
             }
         } catch (SQLException e) {
             throw new NmjEditorException("Error retrieving information of video " + video.getTitle(), e);

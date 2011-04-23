@@ -13,4 +13,9 @@ public class SQLQueries {
      */
     public static final String MOVIES_INFORMATION_QUERY = "SELECT VIDEO_ATTR.TYPE, VIDEO_ATTR.VALUE FROM VIDEO_ATTR WHERE VIDEO_ATTR.VIDEO_ID=";
 
+    /**
+     * Movies synopsis query
+     */
+    public static final String MOVIES_SYNOPSIS_QUERY = "SELECT CONTENT FROM VIDEO_SYNOPSIS WHERE VIDEO_ID=";
+
 }

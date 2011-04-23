@@ -15,6 +15,7 @@ public class Video {
     private String resolution;
     private String fileName;
     private double fps;
+    private String synopsis;
     private List<String> genres = new ArrayList<String>();
     private List<String> directors = new ArrayList<String>();
     private List<String> casting = new ArrayList<String>();
@@ -98,6 +99,14 @@ public class Video {
 
     public void setFps(double fps) {
         this.fps = fps;
+    }
+
+    public String getSynopsis() {
+        return synopsis;
+    }
+
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
     }
 
     public List<String> getGenres() {
