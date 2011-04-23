@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Agrologic" uid="com.nmt.nmj.editor" id="com.nmt.nmj.plugin.nmj_editor" application="com.nmt.nmj.plugin.application" version="1.0.0" useFeatures="false" includeLaunchers="true">
+<product name="nmj-editor" uid="com.nmt.nmj.editor" id="com.nmt.nmj.plugin.nmj_editor" application="com.nmt.nmj.plugin.application" version="1.0.0" useFeatures="false" includeLaunchers="true">
 
    <aboutInfo>
-      <image path="/Agrologic/icons/ablogic.gif"/>
-      <text>
-         %aboutText
-      </text>
    </aboutInfo>
 
    <configIni use="default">
@@ -16,18 +12,10 @@
    <launcherArgs>
    </launcherArgs>
 
-   <windowImages/>
-
    <launcher name="nmjeditor">
       <solaris/>
-      <win useIco="false">
-         <bmp/>
-      </win>
+      <win/>
    </launcher>
-
-   <vm>
-      <windows include="true">jre1.5.0_06</windows>
-   </vm>
 
    <plugins>
       <plugin id="com.ibm.icu"/>
