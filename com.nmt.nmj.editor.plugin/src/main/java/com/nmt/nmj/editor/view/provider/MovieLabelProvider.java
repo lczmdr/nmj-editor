@@ -1,5 +1,6 @@
 package com.nmt.nmj.editor.view.provider;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -30,7 +31,7 @@ public class MovieLabelProvider extends LabelProvider implements ITableLabelProv
             result = String.valueOf(video.getId());
             break;
         case 1: // Video Title
-            result = video.getTitle();
+            result = StringEscapeUtils.unescapeHtml(video.getTitle());
             break;
         case 2: // Video Release Date
             result = video.getReleaseDate();

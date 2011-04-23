@@ -3,6 +3,7 @@ package com.nmt.nmj.editor.view;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
@@ -181,12 +182,12 @@ public class EditorView extends ViewPart {
                 if (currentVideo != null) {
                     try {
                         obtainExtraInformation(currentVideo);
-                        movieTitle.setText("Movie: " + currentVideo.getTitle());
+                        movieTitle.setText(StringEscapeUtils.unescapeHtml("Movie: " + currentVideo.getTitle()));
                         movieTitle.pack();
                         releaseDateText.setText(currentVideo.getReleaseDate());
                         fileNameLabel.setText(currentVideo.getFileName());
                         fileNameLabel.pack();
-                        synopsisText.setText(currentVideo.getSynopsis());
+                        synopsisText.setText(StringEscapeUtils.unescapeHtml(currentVideo.getSynopsis()));
                         fillInformationList(currentVideo.getGenres(), genresList);
                         fillInformationList(currentVideo.getDirectors(), directorsList);
                         fillInformationList(currentVideo.getCasting(), castingList);
