@@ -10,7 +10,7 @@ import org.eclipse.ui.PartInitException;
 
 import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.ICommandIds;
-import com.nmt.nmj.editor.sqlite.SQLiteConnector;
+import com.nmt.nmj.editor.exception.NmjEditorException;
 import com.nmt.nmj.editor.view.EditorView;
 
 public class OpenDatabaseAction extends Action {
@@ -35,14 +35,12 @@ public class OpenDatabaseAction extends Action {
             fileDialog.setFilterNames(new String[] { "Database Files (*.db)", "All Files (*.*)" });
             String selectedFile = fileDialog.open();
             if (selectedFile != null) {
-                SQLiteConnector connector = new SQLiteConnector();
                 try {
-                    connector.connect(selectedFile);
-                } catch (ClassNotFoundException e) {
-                    MessageDialog.openError(window.getShell(), "Error", "SQLlite drivers missing.");
+                    Application.getSqliteService().openConnection(selectedFile);
+                } catch (NmjEditorException e1) {
+                    MessageDialog.openError(window.getShell(), "Error", e1.getMessage());
                     return;
                 }
-                Application.setSqliteConnector(connector);
                 try {
                     EditorView editorView = (EditorView) window.getActivePage().showView(EditorView.ID);
                     editorView.refresh();

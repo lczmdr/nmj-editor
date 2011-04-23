@@ -1,10 +1,5 @@
 package com.nmt.nmj.editor.view;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +36,6 @@ import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.dialog.CalendarDialog;
 import com.nmt.nmj.editor.exception.NmjEditorException;
 import com.nmt.nmj.editor.model.Video;
-import com.nmt.nmj.editor.sqlite.SQLQueries;
 import com.nmt.nmj.editor.view.provider.MovieContentProvider;
 import com.nmt.nmj.editor.view.provider.MovieLabelProvider;
 
@@ -336,13 +330,11 @@ public class EditorView extends ViewPart {
     }
 
     public void refresh() {
-        Connection connection = Application.getSqliteConnector().getConnection();
         try {
-            if (!connection.isClosed()) {
-                String fileName = Application.getSqliteConnector().getFileName();
-                informationLabel.setText("Current Database: " + fileName);
+            if (Application.getSqliteService().isConnected()) {
+                informationLabel.setText("Current Database: " + Application.getSqliteService().getFileName());
                 informationLabel.pack();
-                List<Video> videos = createVideoStructure(connection);
+                List<Video> videos = Application.getSqliteService().getAllMovies();
                 this.movieTableViewer.setInput(videos);
                 mainComposite.layout();
             } else {
@@ -350,66 +342,13 @@ public class EditorView extends ViewPart {
                 movieTableViewer.setInput(null);
                 detailedInformationComposite.setVisible(false);
             }
-        } catch (SQLException e) {
-            MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-                    "Error reading database", "An error happened trying to read the database: \n" + e.getMessage());
+        } catch (NmjEditorException e) {
+            MessageDialog.openError(window.getShell(), "Error", e.getMessage());
         }
     }
 
-    // TODO: move the next two methods in an data access layer
     private void obtainExtraInformation(Video video) throws NmjEditorException {
-        Connection connection = Application.getSqliteConnector().getConnection();
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(SQLQueries.MOVIES_INFORMATION_QUERY + video.getId());
-            while (rs.next()) {
-                String attributeType = rs.getString("TYPE");
-                if (attributeType.equals("KEYWORD")) {
-                    video.addKeyword(rs.getString("VALUE"));
-                } else if (attributeType.equals("GENRE")) {
-                    video.addGenre(rs.getString("VALUE"));
-                } else if (attributeType.equals("DIRECTOR")) {
-                    video.addDirector(rs.getString("VALUE"));
-                } else if (attributeType.equals("PRINCIPAL_CAST_MEMBER")) {
-                    video.addCasting(rs.getString("VALUE"));
-                }
-            }
-            rs = statement.executeQuery(SQLQueries.MOVIES_SYNOPSIS_QUERY + video.getId());
-            while (rs.next()) {
-                String synopsis = rs.getString("CONTENT");
-                video.setSynopsis(synopsis);
-            }
-        } catch (SQLException e) {
-            throw new NmjEditorException("Error retrieving information of video " + video.getTitle(), e);
-        }
+        Application.getSqliteService().getDetailedInformation(video);
     }
 
-    private List<Video> createVideoStructure(Connection connection) throws SQLException {
-        Statement statement = connection.createStatement();
-        statement.setQueryTimeout(30);
-        ResultSet rs = statement.executeQuery(SQLQueries.MOVIES_QUERY);
-        List<Video> videos = new ArrayList<Video>();
-        while (rs.next()) {
-            Video video = new Video();
-            video.setId(rs.getInt("VIDEO_ID"));
-            video.setTitle(rs.getString("TITLE"));
-            video.setReleaseDate(rs.getString("RELEASE_DATE"));
-            video.setRuntime(formatIntoHHMMSS(rs.getInt("RUNTIME")));
-            video.setRating(rs.getDouble("RATING"));
-            video.setSystem(rs.getString("SYSTEM"));
-            video.setVideoCodec(rs.getString("VIDEO_CODEC"));
-            video.setResolution(rs.getString("RESOLUTION"));
-            video.setFileName(rs.getString("PATH"));
-            video.setFps(rs.getDouble("FPS"));
-            videos.add(video);
-        }
-        return videos;
-    }
-
-    private String formatIntoHHMMSS(int secondsInput) {
-        int hours = secondsInput / 3600, remainder = secondsInput % 3600, minutes = remainder / 60, seconds = remainder % 60;
-        return ((hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":"
-                + (seconds < 10 ? "0" : "") + seconds);
-
-    }
 }

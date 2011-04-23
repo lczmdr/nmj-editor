@@ -9,7 +9,6 @@ import org.eclipse.ui.PartInitException;
 import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.ICommandIds;
 import com.nmt.nmj.editor.exception.NmjEditorException;
-import com.nmt.nmj.editor.sqlite.SQLiteConnector;
 import com.nmt.nmj.editor.view.EditorView;
 
 public class CloseDatabaseAction extends Action {
@@ -27,16 +26,13 @@ public class CloseDatabaseAction extends Action {
 
     public void run() {
         try {
-            SQLiteConnector sqliteConnector = Application.getSqliteConnector();
-            if (sqliteConnector != null) {
-                sqliteConnector.disconnect();
-                try {
-                    EditorView editorView = (EditorView) window.getActivePage().showView(EditorView.ID);
-                    editorView.refresh();
-                } catch (PartInitException e) {
-                    MessageDialog.openError(window.getShell(), "Error", "Editor view is missing");
-                    e.printStackTrace();
-                }
+            Application.getSqliteService().closeConnection();
+            try {
+                EditorView editorView = (EditorView) window.getActivePage().showView(EditorView.ID);
+                editorView.refresh();
+            } catch (PartInitException e) {
+                MessageDialog.openError(window.getShell(), "Error", "Editor view is missing");
+                e.printStackTrace();
             }
         } catch (NmjEditorException e) {
             MessageDialog.openError(window.getShell(), "Error", e.getMessage());

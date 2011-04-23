@@ -1,21 +1,21 @@
 package com.nmt.nmj.editor;
 
-import java.sql.SQLException;
-
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
-import com.nmt.nmj.editor.sqlite.SQLiteConnector;
+import com.nmt.nmj.editor.exception.NmjEditorException;
+import com.nmt.nmj.editor.sqlite.SQLiteService;
 
 /**
  * This class controls all aspects of the application's execution
  */
 public class Application implements IApplication {
 
-    private static SQLiteConnector sqliteConnector;
+    private static SQLiteService sqliteService = new SQLiteService();
 
     /*
      * (non-Javadoc)
@@ -43,11 +43,12 @@ public class Application implements IApplication {
      * @see org.eclipse.equinox.app.IApplication#stop()
      */
     public void stop() {
-        if (sqliteConnector != null) {
+        if (getSqliteService() != null) {
             try {
-                sqliteConnector.getConnection().close();
-            } catch (SQLException e) {
-                // TODO: ???
+                getSqliteService().closeConnection();
+            } catch (NmjEditorException e) {
+                MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
+                        e.getMessage());
             }
         }
         if (!PlatformUI.isWorkbenchRunning())
@@ -62,11 +63,8 @@ public class Application implements IApplication {
         });
     }
 
-    public static void setSqliteConnector(SQLiteConnector sqliteConnector) {
-        Application.sqliteConnector = sqliteConnector;
+    public static SQLiteService getSqliteService() {
+        return sqliteService;
     }
 
-    public static SQLiteConnector getSqliteConnector() {
-        return sqliteConnector;
-    }
 }
