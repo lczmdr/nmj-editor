@@ -8,14 +8,14 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
 import com.nmt.nmj.editor.exception.NmjEditorException;
-import com.nmt.nmj.editor.sqlite.SQLiteService;
+import com.nmt.nmj.editor.sqlite.DatabaseService;
 
 /**
  * This class controls all aspects of the application's execution
  */
 public class Application implements IApplication {
 
-    private static SQLiteService sqliteService = new SQLiteService();
+    private static DatabaseService databaseService = new DatabaseService();
 
     /*
      * (non-Javadoc)
@@ -43,9 +43,9 @@ public class Application implements IApplication {
      * @see org.eclipse.equinox.app.IApplication#stop()
      */
     public void stop() {
-        if (getSqliteService() != null) {
+        if (databaseService != null) {
             try {
-                getSqliteService().closeConnection();
+                databaseService.closeConnection();
             } catch (NmjEditorException e) {
                 MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
                         e.getMessage());
@@ -63,8 +63,8 @@ public class Application implements IApplication {
         });
     }
 
-    public static SQLiteService getSqliteService() {
-        return sqliteService;
+    public static DatabaseService getDatabaseService() {
+        return databaseService;
     }
 
 }

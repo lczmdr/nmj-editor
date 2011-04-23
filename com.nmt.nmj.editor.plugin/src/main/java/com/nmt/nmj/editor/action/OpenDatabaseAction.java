@@ -36,7 +36,7 @@ public class OpenDatabaseAction extends Action {
             String selectedFile = fileDialog.open();
             if (selectedFile != null) {
                 try {
-                    Application.getSqliteService().openConnection(selectedFile);
+                    Application.getDatabaseService().openConnection(selectedFile);
                 } catch (NmjEditorException e1) {
                     MessageDialog.openError(window.getShell(), "Error", e1.getMessage());
                     return;

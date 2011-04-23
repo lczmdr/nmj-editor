@@ -10,7 +10,7 @@ import java.util.List;
 import com.nmt.nmj.editor.exception.NmjEditorException;
 import com.nmt.nmj.editor.model.Video;
 
-public class SQLiteService {
+public class DatabaseService {
 
     private SQLiteConnector sqliteConnector;
 

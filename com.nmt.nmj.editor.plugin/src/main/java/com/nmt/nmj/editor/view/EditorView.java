@@ -331,10 +331,10 @@ public class EditorView extends ViewPart {
 
     public void refresh() {
         try {
-            if (Application.getSqliteService().isConnected()) {
-                informationLabel.setText("Current Database: " + Application.getSqliteService().getFileName());
+            if (Application.getDatabaseService().isConnected()) {
+                informationLabel.setText("Current Database: " + Application.getDatabaseService().getFileName());
                 informationLabel.pack();
-                List<Video> videos = Application.getSqliteService().getAllMovies();
+                List<Video> videos = Application.getDatabaseService().getAllMovies();
                 this.movieTableViewer.setInput(videos);
                 mainComposite.layout();
             } else {
@@ -348,7 +348,7 @@ public class EditorView extends ViewPart {
     }
 
     private void obtainExtraInformation(Video video) throws NmjEditorException {
-        Application.getSqliteService().getDetailedInformation(video);
+        Application.getDatabaseService().getDetailedInformation(video);
     }
 
 }

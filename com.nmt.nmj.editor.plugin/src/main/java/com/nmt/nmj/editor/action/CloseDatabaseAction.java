@@ -26,7 +26,7 @@ public class CloseDatabaseAction extends Action {
 
     public void run() {
         try {
-            Application.getSqliteService().closeConnection();
+            Application.getDatabaseService().closeConnection();
             try {
                 EditorView editorView = (EditorView) window.getActivePage().showView(EditorView.ID);
                 editorView.refresh();
