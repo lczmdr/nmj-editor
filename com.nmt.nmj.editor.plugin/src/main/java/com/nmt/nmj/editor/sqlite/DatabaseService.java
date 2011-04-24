@@ -25,11 +25,7 @@ public class DatabaseService {
 
     public void closeConnection() throws NmjEditorException {
         if (sqliteConnector != null) {
-            try {
-                sqliteConnector.getConnection().close();
-            } catch (SQLException e) {
-                throw new NmjEditorException("Error closing the database connection");
-            }
+            sqliteConnector.disconnect();
         }
     }
 
@@ -41,6 +37,9 @@ public class DatabaseService {
     }
 
     public String getFileName() {
+        if (sqliteConnector == null) {
+            return null;
+        }
         return sqliteConnector.getFileName();
     }
 

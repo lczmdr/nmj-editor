@@ -106,11 +106,11 @@ public class EditorView extends ViewPart {
 
         tabItem.setControl(createMovieTable(tabFolder));
 
-        tabItem = new TabItem(tabFolder, SWT.NULL);
-        tabItem.setText("TV Shows");
-
-        tabItem = new TabItem(tabFolder, SWT.NULL);
-        tabItem.setText("Music");
+//        tabItem = new TabItem(tabFolder, SWT.NULL);
+//        tabItem.setText("TV Shows");
+//
+//        tabItem = new TabItem(tabFolder, SWT.NULL);
+//        tabItem.setText("Music");
 
         createDetailedInformationGroup();
 
@@ -373,10 +373,12 @@ public class EditorView extends ViewPart {
                 List<Video> videos = Application.getDatabaseService().getAllMovies();
                 this.movieTableViewer.setInput(videos);
                 mainComposite.layout();
+                getViewSite().getActionBars().getStatusLineManager().setMessage(videos.size() + " movies");
             } else {
                 informationLabel.setText("Current Database: ");
                 movieTableViewer.setInput(null);
                 detailedInformationComposite.setVisible(false);
+                getViewSite().getActionBars().getStatusLineManager().setMessage("");
             }
         } catch (NmjEditorException e) {
             MessageDialog.openError(window.getShell(), "Error", e.getMessage());

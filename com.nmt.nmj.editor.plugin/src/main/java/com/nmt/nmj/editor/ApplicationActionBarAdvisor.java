@@ -17,11 +17,13 @@ import org.eclipse.ui.application.IActionBarConfigurer;
 
 import com.nmt.nmj.editor.action.CloseDatabaseAction;
 import com.nmt.nmj.editor.action.OpenDatabaseAction;
+import com.nmt.nmj.editor.action.RefreshDatabaseAction;
 
 public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
     private IWorkbenchAction exitAction;
     private Action openDatabaseAction;
+    private Action refreshDatabaseAction;
     private Action closeDatabaseAction;
 
     public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
@@ -38,6 +40,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         openDatabaseAction = new OpenDatabaseAction(window, "Open Database");
         register(openDatabaseAction);
 
+        refreshDatabaseAction = new RefreshDatabaseAction(window, "Refresh");
+        register(refreshDatabaseAction);
+
         closeDatabaseAction = new CloseDatabaseAction(window, "Close Database");
         register(closeDatabaseAction);
     }
@@ -49,6 +54,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         IToolBarManager toolbar = new ToolBarManager(SWT.FLAT | SWT.RIGHT);
         coolBar.add(new ToolBarContributionItem(toolbar, "main"));
         toolbar.add(openDatabaseAction);
+        toolbar.add(refreshDatabaseAction);
         toolbar.add(closeDatabaseAction);
         toolbar.add(new Separator());
         toolbar.add(exitAction);
