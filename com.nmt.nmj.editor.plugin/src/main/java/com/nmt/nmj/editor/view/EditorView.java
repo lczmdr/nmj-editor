@@ -205,7 +205,8 @@ public class EditorView extends ViewPart {
                                 posterImageCanvas.setVisible(true);
                                 posterImageCanvas.redraw();
                             } else {
-                                posterImageCanvas.setVisible(false);
+                                posterImage = new Image(window.getShell().getDisplay(), "no-poster.jpg");
+                                posterImageCanvas.setVisible(true);
                             }
                         } else {
                             posterImageCanvas.setVisible(false);
