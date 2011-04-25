@@ -5,16 +5,21 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
@@ -194,7 +199,7 @@ public class EditorView extends ViewPart {
         if (currentVideo != null) {
             try {
                 obtainExtraInformation(currentVideo);
-                movieTitle.setText(StringEscapeUtils.unescapeHtml("Movie: " + currentVideo.getTitle()));
+                movieTitle.setText(StringEscapeUtils.unescapeHtml(currentVideo.getTitle()));
                 movieTitle.pack();
                 searchTitle.setText(StringEscapeUtils.unescapeHtml(currentVideo.getSearchTitle()));
                 releaseDateText.setText(currentVideo.getReleaseDate());
@@ -250,6 +255,30 @@ public class EditorView extends ViewPart {
         movieTitle = new Label(detailedInformationComposite, SWT.WRAP);
         Font boldFont = new Font(window.getShell().getDisplay(), "", 14, SWT.BOLD);
         movieTitle.setFont(boldFont);
+        movieTitle.addMouseListener(new MouseAdapter() {
+            public void mouseDown(MouseEvent e) {
+                InputDialog changeMovieTitle = new InputDialog(window.getShell(), "Movie Title", "New movie title",
+                        movieTitle.getText(), new IInputValidator() {
+                            @Override
+                            public String isValid(String newText) {
+                                if (newText.trim().length() == 0) {
+                                    return "Empty value not allowed";
+                                }
+                                return null;
+                            }
+                        });
+                if (changeMovieTitle.open() == Window.OK) {
+                    movieTitle.setText(changeMovieTitle.getValue().trim());
+                }
+            };
+        });
+        movieTitle.addMouseMoveListener(new MouseMoveListener() {
+            @Override
+            public void mouseMove(MouseEvent e) {
+                movieTitle.setCursor(new Cursor(window.getShell().getDisplay(), SWT.CURSOR_HAND));
+            }
+        });
+
         GridData layoutData = new GridData();
         layoutData.horizontalSpan = 2;
 
@@ -365,12 +394,19 @@ public class EditorView extends ViewPart {
         addButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                InputDialog input = new InputDialog(window.getShell(), "Input", "New " + type, "", null);
+                InputDialog input = new InputDialog(window.getShell(), "Input", "New " + type, "",
+                        new IInputValidator() {
+                            @Override
+                            public String isValid(String newText) {
+                                if (newText.trim().length() == 0) {
+                                    return "Empty value not allowed";
+                                }
+                                return null;
+                            }
+                        });
                 if (input.open() == Window.OK) {
                     String value = input.getValue();
-                    if (value != null && value.trim().length() > 0) {
-                        list.add(value.trim());
-                    }
+                    list.add(value.trim());
                 }
             }
         });
