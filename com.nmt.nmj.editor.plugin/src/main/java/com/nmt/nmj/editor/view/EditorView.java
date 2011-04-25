@@ -287,10 +287,10 @@ public class EditorView extends ViewPart {
         Composite composite = new Composite(doubleColumnComposite, SWT.NONE);
         composite.setLayout(new GridLayout(2, false));
 
-        genresList = createListControl(composite, "Genres");
-        directorsList = createListControl(composite, "Directors");
-        castingList = createListControl(composite, "Casting");
-        keywordsList = createListControl(composite, "Keywords");
+        genresList = createListControl(composite, "Genres", "genre");
+        directorsList = createListControl(composite, "Directors", "director");
+        castingList = createListControl(composite, "Casting", "casting");
+        keywordsList = createListControl(composite, "Keywords", "keyword");
 
         Composite sinopsisComposite = new Composite(doubleColumnComposite, SWT.NONE);
         sinopsisComposite.setLayout(new GridLayout(2, false));
@@ -342,7 +342,7 @@ public class EditorView extends ViewPart {
         });
     }
 
-    private org.eclipse.swt.widgets.List createListControl(Composite parent, String label) {
+    private org.eclipse.swt.widgets.List createListControl(Composite parent, String label, final String type) {
         Composite composite = new Composite(parent, SWT.NONE);
         composite.setLayout(new GridLayout(3, false));
 
@@ -365,7 +365,7 @@ public class EditorView extends ViewPart {
         addButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                InputDialog input = new InputDialog(window.getShell(), "Input", "New value:", "", null);
+                InputDialog input = new InputDialog(window.getShell(), "Input", "New " + type, "", null);
                 if (input.open() == Window.OK) {
                     String value = input.getValue();
                     if (value != null && value.trim().length() > 0) {
