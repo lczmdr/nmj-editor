@@ -28,7 +28,8 @@ public class RefreshDatabaseAction extends Action {
         if (window != null) {
             String fileName = Application.getDatabaseService().getFileName();
             if (fileName == null || fileName.length() == 0) {
-                MessageDialog.openInformation(window.getShell(), "Information", "First open a database");
+                MessageDialog.openInformation(window.getShell(), "Information",
+                        "No current database connection. First open one!");
                 return;
             }
             try {
