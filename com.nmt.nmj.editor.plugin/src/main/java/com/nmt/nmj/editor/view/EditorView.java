@@ -1,5 +1,6 @@
 package com.nmt.nmj.editor.view;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -200,9 +201,13 @@ public class EditorView extends ViewPart {
                         fillInformationList(currentVideo.getCasting(), castingList);
                         fillInformationList(currentVideo.getKeywords(), keywordsList);
                         if (!currentVideo.getPosterImage().equals("")) {
-                            posterImage = new Image(window.getShell().getDisplay(), currentVideo.getPosterImage());
-                            posterImageCanvas.setVisible(true);
-                            posterImageCanvas.redraw();
+                            if (new File(currentVideo.getPosterImage()).exists()) {
+                                posterImage = new Image(window.getShell().getDisplay(), currentVideo.getPosterImage());
+                                posterImageCanvas.setVisible(true);
+                                posterImageCanvas.redraw();
+                            } else {
+                                posterImageCanvas.setVisible(false);
+                            }
                         } else {
                             posterImageCanvas.setVisible(false);
                         }
@@ -284,7 +289,7 @@ public class EditorView extends ViewPart {
         synopsisText.setLayoutData(new GridData(500, 70));
 
         posterImageCanvas = new Canvas(detailedInformationComposite, SWT.NO_REDRAW_RESIZE);
-        posterImageCanvas.setLayoutData(new GridData(130, 150));
+        posterImageCanvas.setLayoutData(new GridData(124, 183));
         posterImageCanvas.addPaintListener(new PaintListener() {
             public void paintControl(PaintEvent e) {
                 e.gc.drawImage(posterImage, 0, 0);
