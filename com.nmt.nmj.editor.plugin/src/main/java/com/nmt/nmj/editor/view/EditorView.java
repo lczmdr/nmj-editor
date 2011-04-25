@@ -86,14 +86,10 @@ public class EditorView extends ViewPart {
 
         window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 
-        GridLayout layout = new GridLayout();
-        layout.marginHeight = 0;
-        layout.marginWidth = 0;
-
         mainComposite = new Composite(parent, SWT.NONE);
         mainComposite.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL, GridData.VERTICAL_ALIGN_BEGINNING,
                 true, false));
-        layout = new GridLayout();
+        GridLayout layout = new GridLayout();
         layout.marginHeight = 5;
         layout.marginWidth = 10;
         layout.numColumns = 1;
@@ -299,9 +295,7 @@ public class EditorView extends ViewPart {
 
     private void createReleaseDateWidget(Composite parent) {
         Composite releaseDateContainer = new Composite(parent, SWT.NONE);
-        GridLayout layout = new GridLayout();
-        layout.numColumns = 3;
-        releaseDateContainer.setLayout(layout);
+        releaseDateContainer.setLayout(new GridLayout(3, false));
 
         Label l = new Label(releaseDateContainer, SWT.NONE);
         l.setText("Release Date:");
@@ -331,9 +325,7 @@ public class EditorView extends ViewPart {
 
     private org.eclipse.swt.widgets.List createListControl(Composite parent, String label) {
         Composite composite = new Composite(parent, SWT.NONE);
-        GridLayout layout = new GridLayout();
-        layout.numColumns = 3;
-        composite.setLayout(layout);
+        composite.setLayout(new GridLayout(3, false));
 
         Label l = new Label(composite, SWT.NONE);
         l.setText(label);
@@ -346,9 +338,7 @@ public class EditorView extends ViewPart {
         list.setLayoutData(gd);
 
         Composite buttons = new Composite(composite, SWT.NONE);
-        layout = new GridLayout();
-        layout.numColumns = 1;
-        buttons.setLayout(layout);
+        buttons.setLayout(new GridLayout(1, false));
 
         Button addButton = new Button(buttons, SWT.PUSH);
         Display display = buttons.getDisplay();
