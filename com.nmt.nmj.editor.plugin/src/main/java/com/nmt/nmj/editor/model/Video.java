@@ -17,6 +17,7 @@ public class Video {
     private double fps;
     private String synopsis;
     private String posterImage;
+    private String searchTitle;
     private List<String> genres = new ArrayList<String>();
     private List<String> directors = new ArrayList<String>();
     private List<String> casting = new ArrayList<String>();
@@ -116,6 +117,14 @@ public class Video {
 
     public void setPosterImage(String posterImage) {
         this.posterImage = posterImage;
+    }
+
+    public String getSearchTitle() {
+        return searchTitle;
+    }
+
+    public void setSearchTitle(String searchTitle) {
+        this.searchTitle = searchTitle;
     }
 
     public List<String> getGenres() {

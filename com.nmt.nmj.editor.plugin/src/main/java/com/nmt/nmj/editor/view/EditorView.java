@@ -82,6 +82,8 @@ public class EditorView extends ViewPart {
     private Image posterImage;
     private Canvas posterImageCanvas;
 
+    private Text searchTitle;
+
     public void createPartControl(Composite parent) {
 
         window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
@@ -186,6 +188,7 @@ public class EditorView extends ViewPart {
                         obtainExtraInformation(currentVideo);
                         movieTitle.setText(StringEscapeUtils.unescapeHtml("Movie: " + currentVideo.getTitle()));
                         movieTitle.pack();
+                        searchTitle.setText(StringEscapeUtils.unescapeHtml(currentVideo.getSearchTitle()));
                         releaseDateText.setText(currentVideo.getReleaseDate());
                         fileNameLabel.setText("Filename: " + currentVideo.getFileName());
                         fileNameLabel.pack();
@@ -241,7 +244,15 @@ public class EditorView extends ViewPart {
         movieTitle.setFont(boldFont);
         GridData layoutData = new GridData();
         layoutData.horizontalSpan = 2;
-        movieTitle.setLayoutData(layoutData);
+
+        Composite searchTitleComposite = new Composite(detailedInformationComposite, SWT.NONE);
+        searchTitleComposite.setLayout(new GridLayout(2, false));
+        Label l = new Label(searchTitleComposite, SWT.NONE);
+        l.setText("Search Title:");
+        searchTitle = new Text(searchTitleComposite, SWT.BORDER);
+        GridData gd = new GridData();
+        gd.widthHint = 150;
+        searchTitle.setLayoutData(gd);
 
         fileNameLabel = new Label(detailedInformationComposite, SWT.NONE);
         fileNameLabel.setText("Filename:");

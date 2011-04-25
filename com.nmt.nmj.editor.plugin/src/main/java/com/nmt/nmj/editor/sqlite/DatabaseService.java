@@ -56,6 +56,7 @@ public class DatabaseService {
                 Video video = new Video();
                 video.setId(rs.getInt("VIDEO_ID"));
                 video.setTitle(rs.getString("TITLE"));
+                video.setSearchTitle(rs.getString("SEARCH_TITLE"));
                 video.setReleaseDate(rs.getString("RELEASE_DATE"));
                 video.setRuntime(formatIntoHHMMSS(rs.getInt("RUNTIME")));
                 video.setRating(rs.getDouble("RATING"));
