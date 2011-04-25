@@ -69,6 +69,8 @@ public class EditorView extends ViewPart {
     private Label movieTitle;
     private Video currentVideo;
     private Text releaseDateText;
+    private Button tvSerieTypeButton;
+    private Button movieTypeButton;
     private org.eclipse.swt.widgets.List keywordsList;
     private org.eclipse.swt.widgets.List directorsList;
     private org.eclipse.swt.widgets.List genresList;
@@ -106,11 +108,11 @@ public class EditorView extends ViewPart {
 
         tabItem.setControl(createMovieTable(tabFolder));
 
-//        tabItem = new TabItem(tabFolder, SWT.NULL);
-//        tabItem.setText("TV Shows");
-//
-//        tabItem = new TabItem(tabFolder, SWT.NULL);
-//        tabItem.setText("Music");
+        // tabItem = new TabItem(tabFolder, SWT.NULL);
+        // tabItem.setText("TV Shows");
+        //
+        // tabItem = new TabItem(tabFolder, SWT.NULL);
+        // tabItem.setText("Music");
 
         createDetailedInformationGroup();
 
@@ -185,9 +187,11 @@ public class EditorView extends ViewPart {
                         movieTitle.setText(StringEscapeUtils.unescapeHtml("Movie: " + currentVideo.getTitle()));
                         movieTitle.pack();
                         releaseDateText.setText(currentVideo.getReleaseDate());
-                        fileNameLabel.setText(currentVideo.getFileName());
+                        fileNameLabel.setText("Filename: " + currentVideo.getFileName());
                         fileNameLabel.pack();
                         synopsisText.setText(StringEscapeUtils.unescapeHtml(currentVideo.getSynopsis()));
+                        movieTypeButton.setSelection(true);
+                        tvSerieTypeButton.setSelection(false);
                         fillInformationList(currentVideo.getGenres(), genresList);
                         fillInformationList(currentVideo.getDirectors(), directorsList);
                         fillInformationList(currentVideo.getCasting(), castingList);
@@ -215,13 +219,10 @@ public class EditorView extends ViewPart {
         Group detailedInformationGroup = new Group(mainComposite, SWT.SHADOW_ETCHED_IN);
         detailedInformationGroup.setText("Detailed information");
         detailedInformationGroup.setLayoutData(new GridData(GridData.FILL_BOTH));
-
-        GridLayout layout = new GridLayout();
-        layout.numColumns = 1;
-        detailedInformationGroup.setLayout(layout);
+        detailedInformationGroup.setLayout(new GridLayout(1, false));
 
         detailedInformationComposite = new Composite(detailedInformationGroup, SWT.NONE);
-        detailedInformationComposite.setLayout(layout);
+        detailedInformationComposite.setLayout(new GridLayout(1, false));
         detailedInformationComposite.setVisible(false);
 
         movieTitle = new Label(detailedInformationComposite, SWT.WRAP);
@@ -239,37 +240,40 @@ public class EditorView extends ViewPart {
         fileNameLabel.pack();
 
         Composite doubleColumnComposite = new Composite(detailedInformationComposite, SWT.NONE);
-        layout = new GridLayout();
-        layout.numColumns = 2;
-        doubleColumnComposite.setLayout(layout);
+        doubleColumnComposite.setLayout(new GridLayout(2, false));
 
-        createReleaseDateWidget(doubleColumnComposite);
+        Composite basicInformationComposite = new Composite(doubleColumnComposite, SWT.NONE);
+        basicInformationComposite.setLayout(new GridLayout(1, false));
+        createReleaseDateWidget(basicInformationComposite);
+
+        Group videoTypeGroup = new Group(basicInformationComposite, SWT.SHADOW_ETCHED_IN);
+        videoTypeGroup.setText("Video Type");
+        videoTypeGroup.setLayout(new GridLayout(2, false));
+
+        movieTypeButton = new Button(videoTypeGroup, SWT.RADIO);
+        movieTypeButton.setText("Movie");
+
+        tvSerieTypeButton = new Button(videoTypeGroup, SWT.RADIO);
+        tvSerieTypeButton.setText("TV Series");
 
         Composite composite = new Composite(doubleColumnComposite, SWT.NONE);
-        layout = new GridLayout();
-        layout.numColumns = 2;
-        composite.setLayout(layout);
+        composite.setLayout(new GridLayout(2, false));
 
         genresList = createListControl(composite, "Genres");
         directorsList = createListControl(composite, "Directors");
         castingList = createListControl(composite, "Casting");
         keywordsList = createListControl(composite, "Keywords");
 
-        // white space
-        new Label(doubleColumnComposite, SWT.NONE);
-
         Composite sinopsisComposite = new Composite(doubleColumnComposite, SWT.NONE);
-        layout = new GridLayout();
-        layout.numColumns = 2;
-        sinopsisComposite.setLayout(layout);
+        sinopsisComposite.setLayout(new GridLayout(2, false));
+        GridData gridData = new GridData();
+        gridData.horizontalSpan = 2;
+        sinopsisComposite.setLayoutData(gridData);
 
         Label label = new Label(sinopsisComposite, SWT.NONE);
         label.setText("Synopsis");
         synopsisText = new Text(sinopsisComposite, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
-        GridData gd = new GridData();
-        gd.widthHint = 300;
-        gd.heightHint = 70;
-        synopsisText.setLayoutData(gd);
+        synopsisText.setLayoutData(new GridData(500, 70));
     }
 
     private void createReleaseDateWidget(Composite parent) {
