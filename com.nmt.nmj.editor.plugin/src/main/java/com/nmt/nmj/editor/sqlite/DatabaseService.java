@@ -60,6 +60,8 @@ public class DatabaseService {
                 video.setReleaseDate(rs.getString("RELEASE_DATE"));
                 video.setRuntime(formatIntoHHMMSS(rs.getInt("RUNTIME")));
                 video.setRating(rs.getDouble("RATING"));
+                video.setCertification(rs.getString("PARENTAL_RATING"));
+                video.setImdb(rs.getString("TTID"));
                 video.setSystem(rs.getString("SYSTEM"));
                 video.setVideoCodec(rs.getString("VIDEO_CODEC"));
                 video.setResolution(rs.getString("RESOLUTION"));

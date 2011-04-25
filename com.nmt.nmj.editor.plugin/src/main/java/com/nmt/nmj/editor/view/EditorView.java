@@ -78,6 +78,8 @@ public class EditorView extends ViewPart {
     private Label movieTitle;
     private Text searchTitle;
     private Text releaseDateText;
+    private Text certificationMpaaText;
+    private Text imdbText;
     private Button tvSerieTypeButton;
     private Button movieTypeButton;
     private org.eclipse.swt.widgets.List keywordsList;
@@ -206,6 +208,8 @@ public class EditorView extends ViewPart {
                 fileNameLabel.setText("Filename: " + currentVideo.getFileName());
                 fileNameLabel.pack();
                 synopsisText.setText(StringEscapeUtils.unescapeHtml(currentVideo.getSynopsis()));
+                certificationMpaaText.setText(currentVideo.getCertification());
+                imdbText.setText(currentVideo.getImdb());
                 movieTypeButton.setSelection(true);
                 tvSerieTypeButton.setSelection(false);
                 fillInformationList(currentVideo.getGenres(), genresList);
@@ -301,7 +305,27 @@ public class EditorView extends ViewPart {
 
         Composite basicInformationComposite = new Composite(doubleColumnComposite, SWT.NONE);
         basicInformationComposite.setLayout(new GridLayout(1, false));
+
         createReleaseDateWidget(basicInformationComposite);
+
+        Composite certificationImdbComposite = new Composite(basicInformationComposite, SWT.NONE);
+        certificationImdbComposite.setLayout(new GridLayout(2, false));
+
+        l = new Label(certificationImdbComposite, SWT.NONE);
+        l.setText("Certification:");
+
+        certificationMpaaText = new Text(certificationImdbComposite, SWT.BORDER);
+        gd = new GridData();
+        gd.widthHint = 100;
+        certificationMpaaText.setLayoutData(gd);
+
+        l = new Label(certificationImdbComposite, SWT.NONE);
+        l.setText("IMDB:");
+
+        imdbText = new Text(certificationImdbComposite, SWT.BORDER);
+        gd = new GridData();
+        gd.widthHint = 100;
+        imdbText.setLayoutData(gd);
 
         Group videoTypeGroup = new Group(basicInformationComposite, SWT.SHADOW_ETCHED_IN);
         videoTypeGroup.setText("Video Type");

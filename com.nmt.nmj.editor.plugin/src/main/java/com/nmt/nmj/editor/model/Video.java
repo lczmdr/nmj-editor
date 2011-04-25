@@ -10,6 +10,8 @@ public class Video {
     private String releaseDate;
     private String runtime;
     private double rating;
+    private String certification;
+    private String imdb;
     private String system;
     private String videoCodec;
     private String resolution;
@@ -61,6 +63,22 @@ public class Video {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public String getCertification() {
+        return certification;
+    }
+
+    public void setCertification(String certification) {
+        this.certification = certification;
+    }
+
+    public String getImdb() {
+        return imdb;
+    }
+
+    public void setImdb(String imdb) {
+        this.imdb = imdb;
     }
 
     public String getSystem() {
