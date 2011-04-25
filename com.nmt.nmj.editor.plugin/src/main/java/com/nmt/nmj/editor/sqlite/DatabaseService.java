@@ -1,5 +1,6 @@
 package com.nmt.nmj.editor.sqlite;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,6 +46,7 @@ public class DatabaseService {
 
     public List<Video> getAllMovies() throws NmjEditorException {
         Connection connection = sqliteConnector.getConnection();
+        File file = new File(sqliteConnector.getFileName());
         List<Video> videos = new ArrayList<Video>();
         try {
             Statement statement = connection.createStatement();
@@ -62,12 +64,20 @@ public class DatabaseService {
                 video.setResolution(rs.getString("RESOLUTION"));
                 video.setFileName(rs.getString("PATH"));
                 video.setFps(rs.getDouble("FPS"));
+                video.setPosterImage(createPosterFullPath(file, rs.getString("DETAIL_POSTER")));
                 videos.add(video);
             }
         } catch (SQLException e) {
             throw new NmjEditorException("Error reading movies from database");
         }
         return videos;
+    }
+
+    private String createPosterFullPath(File file, String posterImage) throws SQLException {
+        if (posterImage == null || posterImage.equals("")) {
+            return "";
+        }
+        return file.getParent() + posterImage.replace("nmj_database", "");
     }
 
     public void getDetailedInformation(Video video) throws NmjEditorException {

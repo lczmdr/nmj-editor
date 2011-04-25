@@ -6,20 +6,21 @@ import java.util.List;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -77,6 +78,8 @@ public class EditorView extends ViewPart {
     private org.eclipse.swt.widgets.List castingList;
     private Label fileNameLabel;
     private Text synopsisText;
+    private Image posterImage;
+    private Canvas posterImageCanvas;
 
     public void createPartControl(Composite parent) {
 
@@ -196,6 +199,13 @@ public class EditorView extends ViewPart {
                         fillInformationList(currentVideo.getDirectors(), directorsList);
                         fillInformationList(currentVideo.getCasting(), castingList);
                         fillInformationList(currentVideo.getKeywords(), keywordsList);
+                        if (!currentVideo.getPosterImage().equals("")) {
+                            posterImage = new Image(window.getShell().getDisplay(), currentVideo.getPosterImage());
+                            posterImageCanvas.setVisible(true);
+                            posterImageCanvas.redraw();
+                        } else {
+                            posterImageCanvas.setVisible(false);
+                        }
                         detailedInformationComposite.setVisible(true);
                         detailedInformationComposite.pack();
                     } catch (NmjEditorException e1) {
@@ -222,22 +232,20 @@ public class EditorView extends ViewPart {
         detailedInformationGroup.setLayout(new GridLayout(1, false));
 
         detailedInformationComposite = new Composite(detailedInformationGroup, SWT.NONE);
-        detailedInformationComposite.setLayout(new GridLayout(1, false));
+        detailedInformationComposite.setLayout(new GridLayout(2, false));
         detailedInformationComposite.setVisible(false);
 
         movieTitle = new Label(detailedInformationComposite, SWT.WRAP);
-        Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);
-        if (boldFont.getFontData().length == 1) {
-            // TODO: font size not working
-            FontData fontData = boldFont.getFontData()[0];
-            fontData.setHeight(16);
-            boldFont = new Font(window.getShell().getDisplay(), boldFont.getFontData()[0]);
-        }
+        Font boldFont = new Font(window.getShell().getDisplay(), "", 14, SWT.BOLD);
         movieTitle.setFont(boldFont);
+        GridData layoutData = new GridData();
+        layoutData.horizontalSpan = 2;
+        movieTitle.setLayoutData(layoutData);
 
         fileNameLabel = new Label(detailedInformationComposite, SWT.NONE);
         fileNameLabel.setText("Filename:");
         fileNameLabel.pack();
+        fileNameLabel.setLayoutData(layoutData);
 
         Composite doubleColumnComposite = new Composite(detailedInformationComposite, SWT.NONE);
         doubleColumnComposite.setLayout(new GridLayout(2, false));
@@ -274,6 +282,14 @@ public class EditorView extends ViewPart {
         label.setText("Synopsis");
         synopsisText = new Text(sinopsisComposite, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         synopsisText.setLayoutData(new GridData(500, 70));
+
+        posterImageCanvas = new Canvas(detailedInformationComposite, SWT.NO_REDRAW_RESIZE);
+        posterImageCanvas.setLayoutData(new GridData(130, 150));
+        posterImageCanvas.addPaintListener(new PaintListener() {
+            public void paintControl(PaintEvent e) {
+                e.gc.drawImage(posterImage, 0, 0);
+            }
+        });
     }
 
     private void createReleaseDateWidget(Composite parent) {
