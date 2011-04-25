@@ -68,8 +68,10 @@ public class EditorView extends ViewPart {
     private TableViewer movieTableViewer;
     private Label informationLabel;
     private MovieSorter movieTableSorter;
-    private Label movieTitle;
     private Video currentVideo;
+
+    private Label movieTitle;
+    private Text searchTitle;
     private Text releaseDateText;
     private Button tvSerieTypeButton;
     private Button movieTypeButton;
@@ -81,8 +83,6 @@ public class EditorView extends ViewPart {
     private Text synopsisText;
     private Image posterImage;
     private Canvas posterImageCanvas;
-
-    private Text searchTitle;
 
     public void createPartControl(Composite parent) {
 
@@ -181,53 +181,60 @@ public class EditorView extends ViewPart {
         movieTable.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                IStructuredSelection selection = (IStructuredSelection) movieTableViewer.getSelection();
-                currentVideo = (Video) selection.getFirstElement();
-                if (currentVideo != null) {
-                    try {
-                        obtainExtraInformation(currentVideo);
-                        movieTitle.setText(StringEscapeUtils.unescapeHtml("Movie: " + currentVideo.getTitle()));
-                        movieTitle.pack();
-                        searchTitle.setText(StringEscapeUtils.unescapeHtml(currentVideo.getSearchTitle()));
-                        releaseDateText.setText(currentVideo.getReleaseDate());
-                        fileNameLabel.setText("Filename: " + currentVideo.getFileName());
-                        fileNameLabel.pack();
-                        synopsisText.setText(StringEscapeUtils.unescapeHtml(currentVideo.getSynopsis()));
-                        movieTypeButton.setSelection(true);
-                        tvSerieTypeButton.setSelection(false);
-                        fillInformationList(currentVideo.getGenres(), genresList);
-                        fillInformationList(currentVideo.getDirectors(), directorsList);
-                        fillInformationList(currentVideo.getCasting(), castingList);
-                        fillInformationList(currentVideo.getKeywords(), keywordsList);
-                        if (!currentVideo.getPosterImage().equals("")) {
-                            if (new File(currentVideo.getPosterImage()).exists()) {
-                                posterImage = new Image(window.getShell().getDisplay(), currentVideo.getPosterImage());
-                                posterImageCanvas.setVisible(true);
-                                posterImageCanvas.redraw();
-                            } else {
-                                posterImage = new Image(window.getShell().getDisplay(), "no-poster.jpg");
-                                posterImageCanvas.setVisible(true);
-                            }
-                        } else {
-                            posterImageCanvas.setVisible(false);
-                        }
-                        detailedInformationComposite.setVisible(true);
-                        detailedInformationComposite.pack();
-                    } catch (NmjEditorException e1) {
-                        MessageDialog.openError(window.getShell(), "Error", e1.getMessage());
-                    }
-                }
-            }
-
-            private void fillInformationList(List<String> information, org.eclipse.swt.widgets.List informationList) {
-                informationList.removeAll();
-                for (String info : information) {
-                    informationList.add(info);
-                }
+                refreshSelectedMovieInformation();
             }
         });
 
         return composite;
+    }
+
+    private void refreshSelectedMovieInformation() {
+        IStructuredSelection selection = (IStructuredSelection) movieTableViewer.getSelection();
+        currentVideo = (Video) selection.getFirstElement();
+        if (currentVideo != null) {
+            try {
+                obtainExtraInformation(currentVideo);
+                movieTitle.setText(StringEscapeUtils.unescapeHtml("Movie: " + currentVideo.getTitle()));
+                movieTitle.pack();
+                searchTitle.setText(StringEscapeUtils.unescapeHtml(currentVideo.getSearchTitle()));
+                releaseDateText.setText(currentVideo.getReleaseDate());
+                fileNameLabel.setText("Filename: " + currentVideo.getFileName());
+                fileNameLabel.pack();
+                synopsisText.setText(StringEscapeUtils.unescapeHtml(currentVideo.getSynopsis()));
+                movieTypeButton.setSelection(true);
+                tvSerieTypeButton.setSelection(false);
+                fillInformationList(currentVideo.getGenres(), genresList);
+                fillInformationList(currentVideo.getDirectors(), directorsList);
+                fillInformationList(currentVideo.getCasting(), castingList);
+                fillInformationList(currentVideo.getKeywords(), keywordsList);
+                if (!currentVideo.getPosterImage().equals("")) {
+                    if (new File(currentVideo.getPosterImage()).exists()) {
+                        posterImage = new Image(window.getShell().getDisplay(), currentVideo.getPosterImage());
+                        posterImageCanvas.setVisible(true);
+                        posterImageCanvas.redraw();
+                    } else {
+                        posterImage = new Image(window.getShell().getDisplay(),
+                                EditorView.class.getResourceAsStream("/icons/no-poster.jpg"));
+                        posterImageCanvas.setVisible(true);
+                    }
+                } else {
+                    posterImage = new Image(window.getShell().getDisplay(),
+                            EditorView.class.getResourceAsStream("/icons/no-poster.jpg"));
+                    posterImageCanvas.setVisible(true);
+                }
+                detailedInformationComposite.setVisible(true);
+                detailedInformationComposite.pack();
+            } catch (NmjEditorException e1) {
+                MessageDialog.openError(window.getShell(), "Error", e1.getMessage());
+            }
+        }
+    }
+
+    private void fillInformationList(List<String> information, org.eclipse.swt.widgets.List informationList) {
+        informationList.removeAll();
+        for (String info : information) {
+            informationList.add(info);
+        }
     }
 
     private void createDetailedInformationGroup() {
@@ -401,6 +408,10 @@ public class EditorView extends ViewPart {
                 this.movieTableViewer.setInput(videos);
                 mainComposite.layout();
                 getViewSite().getActionBars().getStatusLineManager().setMessage(videos.size() + " movies");
+                if (movieTableViewer.getTable().getItemCount() > 0) {
+                    movieTableViewer.getTable().select(0);
+                    refreshSelectedMovieInformation();
+                }
             } else {
                 informationLabel.setText("Current Database: ");
                 movieTableViewer.setInput(null);
