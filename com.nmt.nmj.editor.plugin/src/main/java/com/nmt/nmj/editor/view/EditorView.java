@@ -259,6 +259,7 @@ public class EditorView extends ViewPart {
         movieTitle = new Label(detailedInformationComposite, SWT.WRAP);
         Font boldFont = new Font(window.getShell().getDisplay(), "", 14, SWT.BOLD);
         movieTitle.setFont(boldFont);
+        movieTitle.setToolTipText("Click to change");
         movieTitle.addMouseListener(new MouseAdapter() {
             public void mouseDown(MouseEvent e) {
                 InputDialog changeMovieTitle = new InputDialog(window.getShell(), "Movie Title", "New movie title",
