@@ -28,7 +28,7 @@ public class RefreshDatabaseAction extends Action {
         if (window != null) {
             String fileName = Application.getDatabaseService().getFileName();
             if (fileName == null || fileName.length() == 0) {
-                MessageDialog.openError(window.getShell(), "Error", "Non active database connection");
+                MessageDialog.openInformation(window.getShell(), "Information", "First open a database");
                 return;
             }
             try {
