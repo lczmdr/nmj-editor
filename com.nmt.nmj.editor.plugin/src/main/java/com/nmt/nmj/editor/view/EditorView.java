@@ -91,6 +91,8 @@ public class EditorView extends ViewPart {
     private Image posterImage;
     private Canvas posterImageCanvas;
 
+    private Button updateMovieButton;
+
     public void createPartControl(Composite parent) {
 
         window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
@@ -388,14 +390,10 @@ public class EditorView extends ViewPart {
         synopsisText = new Text(sinopsisComposite, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         synopsisText.setLayoutData(new GridData(500, 70));
 
-        // posterImageCanvas = new Canvas(detailedInformationComposite,
-        // SWT.NO_REDRAW_RESIZE);
-        // posterImageCanvas.setLayoutData(new GridData(124, 183));
-        // posterImageCanvas.addPaintListener(new PaintListener() {
-        // public void paintControl(PaintEvent e) {
-        // e.gc.drawImage(posterImage, 0, 0);
-        // }
-        // });
+        updateMovieButton = new Button(detailedInformationComposite, SWT.PUSH);
+        updateMovieButton.setImage(new Image(window.getShell().getDisplay(), EditorView.class
+                .getResourceAsStream("/icons/save.png")));
+        updateMovieButton.setText("Save");
 
     }
 
