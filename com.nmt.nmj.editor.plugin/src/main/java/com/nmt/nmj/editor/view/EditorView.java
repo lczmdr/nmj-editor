@@ -109,7 +109,7 @@ public class EditorView extends ViewPart {
 
         TabFolder tabFolder = new TabFolder(mainComposite, SWT.BORDER);
         GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-        gd.heightHint = 260;
+        gd.heightHint = 220;
         tabFolder.setLayoutData(gd);
 
         TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
@@ -284,9 +284,6 @@ public class EditorView extends ViewPart {
             }
         });
 
-        GridData layoutData = new GridData();
-        layoutData.horizontalSpan = 2;
-
         Composite searchTitleComposite = new Composite(detailedInformationComposite, SWT.NONE);
         searchTitleComposite.setLayout(new GridLayout(2, false));
         Label l = new Label(searchTitleComposite, SWT.NONE);
@@ -299,7 +296,41 @@ public class EditorView extends ViewPart {
         fileNameLabel = new Label(detailedInformationComposite, SWT.NONE);
         fileNameLabel.setText("Filename:");
         fileNameLabel.pack();
-        fileNameLabel.setLayoutData(layoutData);
+
+        TabFolder tabFolder = new TabFolder(detailedInformationComposite, SWT.BORDER);
+        gd = new GridData(GridData.FILL_HORIZONTAL);
+        gd.heightHint = 240;
+        gd.verticalSpan = 2;
+        tabFolder.setLayoutData(gd);
+
+        TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
+        tabItem.setText("Poster");
+
+        Composite imageCanvasComposite = new Composite(tabFolder, SWT.BORDER);
+        imageCanvasComposite.setLayout(new GridLayout(1, false));
+        gd = new GridData(GridData.FILL_HORIZONTAL);
+        gd.heightHint = 180;
+        gd.widthHint = 140;
+        imageCanvasComposite.setLayoutData(gd);
+
+        posterImageCanvas = new Canvas(imageCanvasComposite, SWT.NO_REDRAW_RESIZE);
+        posterImageCanvas.setLayoutData(new GridData(124, 183));
+        posterImageCanvas.addPaintListener(new PaintListener() {
+            public void paintControl(PaintEvent e) {
+                e.gc.drawImage(posterImage, 0, 0);
+            }
+        });
+
+        Button changeImageButton = new Button(imageCanvasComposite, SWT.PUSH);
+        changeImageButton.setText("Change picture");
+
+        tabItem.setControl(imageCanvasComposite);
+
+        tabItem = new TabItem(tabFolder, SWT.NULL);
+        tabItem.setText("Thumbnail");
+
+        tabItem = new TabItem(tabFolder, SWT.NULL);
+        tabItem.setText("Wallpaper");
 
         Composite doubleColumnComposite = new Composite(detailedInformationComposite, SWT.NONE);
         doubleColumnComposite.setLayout(new GridLayout(2, false));
@@ -357,13 +388,15 @@ public class EditorView extends ViewPart {
         synopsisText = new Text(sinopsisComposite, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         synopsisText.setLayoutData(new GridData(500, 70));
 
-        posterImageCanvas = new Canvas(detailedInformationComposite, SWT.NO_REDRAW_RESIZE);
-        posterImageCanvas.setLayoutData(new GridData(124, 183));
-        posterImageCanvas.addPaintListener(new PaintListener() {
-            public void paintControl(PaintEvent e) {
-                e.gc.drawImage(posterImage, 0, 0);
-            }
-        });
+        // posterImageCanvas = new Canvas(detailedInformationComposite,
+        // SWT.NO_REDRAW_RESIZE);
+        // posterImageCanvas.setLayoutData(new GridData(124, 183));
+        // posterImageCanvas.addPaintListener(new PaintListener() {
+        // public void paintControl(PaintEvent e) {
+        // e.gc.drawImage(posterImage, 0, 0);
+        // }
+        // });
+
     }
 
     private void createReleaseDateWidget(Composite parent) {
