@@ -119,11 +119,11 @@ public class EditorView extends ViewPart {
 
         tabItem.setControl(createMovieTable(tabFolder));
 
-        // tabItem = new TabItem(tabFolder, SWT.NULL);
-        // tabItem.setText("TV Shows");
-        //
-        // tabItem = new TabItem(tabFolder, SWT.NULL);
-        // tabItem.setText("Music");
+        tabItem = new TabItem(tabFolder, SWT.NULL);
+        tabItem.setText("TV Shows");
+
+        tabItem = new TabItem(tabFolder, SWT.NULL);
+        tabItem.setText("Music");
 
         createDetailedInformationGroup();
 
@@ -258,7 +258,11 @@ public class EditorView extends ViewPart {
         detailedInformationComposite.setLayout(new GridLayout(2, false));
         detailedInformationComposite.setVisible(false);
 
+        GridData gd = new GridData();
+        gd.horizontalSpan = 2;
+
         movieTitle = new Label(detailedInformationComposite, SWT.WRAP);
+        movieTitle.setLayoutData(gd);
         Font boldFont = new Font(window.getShell().getDisplay(), "", 14, SWT.BOLD);
         movieTitle.setFont(boldFont);
         movieTitle.setToolTipText("Click to change");
@@ -286,18 +290,11 @@ public class EditorView extends ViewPart {
             }
         });
 
-        Composite searchTitleComposite = new Composite(detailedInformationComposite, SWT.NONE);
-        searchTitleComposite.setLayout(new GridLayout(2, false));
-        Label l = new Label(searchTitleComposite, SWT.NONE);
-        l.setText("Search Title:");
-        searchTitle = new Text(searchTitleComposite, SWT.BORDER);
-        GridData gd = new GridData();
-        gd.widthHint = 150;
-        searchTitle.setLayoutData(gd);
-
-        fileNameLabel = new Label(detailedInformationComposite, SWT.NONE);
+        fileNameLabel = new Label(detailedInformationComposite, SWT.WRAP);
         fileNameLabel.setText("Filename:");
         fileNameLabel.pack();
+
+        fileNameLabel.setLayoutData(gd);
 
         TabFolder tabFolder = new TabFolder(detailedInformationComposite, SWT.BORDER);
         gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -345,7 +342,7 @@ public class EditorView extends ViewPart {
         Composite certificationImdbComposite = new Composite(basicInformationComposite, SWT.NONE);
         certificationImdbComposite.setLayout(new GridLayout(2, false));
 
-        l = new Label(certificationImdbComposite, SWT.NONE);
+        Label l = new Label(certificationImdbComposite, SWT.NONE);
         l.setText("Certification:");
 
         certificationMpaaText = new Text(certificationImdbComposite, SWT.BORDER);
@@ -360,6 +357,13 @@ public class EditorView extends ViewPart {
         gd = new GridData();
         gd.widthHint = 100;
         imdbText.setLayoutData(gd);
+
+        l = new Label(certificationImdbComposite, SWT.NONE);
+        l.setText("Search Title:");
+        searchTitle = new Text(certificationImdbComposite, SWT.BORDER);
+        gd = new GridData();
+        gd.widthHint = 150;
+        searchTitle.setLayoutData(gd);
 
         Group videoTypeGroup = new Group(basicInformationComposite, SWT.SHADOW_ETCHED_IN);
         videoTypeGroup.setText("Video Type");
