@@ -26,9 +26,39 @@
             name="nmj.editor.openDatabase">
       </command>
       <command
+            id="nmj.editor.refreshDatabase"
+            name="nmj.editor.refreshDatabase">
+      </command>
+      <command
             id="nmj.editor.closeDatabase"
             name="nmj.editor.closeDatabase">
       </command>
+      <command
+            id="nmj.editor.listView"
+            name="nmj.editor.listView">
+      </command>
+      <command
+            id="nmj.editor.wallView"
+            name="nmj.editor.wallView">
+      </command>
+      <keyBinding
+            command="nmj.editor.openDatabase"
+            commandId="nmj.editor.openDatabase"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+O">
+      </keyBinding>
+            <keyBinding
+            command="nmj.editor.listView"
+            commandId="nmj.editor.listView"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+L">
+      </keyBinding>
+            <keyBinding
+            command="nmj.editor.wallView"
+            commandId="nmj.editor.wallView"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+W">
+      </keyBinding>
    </extension>
    <extension
          point="org.eclipse.ui.views">

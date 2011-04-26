@@ -19,8 +19,8 @@ public class RefreshDatabaseAction extends Action {
         this.window = window;
         setText(label);
         setToolTipText(label);
-        setId(com.nmt.nmj.editor.ICommandIds.CMD_OPEN_DATABASE);
-        setActionDefinitionId(ICommandIds.CMD_OPEN_DATABASE);
+        setId(com.nmt.nmj.editor.ICommandIds.CMD_REFRESH_DATABASE);
+        setActionDefinitionId(ICommandIds.CMD_REFRESH_DATABASE);
         setImageDescriptor(ImageDescriptor.createFromFile(RefreshDatabaseAction.class, "/icons/refresh.png"));
     }
 

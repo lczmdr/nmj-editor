@@ -14,8 +14,8 @@ public class ListViewAction extends Action {
         this.window = window;
         setText(label);
         setToolTipText(label);
-        setId(com.nmt.nmj.editor.ICommandIds.CMD_CLOSE_DATABASE);
-        setActionDefinitionId(ICommandIds.CMD_CLOSE_DATABASE);
+        setId(com.nmt.nmj.editor.ICommandIds.CMD_LIST_VIEW);
+        setActionDefinitionId(ICommandIds.CMD_LIST_VIEW);
     }
 
     public void run() {
