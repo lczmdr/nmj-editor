@@ -296,41 +296,6 @@ public class EditorView extends ViewPart {
 
         fileNameLabel.setLayoutData(gd);
 
-        TabFolder tabFolder = new TabFolder(detailedInformationComposite, SWT.BORDER);
-        gd = new GridData(GridData.FILL_HORIZONTAL);
-        gd.heightHint = 240;
-        gd.verticalSpan = 2;
-        tabFolder.setLayoutData(gd);
-
-        TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
-        tabItem.setText("Poster");
-
-        Composite imageCanvasComposite = new Composite(tabFolder, SWT.BORDER);
-        imageCanvasComposite.setLayout(new GridLayout(1, false));
-        gd = new GridData(GridData.FILL_HORIZONTAL);
-        gd.heightHint = 180;
-        gd.widthHint = 140;
-        imageCanvasComposite.setLayoutData(gd);
-
-        posterImageCanvas = new Canvas(imageCanvasComposite, SWT.NO_REDRAW_RESIZE);
-        posterImageCanvas.setLayoutData(new GridData(124, 183));
-        posterImageCanvas.addPaintListener(new PaintListener() {
-            public void paintControl(PaintEvent e) {
-                e.gc.drawImage(posterImage, 0, 0);
-            }
-        });
-
-        Button changeImageButton = new Button(imageCanvasComposite, SWT.PUSH);
-        changeImageButton.setText("Change picture");
-
-        tabItem.setControl(imageCanvasComposite);
-
-        tabItem = new TabItem(tabFolder, SWT.NULL);
-        tabItem.setText("Thumbnail");
-
-        tabItem = new TabItem(tabFolder, SWT.NULL);
-        tabItem.setText("Wallpaper");
-
         Composite doubleColumnComposite = new Composite(detailedInformationComposite, SWT.NONE);
         doubleColumnComposite.setLayout(new GridLayout(2, false));
 
@@ -393,6 +358,43 @@ public class EditorView extends ViewPart {
         label.setText("Synopsis");
         synopsisText = new Text(sinopsisComposite, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         synopsisText.setLayoutData(new GridData(500, 70));
+
+        /***********************************/
+
+        TabFolder tabFolder = new TabFolder(detailedInformationComposite, SWT.BORDER);
+        gd = new GridData(GridData.FILL_HORIZONTAL);
+        gd.heightHint = 240;
+        gd.verticalSpan = 2;
+        tabFolder.setLayoutData(gd);
+
+        TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
+        tabItem.setText("Poster");
+
+        Composite imageCanvasComposite = new Composite(tabFolder, SWT.BORDER);
+        imageCanvasComposite.setLayout(new GridLayout(1, false));
+        gd = new GridData(GridData.FILL_HORIZONTAL);
+        gd.heightHint = 180;
+        gd.widthHint = 140;
+        imageCanvasComposite.setLayoutData(gd);
+
+        posterImageCanvas = new Canvas(imageCanvasComposite, SWT.NO_REDRAW_RESIZE);
+        posterImageCanvas.setLayoutData(new GridData(124, 183));
+        posterImageCanvas.addPaintListener(new PaintListener() {
+            public void paintControl(PaintEvent e) {
+                e.gc.drawImage(posterImage, 0, 0);
+            }
+        });
+
+        Button changeImageButton = new Button(imageCanvasComposite, SWT.PUSH);
+        changeImageButton.setText("Change picture");
+
+        tabItem.setControl(imageCanvasComposite);
+
+        tabItem = new TabItem(tabFolder, SWT.NULL);
+        tabItem.setText("Thumbnail");
+
+        tabItem = new TabItem(tabFolder, SWT.NULL);
+        tabItem.setText("Wallpaper");
 
         updateMovieButton = new Button(detailedInformationComposite, SWT.PUSH);
         updateMovieButton.setImage(new Image(window.getShell().getDisplay(), EditorView.class
