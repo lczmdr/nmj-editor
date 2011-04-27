@@ -71,7 +71,7 @@ public class MovieInformationComposite extends Composite {
         detailedInformationGroup.setLayout(new GridLayout(1, false));
 
         detailedInformationComposite = new Composite(detailedInformationGroup, SWT.NONE);
-        detailedInformationComposite.setLayout(new GridLayout(2, false));
+        detailedInformationComposite.setLayout(new GridLayout(3, false));
         detailedInformationComposite.setVisible(false);
 
         GridData gd = new GridData();
@@ -106,10 +106,18 @@ public class MovieInformationComposite extends Composite {
             }
         });
 
+        updateMovieButton = new Button(detailedInformationComposite, SWT.PUSH);
+        updateMovieButton.setImage(new Image(window.getShell().getDisplay(), ListView.class
+                .getResourceAsStream("/icons/save.png")));
+        updateMovieButton.setText("Save");
+        
+        
         fileNameLabel = new Label(detailedInformationComposite, SWT.WRAP);
         fileNameLabel.setText("Filename:");
         fileNameLabel.pack();
 
+        gd = new GridData();
+        gd.horizontalSpan = 3;
         fileNameLabel.setLayoutData(gd);
 
         Composite doubleColumnComposite = new Composite(detailedInformationComposite, SWT.NONE);
@@ -216,10 +224,6 @@ public class MovieInformationComposite extends Composite {
         tabItem = new TabItem(tabFolder, SWT.NULL);
         tabItem.setText("Wallpaper");
 
-        updateMovieButton = new Button(detailedInformationComposite, SWT.PUSH);
-        updateMovieButton.setImage(new Image(window.getShell().getDisplay(), ListView.class
-                .getResourceAsStream("/icons/save.png")));
-        updateMovieButton.setText("Save");
     }
 
     private org.eclipse.swt.widgets.List createListControl(Composite parent, String label, final String type) {
