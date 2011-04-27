@@ -9,7 +9,7 @@ import org.eclipse.ui.PartInitException;
 import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.ICommandIds;
 import com.nmt.nmj.editor.exception.NmjEditorException;
-import com.nmt.nmj.editor.view.EditorView;
+import com.nmt.nmj.editor.view.ListView;
 
 public class RefreshDatabaseAction extends Action {
 
@@ -39,7 +39,7 @@ public class RefreshDatabaseAction extends Action {
                 return;
             }
             try {
-                EditorView editorView = (EditorView) window.getActivePage().showView(EditorView.ID);
+                ListView editorView = (ListView) window.getActivePage().showView(ListView.ID);
                 editorView.refresh();
             } catch (PartInitException e) {
                 MessageDialog.openError(window.getShell(), "Error", "Editor view is missing");

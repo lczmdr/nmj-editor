@@ -3,8 +3,13 @@ package com.nmt.nmj.editor.action;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.WorkbenchException;
 
 import com.nmt.nmj.editor.ICommandIds;
+import com.nmt.nmj.editor.perspective.WallPerspective;
+import com.nmt.nmj.editor.view.WallView;
 
 public class WallViewAction extends Action {
 
@@ -19,6 +24,16 @@ public class WallViewAction extends Action {
     }
 
     public void run() {
-        MessageDialog.openError(window.getShell(), "Error", "Wall view");
+        try {
+            PlatformUI.getWorkbench().showPerspective(WallPerspective.ID, window);
+            try {
+                WallView wallView = (WallView) window.getActivePage().showView(WallView.ID);
+                wallView.refresh();
+            } catch (PartInitException e) {
+                MessageDialog.openError(window.getShell(), "Error", "Wall view is missing");
+            }
+        } catch (WorkbenchException e) {
+            MessageDialog.openError(window.getShell(), "Error", "Error opening perspective:" + e.getMessage());
+        }
     }
 }

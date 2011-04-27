@@ -28,8 +28,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     private Action openDatabaseAction;
     private Action refreshDatabaseAction;
     private Action closeDatabaseAction;
-    private Action wallViewAction;
     private Action listViewAction;
+    private Action wallViewAction;
 
     public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
         super(configurer);
@@ -48,22 +48,22 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         refreshDatabaseAction = new RefreshDatabaseAction(window, "Refresh");
         register(refreshDatabaseAction);
 
-        wallViewAction = new WallViewAction(window, "Wall");
-        register(wallViewAction);
-
-        listViewAction = new ListViewAction(window, "List");
-        register(listViewAction);
-
         closeDatabaseAction = new CloseDatabaseAction(window, "Close Database");
         register(closeDatabaseAction);
+
+        listViewAction = new ListViewAction(window, "List view");
+        register(listViewAction);
+
+        wallViewAction = new WallViewAction(window, "Wall view");
+        register(wallViewAction);
     }
 
     protected void fillMenuBar(IMenuManager menuBar) {
         MenuManager databaseMenu = new MenuManager("&Database");
-        MenuManager viewMenu = new MenuManager("&View as...");
+        MenuManager layoutMenu = new MenuManager("Switch view", "layout");
 
         menuBar.add(databaseMenu);
-        menuBar.add(viewMenu);
+        menuBar.add(layoutMenu);
 
         databaseMenu.add(openDatabaseAction);
         databaseMenu.add(refreshDatabaseAction);
@@ -71,8 +71,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         databaseMenu.add(new Separator());
         databaseMenu.add(exitAction);
 
-        viewMenu.add(listViewAction);
-        viewMenu.add(wallViewAction);
+        layoutMenu.add(listViewAction);
+        layoutMenu.add(wallViewAction);
     }
 
     protected void fillCoolBar(ICoolBarManager coolBar) {

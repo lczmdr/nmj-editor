@@ -14,9 +14,14 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="NMJ Editor Perspective"
-            class="com.nmt.nmj.editor.perspective.Perspective"
-            id="com.nmt.nmj.editor.plugin.perspective">
+            name="List"
+            class="com.nmt.nmj.editor.perspective.ListPerspective"
+            id="com.nmt.nmj.editor.plugin.listPerspective">
+      </perspective>
+      <perspective
+            name="Wall"
+            class="com.nmt.nmj.editor.perspective.WallPerspective"
+            id="com.nmt.nmj.editor.plugin.wallPerspective">
       </perspective>
    </extension>
    <extension
@@ -47,25 +52,37 @@
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
             keySequence="Ctrl+O">
       </keyBinding>
-            <keyBinding
+      <keyBinding
+            command="org.eclipse.ui.file.exit"
+            commandId="org.eclipse.ui.file.exit"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Q">
+      </keyBinding>
+      <keyBinding
             command="nmj.editor.listView"
             commandId="nmj.editor.listView"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+L">
+            keySequence="Ctrl+1">
       </keyBinding>
-            <keyBinding
+      <keyBinding
             command="nmj.editor.wallView"
             commandId="nmj.editor.wallView"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+W">
+            keySequence="Ctrl+2">
       </keyBinding>
    </extension>
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="com.nmt.nmj.editor.view.EditorView"
-            id="com.nmt.nmj.editor.editorView"
-            name="Editor View"
+            class="com.nmt.nmj.editor.view.ListView"
+            id="com.nmt.nmj.editor.listView"
+            name="List View"
+            restorable="true">
+      </view>
+      <view
+            class="com.nmt.nmj.editor.view.WallView"
+            id="com.nmt.nmj.editor.wallView"
+            name="Wall View"
             restorable="true">
       </view>
    </extension>
@@ -74,7 +91,11 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="com.nmt.nmj.plugin.application"
-            name="rcp">
+            name="nmj-editor">
+         <property
+               name="appName"
+               value="nmj-editor">
+         </property>
       </product>
    </extension>
 

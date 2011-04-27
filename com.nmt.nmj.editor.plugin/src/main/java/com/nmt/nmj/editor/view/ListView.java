@@ -50,9 +50,9 @@ import com.nmt.nmj.editor.model.Video;
 import com.nmt.nmj.editor.view.provider.MovieContentProvider;
 import com.nmt.nmj.editor.view.provider.MovieLabelProvider;
 
-public class EditorView extends ViewPart {
+public class ListView extends ViewPart {
 
-    public static final String ID = "com.nmt.nmj.editor.editorView";
+    public static final String ID = "com.nmt.nmj.editor.listView";
 
     private final String VIDEO_ID = "ID";
     private final String VIDEO_TITLE = "Name";
@@ -225,12 +225,12 @@ public class EditorView extends ViewPart {
                         posterImageCanvas.redraw();
                     } else {
                         posterImage = new Image(window.getShell().getDisplay(),
-                                EditorView.class.getResourceAsStream("/icons/no-poster.jpg"));
+                                ListView.class.getResourceAsStream("/icons/no-poster.jpg"));
                         posterImageCanvas.setVisible(true);
                     }
                 } else {
                     posterImage = new Image(window.getShell().getDisplay(),
-                            EditorView.class.getResourceAsStream("/icons/no-poster.jpg"));
+                            ListView.class.getResourceAsStream("/icons/no-poster.jpg"));
                     posterImageCanvas.setVisible(true);
                 }
                 detailedInformationComposite.setVisible(true);
@@ -359,8 +359,6 @@ public class EditorView extends ViewPart {
         synopsisText = new Text(sinopsisComposite, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         synopsisText.setLayoutData(new GridData(500, 70));
 
-        /***********************************/
-
         TabFolder tabFolder = new TabFolder(detailedInformationComposite, SWT.BORDER);
         gd = new GridData(GridData.FILL_HORIZONTAL);
         gd.heightHint = 240;
@@ -397,7 +395,7 @@ public class EditorView extends ViewPart {
         tabItem.setText("Wallpaper");
 
         updateMovieButton = new Button(detailedInformationComposite, SWT.PUSH);
-        updateMovieButton.setImage(new Image(window.getShell().getDisplay(), EditorView.class
+        updateMovieButton.setImage(new Image(window.getShell().getDisplay(), ListView.class
                 .getResourceAsStream("/icons/save.png")));
         updateMovieButton.setText("Save");
 
@@ -452,7 +450,7 @@ public class EditorView extends ViewPart {
 
         Button addButton = new Button(buttons, SWT.PUSH);
         Display display = buttons.getDisplay();
-        addButton.setImage(new Image(display, EditorView.class.getResourceAsStream("/icons/add.png")));
+        addButton.setImage(new Image(display, ListView.class.getResourceAsStream("/icons/add.png")));
         addButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -474,7 +472,7 @@ public class EditorView extends ViewPart {
         });
 
         Button removeButton = new Button(buttons, SWT.PUSH);
-        removeButton.setImage(new Image(display, EditorView.class.getResourceAsStream("/icons/remove.png")));
+        removeButton.setImage(new Image(display, ListView.class.getResourceAsStream("/icons/remove.png")));
         removeButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

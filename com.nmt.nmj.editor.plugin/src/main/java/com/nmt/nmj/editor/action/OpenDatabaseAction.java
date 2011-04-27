@@ -7,11 +7,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.WorkbenchException;
 
 import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.ICommandIds;
 import com.nmt.nmj.editor.exception.NmjEditorException;
-import com.nmt.nmj.editor.view.EditorView;
+import com.nmt.nmj.editor.perspective.ListPerspective;
+import com.nmt.nmj.editor.view.ListView;
 
 public class OpenDatabaseAction extends Action {
 
@@ -42,11 +45,13 @@ public class OpenDatabaseAction extends Action {
                     return;
                 }
                 try {
-                    EditorView editorView = (EditorView) window.getActivePage().showView(EditorView.ID);
+                    PlatformUI.getWorkbench().showPerspective(ListPerspective.ID, window);
+                    ListView editorView = (ListView) window.getActivePage().showView(ListView.ID);
                     editorView.refresh();
                 } catch (PartInitException e) {
-                    MessageDialog.openError(window.getShell(), "Error", "Editor view is missing");
-                    e.printStackTrace();
+                    MessageDialog.openError(window.getShell(), "Error", "List view is missing");
+                } catch (WorkbenchException e) {
+                    MessageDialog.openError(window.getShell(), "Error", "List perspective is missing");
                 }
             }
         }

@@ -5,11 +5,14 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.WorkbenchException;
 
 import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.ICommandIds;
 import com.nmt.nmj.editor.exception.NmjEditorException;
-import com.nmt.nmj.editor.view.EditorView;
+import com.nmt.nmj.editor.perspective.ListPerspective;
+import com.nmt.nmj.editor.view.ListView;
 
 public class CloseDatabaseAction extends Action {
 
@@ -28,11 +31,13 @@ public class CloseDatabaseAction extends Action {
         try {
             Application.getDatabaseService().closeConnection();
             try {
-                EditorView editorView = (EditorView) window.getActivePage().showView(EditorView.ID);
+                PlatformUI.getWorkbench().showPerspective(ListPerspective.ID, window);
+                ListView editorView = (ListView) window.getActivePage().showView(ListView.ID);
                 editorView.refresh();
             } catch (PartInitException e) {
-                MessageDialog.openError(window.getShell(), "Error", "Editor view is missing");
-                e.printStackTrace();
+                MessageDialog.openError(window.getShell(), "Error", "List view is missing");
+            } catch (WorkbenchException e) {
+                MessageDialog.openError(window.getShell(), "Error", "List perspective is missing");
             }
         } catch (NmjEditorException e) {
             MessageDialog.openError(window.getShell(), "Error", e.getMessage());
