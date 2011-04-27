@@ -94,7 +94,7 @@ public class ListView extends ViewPart {
         layout.numColumns = 1;
         movieInformationComposite.setLayout(layout);
         movieInformationComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        movieInformationComposite.createControls();
+        movieInformationComposite.initialize();
         movieInformationComposite.setVisible(false);
     }
 

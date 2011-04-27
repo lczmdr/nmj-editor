@@ -75,14 +75,14 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         layoutMenu.add(wallViewAction);
     }
 
-    protected void fillCoolBar(ICoolBarManager coolBar) {
-        IToolBarManager toolbar = new ToolBarManager(SWT.FLAT | SWT.RIGHT);
-        coolBar.add(new ToolBarContributionItem(toolbar, "main"));
-        toolbar.add(openDatabaseAction);
-        toolbar.add(refreshDatabaseAction);
-        toolbar.add(closeDatabaseAction);
-        toolbar.add(new Separator());
-        toolbar.add(exitAction);
-    }
+//    protected void fillCoolBar(ICoolBarManager coolBar) {
+//        IToolBarManager toolbar = new ToolBarManager(SWT.FLAT | SWT.RIGHT);
+//        coolBar.add(new ToolBarContributionItem(toolbar, "main"));
+//        toolbar.add(openDatabaseAction);
+//        toolbar.add(refreshDatabaseAction);
+//        toolbar.add(closeDatabaseAction);
+//        toolbar.add(new Separator());
+//        toolbar.add(exitAction);
+//    }
 
 }

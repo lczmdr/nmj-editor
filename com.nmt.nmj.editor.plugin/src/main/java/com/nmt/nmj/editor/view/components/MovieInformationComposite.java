@@ -64,7 +64,7 @@ public class MovieInformationComposite extends Composite {
         window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
     }
 
-    public void createControls() {
+    public void initialize() {
         Group detailedInformationGroup = new Group(this, SWT.SHADOW_ETCHED_IN);
         detailedInformationGroup.setText("Detailed information");
         detailedInformationGroup.setLayoutData(new GridData(GridData.FILL_BOTH));
