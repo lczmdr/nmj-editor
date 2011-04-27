@@ -40,14 +40,11 @@ public class OpenDatabaseAction extends Action {
             if (selectedFile != null) {
                 try {
                     Application.getDatabaseService().openConnection(selectedFile);
-                } catch (NmjEditorException e1) {
-                    MessageDialog.openError(window.getShell(), "Error", e1.getMessage());
-                    return;
-                }
-                try {
                     PlatformUI.getWorkbench().showPerspective(ListPerspective.ID, window);
                     ListView editorView = (ListView) window.getActivePage().showView(ListView.ID);
                     editorView.refresh();
+                } catch (NmjEditorException e1) {
+                    MessageDialog.openError(window.getShell(), "Error", e1.getMessage());
                 } catch (PartInitException e) {
                     MessageDialog.openError(window.getShell(), "Error", "List view is missing");
                 } catch (WorkbenchException e) {
@@ -56,4 +53,5 @@ public class OpenDatabaseAction extends Action {
             }
         }
     }
+
 }

@@ -14,7 +14,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -53,7 +52,6 @@ public class ListView extends ViewPart {
     private Composite mainComposite;
     private MovieInformationComposite movieInformationComposite;
     private TableViewer movieTableViewer;
-    private Label informationLabel;
     private MovieSorter movieTableSorter;
     private Video currentVideo;
 
@@ -69,9 +67,6 @@ public class ListView extends ViewPart {
         layout.marginWidth = 10;
         layout.numColumns = 1;
         mainComposite.setLayout(layout);
-
-        informationLabel = new Label(mainComposite, SWT.WRAP);
-        informationLabel.setText("Current Database: ");
 
         TabFolder tabFolder = new TabFolder(mainComposite, SWT.BORDER);
         GridData gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -194,18 +189,15 @@ public class ListView extends ViewPart {
     public void refresh() {
         try {
             if (Application.getDatabaseService().isConnected()) {
-                informationLabel.setText("Current Database: " + Application.getDatabaseService().getFileName());
-                informationLabel.pack();
-                List<Video> videos = Application.getDatabaseService().getAllMovies();
-                this.movieTableViewer.setInput(videos);
+                List<Video> movies = Application.getDatabaseService().getAllMovies();
+                this.movieTableViewer.setInput(movies);
                 mainComposite.layout();
-                getViewSite().getActionBars().getStatusLineManager().setMessage(videos.size() + " movies");
+                getViewSite().getActionBars().getStatusLineManager().setMessage(movies.size() + " movies. Database: " + Application.getDatabaseService().getFileName());
                 if (movieTableViewer.getTable().getItemCount() > 0) {
                     movieTableViewer.getTable().select(0);
                     refreshSelectedMovieInformation();
                 }
             } else {
-                informationLabel.setText("Current Database: ");
                 movieTableViewer.setInput(null);
                 movieInformationComposite.setVisible(false);
                 getViewSite().getActionBars().getStatusLineManager().setMessage("");

@@ -7,7 +7,7 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
-    private static final String APP_TITLE = "Networked Media Jukebox Editor";
+    public static final String APP_TITLE = "Networked Media Jukebox Editor";
 
     public ApplicationWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
         super(configurer);

@@ -118,7 +118,7 @@ public class WallView extends ViewPart {
                         }
                     });
                 }
-                getViewSite().getActionBars().getStatusLineManager().setMessage(movies.size() + " movies");
+                getViewSite().getActionBars().getStatusLineManager().setMessage(movies.size() + " movies. Database: " + Application.getDatabaseService().getFileName());
                 posterComposite.layout();
                 posterComposite.pack(true);
             } else {
