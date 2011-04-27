@@ -53,6 +53,12 @@
             keySequence="Ctrl+O">
       </keyBinding>
       <keyBinding
+            command="nmj.editor.refreshDatabase"
+            commandId="nmj.editor.refreshDatabase"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+R">
+      </keyBinding>
+      <keyBinding
             command="org.eclipse.ui.file.exit"
             commandId="org.eclipse.ui.file.exit"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
