@@ -11,12 +11,12 @@ import org.eclipse.swt.widgets.Shell;
 import com.nmt.nmj.editor.model.Video;
 import com.nmt.nmj.editor.view.components.MovieInformationComposite;
 
-public class WallMovieInformationDialog extends Dialog {
+public class MovieInformationDialog extends Dialog {
 
     private MovieInformationComposite movieInformationComposite;
     private Video video;
 
-    public WallMovieInformationDialog(Shell parent, Video video) {
+    public MovieInformationDialog(Shell parent, Video video) {
         super(parent);
         this.video = video;
     }
