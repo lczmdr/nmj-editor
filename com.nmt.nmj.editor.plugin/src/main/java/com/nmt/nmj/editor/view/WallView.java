@@ -18,6 +18,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -28,14 +29,14 @@ import com.nmt.nmj.editor.model.Video;
 
 public class WallView extends ViewPart {
 
+    private static final String NO_POSTER_IMAGE = "/icons/no-poster.jpg";
+
     public static final String ID = "com.nmt.nmj.editor.wallView";
 
     private IWorkbenchWindow window;
-    private Composite mainComposite;
+    private Composite posterComposite;
 
     private ScrolledComposite scrolledComposite;
-
-    private boolean updated;
 
     public void createPartControl(Composite parent) {
 
@@ -43,41 +44,37 @@ public class WallView extends ViewPart {
 
         scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 
-        mainComposite = new Composite(scrolledComposite, SWT.NONE);
-//        mainComposite.setLayout(new GridLayout(8, false));
-        // mainComposite.setSize(400, 400);
-        mainComposite.setBackground(new Color(window.getShell().getDisplay(), 0, 0, 0));
-
-        scrolledComposite.setContent(mainComposite);
+        createPosterComposite();
         scrolledComposite.setExpandHorizontal(true);
         scrolledComposite.setExpandVertical(true);
-        // scrolledComposite.setMinSize(mainComposite.computeSize(1000, 10000));
 
-        // Composite imageCanvasComposite = new Composite(composite,
-        // SWT.BORDER);
-        // imageCanvasComposite.setLayout(new GridLayout(1, false));
-        // GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-        // gd.heightHint = 180;
-        // gd.widthHint = 140;
-        // imageCanvasComposite.setLayoutData(gd);
+        Label l = new Label(posterComposite, SWT.NONE);
+        l.setText("testing");
+    }
 
+    private void createPosterComposite() {
+        posterComposite = new Composite(scrolledComposite, SWT.NONE);
+        posterComposite.setBackground(new Color(window.getShell().getDisplay(), 0, 0, 0));
+        scrolledComposite.setContent(posterComposite);
     }
 
     @Override
     public void setFocus() {
 
     }
-    
+
     public void refresh() {
         try {
-            if (Application.getDatabaseService().isConnected() && !updated) {
+            if (Application.getDatabaseService().isConnected()) {
+                posterComposite.dispose();
+                createPosterComposite();
                 List<Video> movies = Application.getDatabaseService().getAllMovies();
-                int moviesByRow = mainComposite.getBounds().width / 130;
+                int moviesByRow = posterComposite.getBounds().width / 130;
                 int height = (int) (Math.ceil(movies.size() / moviesByRow) * 200);
-                mainComposite.setLayout(new GridLayout(moviesByRow, false));
-                scrolledComposite.setMinSize(mainComposite.computeSize(1000, height));
+                posterComposite.setLayout(new GridLayout(moviesByRow, false));
+                scrolledComposite.setMinSize(posterComposite.computeSize(1000, height));
                 for (final Video video : movies) {
-                    final Canvas posterImageCanvas = new Canvas(mainComposite, SWT.NO_REDRAW_RESIZE);
+                    final Canvas posterImageCanvas = new Canvas(posterComposite, SWT.NO_REDRAW_RESIZE);
                     posterImageCanvas.setToolTipText(video.getTitle());
                     posterImageCanvas.addMouseListener(new MouseAdapter() {
                         @Override
@@ -95,18 +92,17 @@ public class WallView extends ViewPart {
                     posterImageCanvas.addPaintListener(new PaintListener() {
                         public void paintControl(PaintEvent e) {
                             Image posterImage = (Image) posterImageCanvas.getData("double-buffer-image");
-                            if (posterImage==null) {
+                            if (posterImage == null) {
                                 if (!video.getPosterImage().equals("")) {
                                     if (new File(video.getPosterImage()).exists()) {
                                         posterImage = new Image(window.getShell().getDisplay(), video.getPosterImage());
-                                        
                                     } else {
                                         posterImage = new Image(window.getShell().getDisplay(), ListView.class
-                                                .getResourceAsStream("/icons/no-poster.jpg"));
+                                                .getResourceAsStream(NO_POSTER_IMAGE));
                                     }
                                 } else {
                                     posterImage = new Image(window.getShell().getDisplay(), ListView.class
-                                            .getResourceAsStream("/icons/no-poster.jpg"));
+                                            .getResourceAsStream(NO_POSTER_IMAGE));
                                 }
                                 posterImageCanvas.setData("double-buffer-image", posterImage);
                             }
@@ -114,9 +110,10 @@ public class WallView extends ViewPart {
                         }
                     });
                 }
-                mainComposite.layout();
-                mainComposite.pack(true);
-                updated = true;
+                posterComposite.layout();
+                posterComposite.pack(true);
+            } else {
+                posterComposite.dispose();
             }
         } catch (NmjEditorException e) {
             MessageDialog.openError(window.getShell(), "Error", e.getMessage());

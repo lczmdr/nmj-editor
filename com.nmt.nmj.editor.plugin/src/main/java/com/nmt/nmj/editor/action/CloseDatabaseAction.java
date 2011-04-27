@@ -12,7 +12,9 @@ import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.ICommandIds;
 import com.nmt.nmj.editor.exception.NmjEditorException;
 import com.nmt.nmj.editor.perspective.ListPerspective;
+import com.nmt.nmj.editor.perspective.WallPerspective;
 import com.nmt.nmj.editor.view.ListView;
+import com.nmt.nmj.editor.view.WallView;
 
 public class CloseDatabaseAction extends Action {
 
@@ -31,9 +33,12 @@ public class CloseDatabaseAction extends Action {
         try {
             Application.getDatabaseService().closeConnection();
             try {
+                PlatformUI.getWorkbench().showPerspective(WallPerspective.ID, window);
+                WallView wallView = (WallView) window.getActivePage().showView(WallView.ID);
+                wallView.refresh();
                 PlatformUI.getWorkbench().showPerspective(ListPerspective.ID, window);
-                ListView editorView = (ListView) window.getActivePage().showView(ListView.ID);
-                editorView.refresh();
+                ListView listView = (ListView) window.getActivePage().showView(ListView.ID);
+                listView.refresh();
             } catch (PartInitException e) {
                 MessageDialog.openError(window.getShell(), "Error", "List view is missing");
             } catch (WorkbenchException e) {
