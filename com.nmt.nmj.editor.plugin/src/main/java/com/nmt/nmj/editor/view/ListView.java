@@ -30,6 +30,7 @@ import com.nmt.nmj.editor.model.Video;
 import com.nmt.nmj.editor.view.components.MovieInformationComposite;
 import com.nmt.nmj.editor.view.provider.MovieContentProvider;
 import com.nmt.nmj.editor.view.provider.MovieLabelProvider;
+import com.nmt.nmj.editor.view.sorter.MovieSorter;
 
 public class ListView extends ViewPart {
 

@@ -1,4 +1,4 @@
-package com.nmt.nmj.editor.view;
+package com.nmt.nmj.editor.view.sorter;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import com.nmt.nmj.editor.model.Video;
 
-class MovieSorter extends ViewerSorter {
+public class MovieSorter extends ViewerSorter {
 
     private TableColumn currentColumn = null;
     private Map<TableColumn, Boolean> sortMap = new HashMap<TableColumn, Boolean>();
