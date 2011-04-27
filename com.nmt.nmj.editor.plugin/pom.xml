@@ -31,16 +31,27 @@
         <version>2.2</version>
         <executions>
           <execution>
-            <id>copy-dependencies</id>
-            <phase>process-resources</phase>
+            <id>copy-bundle-classpath-libs</id>
+            <phase>validate</phase>
             <goals>
-              <goal>copy-dependencies</goal>
+              <goal>copy</goal>
             </goals>
             <configuration>
               <outputDirectory>${project.basedir}/lib</outputDirectory>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>false</overWriteSnapshots>
               <overWriteIfNewer>true</overWriteIfNewer>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.xerial</groupId>
+                  <artifactId>sqlite-jdbc</artifactId>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>commons-lang</groupId>
+                  <artifactId>commons-lang</artifactId>
+                </artifactItem>
+              </artifactItems>
             </configuration>
           </execution>
         </executions>
