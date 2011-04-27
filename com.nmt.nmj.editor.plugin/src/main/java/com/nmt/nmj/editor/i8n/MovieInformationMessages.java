@@ -1,0 +1,47 @@
+package com.nmt.nmj.editor.i8n;
+
+import org.eclipse.osgi.util.NLS;
+
+public class MovieInformationMessages extends NLS {
+
+    private static final String BUNDLE_NAME = "com.nmt.nmj.editor.i8n.movieInformationMessages"; //$NON-NLS-1$
+
+    public static String movie_information_33;
+    public static String movie_information_casting;
+    public static String movie_information_casting_lowercase;
+    public static String movie_information_certification;
+    public static String movie_information_change_picture;
+    public static String movie_information_director;
+    public static String movie_information_directors;
+    public static String movie_information_empty_value_not_allowed;
+    public static String movie_information_filename;
+    public static String movie_information_genre;
+    public static String movie_information_genres;
+    public static String movie_information_group_title;
+    public static String movie_information_imdb;
+    public static String movie_information_input;
+    public static String movie_information_keyword_lowercase;
+    public static String movie_information_keywords;
+    public static String movie_information_movie;
+    public static String movie_information_movie_title;
+    public static String movie_information_movie_title_click;
+    public static String movie_information_new;
+    public static String movie_information_new_movie_title;
+    public static String movie_information_poster;
+    public static String movie_information_release_date;
+    public static String movie_information_save;
+    public static String movie_information_search_title_text;
+    public static String movie_information_synopsis;
+    public static String movie_information_thumbnail;
+    public static String movie_information_tv_series;
+    public static String movie_information_video_type;
+    public static String movie_information_wallpaper;
+
+    static {
+        // initialize resource bundle
+        NLS.initializeMessages(BUNDLE_NAME, MovieInformationMessages.class);
+    }
+
+    private MovieInformationMessages() {
+    }
+}

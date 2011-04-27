@@ -34,11 +34,13 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 import com.nmt.nmj.editor.dialog.CalendarDialog;
+import com.nmt.nmj.editor.i8n.MovieInformationMessages;
 import com.nmt.nmj.editor.model.Video;
 import com.nmt.nmj.editor.view.ListView;
 
 public class MovieInformationComposite extends Composite {
 
+    private static final String POSTER_NO_IMAGE = "/icons/no-poster.jpg";
     private Canvas posterImageCanvas;
     protected Image posterImage;
     private Button updateMovieButton;
@@ -66,7 +68,7 @@ public class MovieInformationComposite extends Composite {
 
     public void initialize() {
         Group detailedInformationGroup = new Group(this, SWT.SHADOW_ETCHED_IN);
-        detailedInformationGroup.setText("Detailed information");
+        detailedInformationGroup.setText(MovieInformationMessages.movie_information_group_title);
         detailedInformationGroup.setLayoutData(new GridData(GridData.FILL_BOTH));
         detailedInformationGroup.setLayout(new GridLayout(1, false));
 
@@ -79,17 +81,18 @@ public class MovieInformationComposite extends Composite {
 
         movieTitle = new Label(detailedInformationComposite, SWT.WRAP);
         movieTitle.setLayoutData(gd);
-        Font boldFont = new Font(window.getShell().getDisplay(), "", 14, SWT.BOLD);
+        Font boldFont = new Font(window.getShell().getDisplay(), "", 14, SWT.BOLD); //$NON-NLS-1$
         movieTitle.setFont(boldFont);
-        movieTitle.setToolTipText("Click to change");
+        movieTitle.setToolTipText(MovieInformationMessages.movie_information_movie_title_click);
         movieTitle.addMouseListener(new MouseAdapter() {
             public void mouseDown(MouseEvent e) {
-                InputDialog changeMovieTitle = new InputDialog(window.getShell(), "Movie Title", "New movie title",
-                        movieTitle.getText(), new IInputValidator() {
+                InputDialog changeMovieTitle = new InputDialog(window.getShell(),
+                        MovieInformationMessages.movie_information_movie_title, MovieInformationMessages.movie_information_new_movie_title, movieTitle
+                                .getText(), new IInputValidator() {
                             @Override
                             public String isValid(String newText) {
                                 if (newText.trim().length() == 0) {
-                                    return "Empty value not allowed";
+                                    return MovieInformationMessages.movie_information_empty_value_not_allowed;
                                 }
                                 return null;
                             }
@@ -108,12 +111,11 @@ public class MovieInformationComposite extends Composite {
 
         updateMovieButton = new Button(detailedInformationComposite, SWT.PUSH);
         updateMovieButton.setImage(new Image(window.getShell().getDisplay(), ListView.class
-                .getResourceAsStream("/icons/save.png")));
-        updateMovieButton.setText("Save");
-        
-        
+                .getResourceAsStream("/icons/save.png"))); //$NON-NLS-1$
+        updateMovieButton.setText(MovieInformationMessages.movie_information_save);
+
         fileNameLabel = new Label(detailedInformationComposite, SWT.WRAP);
-        fileNameLabel.setText("Filename:");
+        fileNameLabel.setText(MovieInformationMessages.movie_information_filename);
         fileNameLabel.pack();
 
         gd = new GridData();
@@ -132,7 +134,7 @@ public class MovieInformationComposite extends Composite {
         certificationImdbComposite.setLayout(new GridLayout(2, false));
 
         Label l = new Label(certificationImdbComposite, SWT.NONE);
-        l.setText("Certification:");
+        l.setText(MovieInformationMessages.movie_information_certification);
 
         certificationMpaaText = new Text(certificationImdbComposite, SWT.BORDER);
         gd = new GridData();
@@ -140,7 +142,7 @@ public class MovieInformationComposite extends Composite {
         certificationMpaaText.setLayoutData(gd);
 
         l = new Label(certificationImdbComposite, SWT.NONE);
-        l.setText("IMDB:");
+        l.setText(MovieInformationMessages.movie_information_imdb);
 
         imdbText = new Text(certificationImdbComposite, SWT.BORDER);
         gd = new GridData();
@@ -148,29 +150,32 @@ public class MovieInformationComposite extends Composite {
         imdbText.setLayoutData(gd);
 
         l = new Label(certificationImdbComposite, SWT.NONE);
-        l.setText("Search Title:");
+        l.setText(MovieInformationMessages.movie_information_search_title_text);
         searchTitle = new Text(certificationImdbComposite, SWT.BORDER);
         gd = new GridData();
         gd.widthHint = 150;
         searchTitle.setLayoutData(gd);
 
         Group videoTypeGroup = new Group(basicInformationComposite, SWT.SHADOW_ETCHED_IN);
-        videoTypeGroup.setText("Video Type");
+        videoTypeGroup.setText(MovieInformationMessages.movie_information_video_type);
         videoTypeGroup.setLayout(new GridLayout(2, false));
 
         movieTypeButton = new Button(videoTypeGroup, SWT.RADIO);
-        movieTypeButton.setText("Movie");
+        movieTypeButton.setText(MovieInformationMessages.movie_information_movie);
 
         tvSerieTypeButton = new Button(videoTypeGroup, SWT.RADIO);
-        tvSerieTypeButton.setText("TV Series");
+        tvSerieTypeButton.setText(MovieInformationMessages.movie_information_tv_series);
 
         Composite composite = new Composite(doubleColumnComposite, SWT.NONE);
         composite.setLayout(new GridLayout(2, false));
 
-        genresList = createListControl(composite, "Genres", "genre");
-        directorsList = createListControl(composite, "Directors", "director");
-        castingList = createListControl(composite, "Casting", "casting");
-        keywordsList = createListControl(composite, "Keywords", "keyword");
+        genresList = createListControl(composite, MovieInformationMessages.movie_information_genres, MovieInformationMessages.movie_information_genre);
+        directorsList = createListControl(composite, MovieInformationMessages.movie_information_directors,
+                MovieInformationMessages.movie_information_director);
+        castingList = createListControl(composite, MovieInformationMessages.movie_information_casting,
+                MovieInformationMessages.movie_information_casting_lowercase);
+        keywordsList = createListControl(composite, MovieInformationMessages.movie_information_keywords,
+                MovieInformationMessages.movie_information_keyword_lowercase);
 
         Composite sinopsisComposite = new Composite(doubleColumnComposite, SWT.NONE);
         sinopsisComposite.setLayout(new GridLayout(2, false));
@@ -179,7 +184,7 @@ public class MovieInformationComposite extends Composite {
         sinopsisComposite.setLayoutData(gridData);
 
         Label label = new Label(sinopsisComposite, SWT.NONE);
-        label.setText("Synopsis");
+        label.setText(MovieInformationMessages.movie_information_synopsis);
         synopsisText = new Text(sinopsisComposite, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         synopsisText.setLayoutData(new GridData(500, 70));
 
@@ -190,7 +195,7 @@ public class MovieInformationComposite extends Composite {
         tabFolder.setLayoutData(gd);
 
         TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
-        tabItem.setText("Poster");
+        tabItem.setText(MovieInformationMessages.movie_information_poster);
 
         Composite imageCanvasComposite = new Composite(tabFolder, SWT.BORDER);
         imageCanvasComposite.setLayout(new GridLayout(1, false));
@@ -208,7 +213,7 @@ public class MovieInformationComposite extends Composite {
         });
 
         Button changeImageButton = new Button(imageCanvasComposite, SWT.PUSH);
-        changeImageButton.setText("Change picture");
+        changeImageButton.setText(MovieInformationMessages.movie_information_change_picture);
         changeImageButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -219,10 +224,10 @@ public class MovieInformationComposite extends Composite {
         tabItem.setControl(imageCanvasComposite);
 
         tabItem = new TabItem(tabFolder, SWT.NULL);
-        tabItem.setText("Thumbnail");
+        tabItem.setText(MovieInformationMessages.movie_information_thumbnail);
 
         tabItem = new TabItem(tabFolder, SWT.NULL);
-        tabItem.setText("Wallpaper");
+        tabItem.setText(MovieInformationMessages.movie_information_wallpaper);
 
     }
 
@@ -245,16 +250,17 @@ public class MovieInformationComposite extends Composite {
 
         Button addButton = new Button(buttons, SWT.PUSH);
         Display display = buttons.getDisplay();
-        addButton.setImage(new Image(display, ListView.class.getResourceAsStream("/icons/add.png")));
+        addButton.setImage(new Image(display, ListView.class.getResourceAsStream("/icons/add.png"))); //$NON-NLS-1$
         addButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                InputDialog input = new InputDialog(window.getShell(), "Input", "New " + type, "",
+                InputDialog input = new InputDialog(window.getShell(), MovieInformationMessages.movie_information_input,
+                        MovieInformationMessages.movie_information_new + type, "", //$NON-NLS-3$
                         new IInputValidator() {
                             @Override
                             public String isValid(String newText) {
                                 if (newText.trim().length() == 0) {
-                                    return "Empty value not allowed";
+                                    return MovieInformationMessages.movie_information_empty_value_not_allowed;
                                 }
                                 return null;
                             }
@@ -267,7 +273,7 @@ public class MovieInformationComposite extends Composite {
         });
 
         Button removeButton = new Button(buttons, SWT.PUSH);
-        removeButton.setImage(new Image(display, ListView.class.getResourceAsStream("/icons/remove.png")));
+        removeButton.setImage(new Image(display, ListView.class.getResourceAsStream(MovieInformationMessages.movie_information_33)));
         removeButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -285,7 +291,7 @@ public class MovieInformationComposite extends Composite {
         releaseDateContainer.setLayout(new GridLayout(3, false));
 
         Label l = new Label(releaseDateContainer, SWT.NONE);
-        l.setText("Release Date:");
+        l.setText(MovieInformationMessages.movie_information_release_date);
         l.pack();
 
         releaseDateText = new Text(releaseDateContainer, SWT.BORDER);
@@ -295,7 +301,7 @@ public class MovieInformationComposite extends Composite {
         releaseDateText.setLayoutData(gd);
 
         Button openCalendar = new Button(releaseDateContainer, SWT.PUSH);
-        openCalendar.setText("...");
+        openCalendar.setText("..."); //$NON-NLS-1$
         openCalendar.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 if (currentVideo != null) {
@@ -324,7 +330,7 @@ public class MovieInformationComposite extends Composite {
         movieTitle.pack();
         searchTitle.setText(StringEscapeUtils.unescapeHtml(currentVideo.getSearchTitle()));
         releaseDateText.setText(currentVideo.getReleaseDate());
-        fileNameLabel.setText("Filename: " + currentVideo.getFileName());
+        fileNameLabel.setText(MovieInformationMessages.movie_information_filename + currentVideo.getFileName());
         fileNameLabel.pack();
         synopsisText.setText(StringEscapeUtils.unescapeHtml(currentVideo.getSynopsis()));
         certificationMpaaText.setText(currentVideo.getCertification());
@@ -335,19 +341,18 @@ public class MovieInformationComposite extends Composite {
         fillInformationList(currentVideo.getDirectors(), directorsList);
         fillInformationList(currentVideo.getCasting(), castingList);
         fillInformationList(currentVideo.getKeywords(), keywordsList);
-        if (!currentVideo.getPosterImage().equals("")) {
+        if (!currentVideo.getPosterImage().equals("")) { //$NON-NLS-1$
             if (new File(currentVideo.getPosterImage()).exists()) {
                 posterImage = new Image(window.getShell().getDisplay(), currentVideo.getPosterImage());
                 posterImageCanvas.setVisible(true);
                 posterImageCanvas.redraw();
             } else {
                 posterImage = new Image(window.getShell().getDisplay(),
-                        ListView.class.getResourceAsStream("/icons/no-poster.jpg"));
+                        ListView.class.getResourceAsStream(POSTER_NO_IMAGE)); //$NON-NLS-1$
                 posterImageCanvas.setVisible(true);
             }
         } else {
-            posterImage = new Image(window.getShell().getDisplay(),
-                    ListView.class.getResourceAsStream("/icons/no-poster.jpg"));
+            posterImage = new Image(window.getShell().getDisplay(), ListView.class.getResourceAsStream(POSTER_NO_IMAGE)); //$NON-NLS-1$
             posterImageCanvas.setVisible(true);
         }
     }
