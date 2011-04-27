@@ -43,7 +43,8 @@ public class WallView extends ViewPart {
 
         window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 
-        scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+        scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.NONE);
+        scrolledComposite.setBackground(new Color(window.getShell().getDisplay(), 0, 0, 0));
 
         createPosterComposite();
         scrolledComposite.setExpandHorizontal(true);
@@ -117,6 +118,7 @@ public class WallView extends ViewPart {
                         }
                     });
                 }
+                getViewSite().getActionBars().getStatusLineManager().setMessage(movies.size() + " movies");
                 posterComposite.layout();
                 posterComposite.pack(true);
             } else {
