@@ -24,6 +24,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import com.nmt.nmj.editor.Application;
+import com.nmt.nmj.editor.dialog.WallMovieInformationDialog;
 import com.nmt.nmj.editor.exception.NmjEditorException;
 import com.nmt.nmj.editor.model.Video;
 
@@ -79,7 +80,13 @@ public class WallView extends ViewPart {
                     posterImageCanvas.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseDown(MouseEvent e) {
-                            System.out.println(video.getTitle() + " selected");
+                            try {
+                                Application.getDatabaseService().getDetailedInformation(video);
+                                WallMovieInformationDialog dialog = new WallMovieInformationDialog(window.getShell(), video);
+                                dialog.open();
+                            } catch (NmjEditorException e1) {
+                                MessageDialog.openError(window.getShell(), "Error", e1.getMessage());
+                            }
                         }
                     });
                     posterImageCanvas.addMouseMoveListener(new MouseMoveListener() {

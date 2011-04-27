@@ -201,6 +201,12 @@ public class MovieInformationComposite extends Composite {
 
         Button changeImageButton = new Button(imageCanvasComposite, SWT.PUSH);
         changeImageButton.setText("Change picture");
+        changeImageButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+
+            }
+        });
 
         tabItem.setControl(imageCanvasComposite);
 
@@ -308,6 +314,9 @@ public class MovieInformationComposite extends Composite {
     public void setMovie(Video currentVideo) {
         this.currentVideo = currentVideo;
         movieTitle.setText(StringEscapeUtils.unescapeHtml(currentVideo.getTitle()));
+        GridData layoutData = new GridData();
+        layoutData.heightHint = 20;
+        movieTitle.setLayoutData(layoutData);
         movieTitle.pack();
         searchTitle.setText(StringEscapeUtils.unescapeHtml(currentVideo.getSearchTitle()));
         releaseDateText.setText(currentVideo.getReleaseDate());
