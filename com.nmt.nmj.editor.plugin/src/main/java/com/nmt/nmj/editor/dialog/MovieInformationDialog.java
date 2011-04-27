@@ -30,7 +30,7 @@ public class MovieInformationDialog extends Dialog {
         movieInformationComposite.setLayout(layout);
         movieInformationComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         movieInformationComposite.initialize();
-        movieInformationComposite.setMovie(video);
+        movieInformationComposite.showMovieInformation(video);
         movieInformationComposite.setVisible(true);
         return movieInformationComposite;
     }

@@ -315,7 +315,7 @@ public class MovieInformationComposite extends Composite {
         detailedInformationComposite.setVisible(visible);
     }
 
-    public void setMovie(Video currentVideo) {
+    public void showMovieInformation(Video currentVideo) {
         this.currentVideo = currentVideo;
         movieTitle.setText(StringEscapeUtils.unescapeHtml(currentVideo.getTitle()));
         GridData layoutData = new GridData();

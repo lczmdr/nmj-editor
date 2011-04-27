@@ -166,8 +166,8 @@ public class ListView extends ViewPart {
         currentVideo = (Video) selection.getFirstElement();
         if (currentVideo != null) {
             try {
-                obtainExtraInformation(currentVideo);
-                movieInformationComposite.setMovie(currentVideo);
+                Application.getDatabaseService().getDetailedInformation(currentVideo);
+                movieInformationComposite.showMovieInformation(currentVideo);
                 movieInformationComposite.setVisible(true);
                 movieInformationComposite.pack();
             } catch (NmjEditorException e1) {
@@ -205,10 +205,6 @@ public class ListView extends ViewPart {
         } catch (NmjEditorException e) {
             MessageDialog.openError(window.getShell(), "Error", e.getMessage());
         }
-    }
-
-    private void obtainExtraInformation(Video video) throws NmjEditorException {
-        Application.getDatabaseService().getDetailedInformation(video);
     }
 
 }
