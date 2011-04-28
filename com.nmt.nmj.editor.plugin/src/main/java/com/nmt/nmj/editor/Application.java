@@ -8,7 +8,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
 import com.nmt.nmj.editor.exception.NmjEditorException;
-import com.nmt.nmj.editor.i8n.InternationalizationMessages;
+import com.nmt.nmj.editor.nls.InternationalizationMessages;
 import com.nmt.nmj.editor.sqlite.DatabaseService;
 
 /**

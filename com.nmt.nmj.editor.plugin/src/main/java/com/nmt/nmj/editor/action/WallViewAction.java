@@ -8,7 +8,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
 
 import com.nmt.nmj.editor.ICommandIds;
-import com.nmt.nmj.editor.i8n.InternationalizationMessages;
+import com.nmt.nmj.editor.nls.InternationalizationMessages;
 import com.nmt.nmj.editor.perspective.WallPerspective;
 import com.nmt.nmj.editor.view.WallView;
 

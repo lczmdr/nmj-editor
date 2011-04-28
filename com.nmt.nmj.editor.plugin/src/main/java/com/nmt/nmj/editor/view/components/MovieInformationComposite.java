@@ -35,8 +35,8 @@ import org.eclipse.ui.PlatformUI;
 
 import com.nmt.nmj.editor.ImageResource;
 import com.nmt.nmj.editor.dialog.CalendarDialog;
-import com.nmt.nmj.editor.i8n.InternationalizationMessages;
 import com.nmt.nmj.editor.model.Video;
+import com.nmt.nmj.editor.nls.InternationalizationMessages;
 import com.nmt.nmj.editor.view.ListView;
 
 public class MovieInformationComposite extends Composite {

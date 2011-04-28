@@ -27,8 +27,8 @@ import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.ImageResource;
 import com.nmt.nmj.editor.dialog.MovieInformationDialog;
 import com.nmt.nmj.editor.exception.NmjEditorException;
-import com.nmt.nmj.editor.i8n.InternationalizationMessages;
 import com.nmt.nmj.editor.model.Video;
+import com.nmt.nmj.editor.nls.InternationalizationMessages;
 
 public class WallView extends ViewPart {
 
