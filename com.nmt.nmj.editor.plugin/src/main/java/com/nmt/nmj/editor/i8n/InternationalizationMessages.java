@@ -41,6 +41,15 @@ public class InternationalizationMessages extends NLS {
     public static String common_music;
     public static String common_error;
 
+    public static String menu_open_database;
+    public static String menu_refresh;
+    public static String menu_close_database;
+    public static String menu_exit_tooltip;
+    public static String menu_list_view;
+    public static String menu_wall_view;
+    public static String menu_database;
+    public static String menu_switch_view;
+
     public static String list_view_id;
     public static String list_view_movie_name;
     public static String list_view_release_date;
@@ -50,7 +59,7 @@ public class InternationalizationMessages extends NLS {
     public static String list_view_video_codec;
     public static String list_view_video_dimensions;
     public static String list_view_video_fps;
-    
+
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, InternationalizationMessages.class);
