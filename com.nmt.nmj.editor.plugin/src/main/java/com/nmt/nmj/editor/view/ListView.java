@@ -192,7 +192,8 @@ public class ListView extends ViewPart {
                 List<Video> movies = Application.getDatabaseService().getAllMovies();
                 this.movieTableViewer.setInput(movies);
                 mainComposite.layout();
-                getViewSite().getActionBars().getStatusLineManager().setMessage(movies.size() + " movies. Database: " + Application.getDatabaseService().getFileName());
+                String status = movies.size() + " movies. Database: " + Application.getDatabaseService().getFileName();
+                getViewSite().getActionBars().getStatusLineManager().setMessage(status);
                 if (movieTableViewer.getTable().getItemCount() > 0) {
                     movieTableViewer.getTable().select(0);
                     refreshSelectedMovieInformation();

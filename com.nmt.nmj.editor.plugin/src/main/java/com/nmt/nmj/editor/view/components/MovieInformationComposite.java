@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
+import com.nmt.nmj.editor.ImageResource;
 import com.nmt.nmj.editor.dialog.CalendarDialog;
 import com.nmt.nmj.editor.i8n.MovieInformationMessages;
 import com.nmt.nmj.editor.model.Video;
@@ -40,7 +41,6 @@ import com.nmt.nmj.editor.view.ListView;
 
 public class MovieInformationComposite extends Composite {
 
-    private static final String POSTER_NO_IMAGE = "/icons/no-poster.jpg";
     private Canvas posterImageCanvas;
     protected Image posterImage;
     private Button updateMovieButton;
@@ -87,8 +87,9 @@ public class MovieInformationComposite extends Composite {
         movieTitle.addMouseListener(new MouseAdapter() {
             public void mouseDown(MouseEvent e) {
                 InputDialog changeMovieTitle = new InputDialog(window.getShell(),
-                        MovieInformationMessages.movie_information_movie_title, MovieInformationMessages.movie_information_new_movie_title, movieTitle
-                                .getText(), new IInputValidator() {
+                        MovieInformationMessages.movie_information_movie_title,
+                        MovieInformationMessages.movie_information_new_movie_title, movieTitle.getText(),
+                        new IInputValidator() {
                             @Override
                             public String isValid(String newText) {
                                 if (newText.trim().length() == 0) {
@@ -111,7 +112,7 @@ public class MovieInformationComposite extends Composite {
 
         updateMovieButton = new Button(detailedInformationComposite, SWT.PUSH);
         updateMovieButton.setImage(new Image(window.getShell().getDisplay(), ListView.class
-                .getResourceAsStream("/icons/save.png"))); //$NON-NLS-1$
+                .getResourceAsStream(ImageResource.SAVE_IMAGE))); //$NON-NLS-1$
         updateMovieButton.setText(MovieInformationMessages.movie_information_save);
 
         fileNameLabel = new Label(detailedInformationComposite, SWT.WRAP);
@@ -169,7 +170,8 @@ public class MovieInformationComposite extends Composite {
         Composite composite = new Composite(doubleColumnComposite, SWT.NONE);
         composite.setLayout(new GridLayout(2, false));
 
-        genresList = createListControl(composite, MovieInformationMessages.movie_information_genres, MovieInformationMessages.movie_information_genre);
+        genresList = createListControl(composite, MovieInformationMessages.movie_information_genres,
+                MovieInformationMessages.movie_information_genre);
         directorsList = createListControl(composite, MovieInformationMessages.movie_information_directors,
                 MovieInformationMessages.movie_information_director);
         castingList = createListControl(composite, MovieInformationMessages.movie_information_casting,
@@ -250,11 +252,12 @@ public class MovieInformationComposite extends Composite {
 
         Button addButton = new Button(buttons, SWT.PUSH);
         Display display = buttons.getDisplay();
-        addButton.setImage(new Image(display, ListView.class.getResourceAsStream("/icons/add.png"))); //$NON-NLS-1$
+        addButton.setImage(new Image(display, ListView.class.getResourceAsStream(ImageResource.ADD_IMAGE))); //$NON-NLS-1$
         addButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                InputDialog input = new InputDialog(window.getShell(), MovieInformationMessages.movie_information_input,
+                InputDialog input = new InputDialog(window.getShell(),
+                        MovieInformationMessages.movie_information_input,
                         MovieInformationMessages.movie_information_new + type, "", //$NON-NLS-3$
                         new IInputValidator() {
                             @Override
@@ -273,7 +276,7 @@ public class MovieInformationComposite extends Composite {
         });
 
         Button removeButton = new Button(buttons, SWT.PUSH);
-        removeButton.setImage(new Image(display, ListView.class.getResourceAsStream(MovieInformationMessages.movie_information_33)));
+        removeButton.setImage(new Image(display, ListView.class.getResourceAsStream(ImageResource.REMOVE_IMAGE)));
         removeButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -348,11 +351,12 @@ public class MovieInformationComposite extends Composite {
                 posterImageCanvas.redraw();
             } else {
                 posterImage = new Image(window.getShell().getDisplay(),
-                        ListView.class.getResourceAsStream(POSTER_NO_IMAGE)); //$NON-NLS-1$
+                        ListView.class.getResourceAsStream(ImageResource.NO_POSTER_IMAGE)); //$NON-NLS-1$
                 posterImageCanvas.setVisible(true);
             }
         } else {
-            posterImage = new Image(window.getShell().getDisplay(), ListView.class.getResourceAsStream(POSTER_NO_IMAGE)); //$NON-NLS-1$
+            posterImage = new Image(window.getShell().getDisplay(),
+                    ListView.class.getResourceAsStream(ImageResource.NO_POSTER_IMAGE)); //$NON-NLS-1$
             posterImageCanvas.setVisible(true);
         }
     }

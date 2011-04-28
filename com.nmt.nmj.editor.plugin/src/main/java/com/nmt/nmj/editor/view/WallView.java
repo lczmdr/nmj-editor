@@ -24,13 +24,12 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import com.nmt.nmj.editor.Application;
+import com.nmt.nmj.editor.ImageResource;
 import com.nmt.nmj.editor.dialog.MovieInformationDialog;
 import com.nmt.nmj.editor.exception.NmjEditorException;
 import com.nmt.nmj.editor.model.Video;
 
 public class WallView extends ViewPart {
-
-    private static final String NO_POSTER_IMAGE = "/icons/no-poster.jpg";
 
     public static final String ID = "com.nmt.nmj.editor.wallView";
 
@@ -106,11 +105,11 @@ public class WallView extends ViewPart {
                                         posterImage = new Image(window.getShell().getDisplay(), video.getPosterImage());
                                     } else {
                                         posterImage = new Image(window.getShell().getDisplay(), ListView.class
-                                                .getResourceAsStream(NO_POSTER_IMAGE));
+                                                .getResourceAsStream(ImageResource.NO_POSTER_IMAGE));
                                     }
                                 } else {
                                     posterImage = new Image(window.getShell().getDisplay(), ListView.class
-                                            .getResourceAsStream(NO_POSTER_IMAGE));
+                                            .getResourceAsStream(ImageResource.NO_POSTER_IMAGE));
                                 }
                                 posterImageCanvas.setData("double-buffer-image", posterImage);
                             }
@@ -118,7 +117,8 @@ public class WallView extends ViewPart {
                         }
                     });
                 }
-                getViewSite().getActionBars().getStatusLineManager().setMessage(movies.size() + " movies. Database: " + Application.getDatabaseService().getFileName());
+                String status = movies.size() + " movies. Database: " + Application.getDatabaseService().getFileName();
+                getViewSite().getActionBars().getStatusLineManager().setMessage(status);
                 posterComposite.layout();
                 posterComposite.pack(true);
             } else {

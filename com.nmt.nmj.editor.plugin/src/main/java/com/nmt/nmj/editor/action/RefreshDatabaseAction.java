@@ -2,7 +2,6 @@ package com.nmt.nmj.editor.action;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -24,7 +23,6 @@ public class RefreshDatabaseAction extends Action {
         setToolTipText(label);
         setId(com.nmt.nmj.editor.ICommandIds.CMD_REFRESH_DATABASE);
         setActionDefinitionId(ICommandIds.CMD_REFRESH_DATABASE);
-        setImageDescriptor(ImageDescriptor.createFromFile(RefreshDatabaseAction.class, "/icons/refresh.png"));
     }
 
     public void run() {

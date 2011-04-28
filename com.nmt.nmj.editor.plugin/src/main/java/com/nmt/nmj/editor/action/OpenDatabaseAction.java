@@ -2,7 +2,6 @@ package com.nmt.nmj.editor.action;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -26,7 +25,6 @@ public class OpenDatabaseAction extends Action {
         setToolTipText(label);
         setId(com.nmt.nmj.editor.ICommandIds.CMD_OPEN_DATABASE);
         setActionDefinitionId(ICommandIds.CMD_OPEN_DATABASE);
-        setImageDescriptor(ImageDescriptor.createFromFile(OpenDatabaseAction.class, "/icons/open.png"));
     }
 
     public void run() {

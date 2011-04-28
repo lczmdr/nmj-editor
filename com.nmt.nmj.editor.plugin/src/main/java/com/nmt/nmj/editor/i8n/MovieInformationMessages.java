@@ -6,7 +6,6 @@ public class MovieInformationMessages extends NLS {
 
     private static final String BUNDLE_NAME = "com.nmt.nmj.editor.i8n.movieInformationMessages"; //$NON-NLS-1$
 
-    public static String movie_information_33;
     public static String movie_information_casting;
     public static String movie_information_casting_lowercase;
     public static String movie_information_certification;
