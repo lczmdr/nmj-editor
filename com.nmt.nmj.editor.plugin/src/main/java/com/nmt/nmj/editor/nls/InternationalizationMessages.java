@@ -4,7 +4,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class InternationalizationMessages extends NLS {
 
-    private static final String BUNDLE_NAME = "com.nmt.nmj.editor.i8n.internationalizationMessages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "com.nmt.nmj.editor.nls.internationalizationMessages"; //$NON-NLS-1$
 
     public static String movie_information_casting;
     public static String movie_information_casting_lowercase;
