@@ -27,6 +27,7 @@ import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.ImageResource;
 import com.nmt.nmj.editor.dialog.MovieInformationDialog;
 import com.nmt.nmj.editor.exception.NmjEditorException;
+import com.nmt.nmj.editor.model.Movie;
 import com.nmt.nmj.editor.model.Video;
 import com.nmt.nmj.editor.nls.InternationalizationMessages;
 
@@ -67,10 +68,10 @@ public class WallView extends ViewPart {
 
     public void refresh() {
         try {
-            if (Application.getDatabaseService().isConnected()) {
+            if (Application.getDatabaseService().isOpen()) {
                 posterComposite.dispose();
                 createPosterComposite();
-                List<Video> movies = Application.getDatabaseService().getAllMovies();
+                List<Movie> movies = Application.getDatabaseService().getMovies();
                 int moviesByRow = posterComposite.getBounds().width / 130;
                 int height = (int) (Math.ceil(movies.size() / moviesByRow) * 200);
                 posterComposite.setLayout(new GridLayout(moviesByRow, false));
@@ -81,14 +82,8 @@ public class WallView extends ViewPart {
                     posterImageCanvas.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseDown(MouseEvent e) {
-                            try {
-                                Application.getDatabaseService().getDetailedInformation(video);
-                                MovieInformationDialog dialog = new MovieInformationDialog(window.getShell(), video);
-                                dialog.open();
-                            } catch (NmjEditorException e1) {
-                                MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error,
-                                        e1.getMessage());
-                            }
+                            MovieInformationDialog dialog = new MovieInformationDialog(window.getShell(), video);
+                            dialog.open();
                         }
                     });
                     posterImageCanvas.addMouseMoveListener(new MouseMoveListener() {
@@ -119,7 +114,7 @@ public class WallView extends ViewPart {
                         }
                     });
                 }
-                String status = movies.size() + " movies. Database: " + Application.getDatabaseService().getFileName();
+                String status = movies.size() + " movies. " + Application.getDatabaseService().getDatabaseDescription();
                 getViewSite().getActionBars().getStatusLineManager().setMessage(status);
                 posterComposite.layout();
                 posterComposite.pack(true);
