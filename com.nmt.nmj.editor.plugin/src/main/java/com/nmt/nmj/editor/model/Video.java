@@ -3,7 +3,7 @@ package com.nmt.nmj.editor.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Video {
+public abstract class Video {
 
     private int id;
     private String title;

@@ -7,16 +7,16 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
+import com.nmt.nmj.editor.backend.JukeboxDatabaseService;
 import com.nmt.nmj.editor.exception.NmjEditorException;
 import com.nmt.nmj.editor.nls.InternationalizationMessages;
-import com.nmt.nmj.editor.sqlite.DatabaseService;
 
 /**
  * This class controls all aspects of the application's execution
  */
 public class Application implements IApplication {
 
-    private static DatabaseService databaseService = new DatabaseService();
+    private static JukeboxDatabaseService databaseService;
 
     /*
      * (non-Javadoc)
@@ -64,8 +64,12 @@ public class Application implements IApplication {
         });
     }
 
-    public static DatabaseService getDatabaseService() {
+    public static JukeboxDatabaseService getDatabaseService() {
         return databaseService;
+    }
+
+    public static void setDatabaseService(JukeboxDatabaseService databaseService) {
+        Application.databaseService = databaseService;
     }
 
 }

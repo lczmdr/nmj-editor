@@ -11,6 +11,8 @@ import org.eclipse.ui.WorkbenchException;
 
 import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.ICommandIds;
+import com.nmt.nmj.editor.backend.DatabaseServiceFactory;
+import com.nmt.nmj.editor.backend.JukeboxDatabaseService;
 import com.nmt.nmj.editor.exception.NmjEditorException;
 import com.nmt.nmj.editor.nls.InternationalizationMessages;
 import com.nmt.nmj.editor.perspective.ListPerspective;
@@ -38,7 +40,9 @@ public class OpenDatabaseAction extends Action {
             String selectedFile = fileDialog.open();
             if (selectedFile != null) {
                 try {
-                    Application.getDatabaseService().openConnection(selectedFile);
+                    JukeboxDatabaseService databaseService = DatabaseServiceFactory.createSqliteJukeboxDatabaseService(selectedFile);
+                    Application.setDatabaseService(databaseService);
+                    databaseService.openConnection();
                     PlatformUI.getWorkbench().showPerspective(ListPerspective.ID, window);
                     ListView editorView = (ListView) window.getActivePage().showView(ListView.ID);
                     editorView.refresh();

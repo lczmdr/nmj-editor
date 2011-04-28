@@ -25,6 +25,7 @@ import org.eclipse.ui.part.ViewPart;
 
 import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.exception.NmjEditorException;
+import com.nmt.nmj.editor.model.Movie;
 import com.nmt.nmj.editor.model.Video;
 import com.nmt.nmj.editor.nls.InternationalizationMessages;
 import com.nmt.nmj.editor.view.components.MovieInformationComposite;
@@ -166,14 +167,9 @@ public class ListView extends ViewPart {
         IStructuredSelection selection = (IStructuredSelection) movieTableViewer.getSelection();
         currentVideo = (Video) selection.getFirstElement();
         if (currentVideo != null) {
-            try {
-                Application.getDatabaseService().getDetailedInformation(currentVideo);
-                movieInformationComposite.showMovieInformation(currentVideo);
-                movieInformationComposite.setVisible(true);
-                movieInformationComposite.pack();
-            } catch (NmjEditorException e1) {
-                MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error, e1.getMessage());
-            }
+            movieInformationComposite.showMovieInformation(currentVideo);
+            movieInformationComposite.setVisible(true);
+            movieInformationComposite.pack();
         }
     }
 
@@ -189,11 +185,11 @@ public class ListView extends ViewPart {
 
     public void refresh() {
         try {
-            if (Application.getDatabaseService().isConnected()) {
-                List<Video> movies = Application.getDatabaseService().getAllMovies();
+            if (Application.getDatabaseService().isOpen()) {
+                List<Movie> movies = Application.getDatabaseService().getMovies();
                 this.movieTableViewer.setInput(movies);
                 mainComposite.layout();
-                String status = movies.size() + " movies. Database: " + Application.getDatabaseService().getFileName();
+                String status = movies.size() + " movies. " + Application.getDatabaseService().getDatabaseDescription();
                 getViewSite().getActionBars().getStatusLineManager().setMessage(status);
                 if (movieTableViewer.getTable().getItemCount() > 0) {
                     movieTableViewer.getTable().select(0);

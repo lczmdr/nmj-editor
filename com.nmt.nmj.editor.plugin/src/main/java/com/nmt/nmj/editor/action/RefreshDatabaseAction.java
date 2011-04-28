@@ -28,14 +28,13 @@ public class RefreshDatabaseAction extends Action {
 
     public void run() {
         if (window != null) {
-            String fileName = Application.getDatabaseService().getFileName();
-            if (fileName == null || fileName.length() == 0) {
+            if (Application.getDatabaseService().isOpen()) {
                 MessageDialog.openInformation(window.getShell(), "Information",
                         "No current database connection. First open one!");
                 return;
             }
             try {
-                Application.getDatabaseService().openConnection(fileName);
+                Application.getDatabaseService().flushConnection();
             } catch (NmjEditorException e1) {
                 MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error, e1.getMessage());
                 return;
