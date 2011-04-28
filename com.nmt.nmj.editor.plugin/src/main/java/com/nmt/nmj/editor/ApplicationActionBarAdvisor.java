@@ -4,7 +4,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
@@ -16,6 +15,7 @@ import com.nmt.nmj.editor.action.ListViewAction;
 import com.nmt.nmj.editor.action.OpenDatabaseAction;
 import com.nmt.nmj.editor.action.RefreshDatabaseAction;
 import com.nmt.nmj.editor.action.WallViewAction;
+import com.nmt.nmj.editor.i8n.InternationalizationMessages;
 
 public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
@@ -32,30 +32,28 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
     protected void makeActions(IWorkbenchWindow window) {
         exitAction = ActionFactory.QUIT.create(window);
-        exitAction.setImageDescriptor(ImageDescriptor.createFromFile(ApplicationActionBarAdvisor.class,
-                "/icons/exit.png"));
-        exitAction.setToolTipText("Exit");
+        exitAction.setToolTipText(InternationalizationMessages.menu_exit_tooltip);
         register(exitAction);
 
-        openDatabaseAction = new OpenDatabaseAction(window, "Open Database");
+        openDatabaseAction = new OpenDatabaseAction(window, InternationalizationMessages.menu_open_database);
         register(openDatabaseAction);
 
-        refreshDatabaseAction = new RefreshDatabaseAction(window, "Refresh");
+        refreshDatabaseAction = new RefreshDatabaseAction(window, InternationalizationMessages.menu_refresh);
         register(refreshDatabaseAction);
 
-        closeDatabaseAction = new CloseDatabaseAction(window, "Close Database");
+        closeDatabaseAction = new CloseDatabaseAction(window, InternationalizationMessages.menu_close_database);
         register(closeDatabaseAction);
 
-        listViewAction = new ListViewAction(window, "List view");
+        listViewAction = new ListViewAction(window, InternationalizationMessages.menu_list_view);
         register(listViewAction);
 
-        wallViewAction = new WallViewAction(window, "Wall view");
+        wallViewAction = new WallViewAction(window, InternationalizationMessages.menu_wall_view);
         register(wallViewAction);
     }
 
     protected void fillMenuBar(IMenuManager menuBar) {
-        MenuManager databaseMenu = new MenuManager("&Database");
-        MenuManager layoutMenu = new MenuManager("Switch view", "layout");
+        MenuManager databaseMenu = new MenuManager(InternationalizationMessages.menu_database);
+        MenuManager layoutMenu = new MenuManager(InternationalizationMessages.menu_switch_view);
 
         menuBar.add(databaseMenu);
         menuBar.add(layoutMenu);
@@ -70,14 +68,14 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         layoutMenu.add(wallViewAction);
     }
 
-//    protected void fillCoolBar(ICoolBarManager coolBar) {
-//        IToolBarManager toolbar = new ToolBarManager(SWT.FLAT | SWT.RIGHT);
-//        coolBar.add(new ToolBarContributionItem(toolbar, "main"));
-//        toolbar.add(openDatabaseAction);
-//        toolbar.add(refreshDatabaseAction);
-//        toolbar.add(closeDatabaseAction);
-//        toolbar.add(new Separator());
-//        toolbar.add(exitAction);
-//    }
+    // protected void fillCoolBar(ICoolBarManager coolBar) {
+    // IToolBarManager toolbar = new ToolBarManager(SWT.FLAT | SWT.RIGHT);
+    // coolBar.add(new ToolBarContributionItem(toolbar, "main"));
+    // toolbar.add(openDatabaseAction);
+    // toolbar.add(refreshDatabaseAction);
+    // toolbar.add(closeDatabaseAction);
+    // toolbar.add(new Separator());
+    // toolbar.add(exitAction);
+    // }
 
 }
