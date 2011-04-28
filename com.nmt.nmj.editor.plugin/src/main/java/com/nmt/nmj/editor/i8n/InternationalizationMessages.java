@@ -2,9 +2,9 @@ package com.nmt.nmj.editor.i8n;
 
 import org.eclipse.osgi.util.NLS;
 
-public class MovieInformationMessages extends NLS {
+public class InternationalizationMessages extends NLS {
 
-    private static final String BUNDLE_NAME = "com.nmt.nmj.editor.i8n.movieInformationMessages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "com.nmt.nmj.editor.i8n.internationalizationMessages"; //$NON-NLS-1$
 
     public static String movie_information_casting;
     public static String movie_information_casting_lowercase;
@@ -38,9 +38,9 @@ public class MovieInformationMessages extends NLS {
 
     static {
         // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, MovieInformationMessages.class);
+        NLS.initializeMessages(BUNDLE_NAME, InternationalizationMessages.class);
     }
 
-    private MovieInformationMessages() {
+    private InternationalizationMessages() {
     }
 }
