@@ -25,8 +25,8 @@ import org.eclipse.ui.part.ViewPart;
 
 import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.exception.NmjEditorException;
-import com.nmt.nmj.editor.i8n.InternationalizationMessages;
 import com.nmt.nmj.editor.model.Video;
+import com.nmt.nmj.editor.nls.InternationalizationMessages;
 import com.nmt.nmj.editor.view.components.MovieInformationComposite;
 import com.nmt.nmj.editor.view.provider.MovieContentProvider;
 import com.nmt.nmj.editor.view.provider.MovieLabelProvider;

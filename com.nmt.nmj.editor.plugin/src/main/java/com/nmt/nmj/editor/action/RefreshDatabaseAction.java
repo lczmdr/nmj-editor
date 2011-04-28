@@ -10,7 +10,7 @@ import org.eclipse.ui.WorkbenchException;
 import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.ICommandIds;
 import com.nmt.nmj.editor.exception.NmjEditorException;
-import com.nmt.nmj.editor.i8n.InternationalizationMessages;
+import com.nmt.nmj.editor.nls.InternationalizationMessages;
 import com.nmt.nmj.editor.perspective.ListPerspective;
 import com.nmt.nmj.editor.view.ListView;
 

@@ -15,7 +15,7 @@ import com.nmt.nmj.editor.action.ListViewAction;
 import com.nmt.nmj.editor.action.OpenDatabaseAction;
 import com.nmt.nmj.editor.action.RefreshDatabaseAction;
 import com.nmt.nmj.editor.action.WallViewAction;
-import com.nmt.nmj.editor.i8n.InternationalizationMessages;
+import com.nmt.nmj.editor.nls.InternationalizationMessages;
 
 public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 

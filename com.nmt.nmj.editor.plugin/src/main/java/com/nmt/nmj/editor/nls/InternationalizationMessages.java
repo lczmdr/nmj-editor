@@ -1,4 +1,4 @@
-package com.nmt.nmj.editor.i8n;
+package com.nmt.nmj.editor.nls;
 
 import org.eclipse.osgi.util.NLS;
 
