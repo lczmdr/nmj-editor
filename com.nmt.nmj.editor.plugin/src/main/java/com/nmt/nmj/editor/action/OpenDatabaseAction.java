@@ -12,6 +12,7 @@ import org.eclipse.ui.WorkbenchException;
 import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.ICommandIds;
 import com.nmt.nmj.editor.exception.NmjEditorException;
+import com.nmt.nmj.editor.i8n.InternationalizationMessages;
 import com.nmt.nmj.editor.perspective.ListPerspective;
 import com.nmt.nmj.editor.view.ListView;
 
@@ -42,11 +43,14 @@ public class OpenDatabaseAction extends Action {
                     ListView editorView = (ListView) window.getActivePage().showView(ListView.ID);
                     editorView.refresh();
                 } catch (NmjEditorException e1) {
-                    MessageDialog.openError(window.getShell(), "Error", e1.getMessage());
+                    MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error,
+                            e1.getMessage());
                 } catch (PartInitException e) {
-                    MessageDialog.openError(window.getShell(), "Error", "List view is missing");
+                    MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error,
+                            "List view is missing");
                 } catch (WorkbenchException e) {
-                    MessageDialog.openError(window.getShell(), "Error", "List perspective is missing");
+                    MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error,
+                            "List perspective is missing");
                 }
             }
         }

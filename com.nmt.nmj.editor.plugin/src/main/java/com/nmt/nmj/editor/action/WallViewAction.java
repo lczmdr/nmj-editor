@@ -8,6 +8,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
 
 import com.nmt.nmj.editor.ICommandIds;
+import com.nmt.nmj.editor.i8n.InternationalizationMessages;
 import com.nmt.nmj.editor.perspective.WallPerspective;
 import com.nmt.nmj.editor.view.WallView;
 
@@ -30,10 +31,12 @@ public class WallViewAction extends Action {
                 WallView wallView = (WallView) window.getActivePage().showView(WallView.ID);
                 wallView.refresh();
             } catch (PartInitException e) {
-                MessageDialog.openError(window.getShell(), "Error", "Wall view is missing");
+                MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error,
+                        "Wall view is missing");
             }
         } catch (WorkbenchException e) {
-            MessageDialog.openError(window.getShell(), "Error", "Error opening perspective:" + e.getMessage());
+            MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error,
+                    "Error opening perspective:" + e.getMessage());
         }
     }
 }
