@@ -46,36 +46,6 @@
             id="nmj.editor.wallView"
             name="nmj.editor.wallView">
       </command>
-      <keyBinding
-            command="nmj.editor.openDatabase"
-            commandId="nmj.editor.openDatabase"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+O">
-      </keyBinding>
-      <keyBinding
-            command="nmj.editor.refreshDatabase"
-            commandId="nmj.editor.refreshDatabase"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+R">
-      </keyBinding>
-      <keyBinding
-            command="org.eclipse.ui.file.exit"
-            commandId="org.eclipse.ui.file.exit"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Q">
-      </keyBinding>
-      <keyBinding
-            command="nmj.editor.listView"
-            commandId="nmj.editor.listView"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+1">
-      </keyBinding>
-      <keyBinding
-            command="nmj.editor.wallView"
-            commandId="nmj.editor.wallView"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+2">
-      </keyBinding>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -103,6 +73,39 @@
                value="nmj-editor">
          </property>
       </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="nmj.editor.openDatabase"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+O">
+      </key>
+      <key
+            commandId="nmj.editor.refreshDatabase"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+R">
+      </key>
+      <key
+            commandId="nmj.editor.closeDatabase"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+D">
+      </key>
+      <key
+            commandId="org.eclipse.ui.file.exit"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+Q">
+      </key>
+      <key
+            commandId="nmj.editor.listView"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+1">
+      </key>
+      <key
+            commandId="nmj.editor.wallView"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+2">
+      </key>
    </extension>
 
 </plugin>
