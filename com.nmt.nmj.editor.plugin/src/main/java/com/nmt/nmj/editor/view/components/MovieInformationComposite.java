@@ -162,10 +162,10 @@ public class MovieInformationComposite extends Composite {
         videoTypeGroup.setLayout(new GridLayout(2, false));
 
         movieTypeButton = new Button(videoTypeGroup, SWT.RADIO);
-        movieTypeButton.setText(InternationalizationMessages.movie_information_movie);
+        movieTypeButton.setText(InternationalizationMessages.common_movie);
 
         tvSerieTypeButton = new Button(videoTypeGroup, SWT.RADIO);
-        tvSerieTypeButton.setText(InternationalizationMessages.movie_information_tv_series);
+        tvSerieTypeButton.setText(InternationalizationMessages.common_tv_show);
 
         Composite composite = new Composite(doubleColumnComposite, SWT.NONE);
         composite.setLayout(new GridLayout(2, false));
@@ -258,7 +258,7 @@ public class MovieInformationComposite extends Composite {
             public void widgetSelected(SelectionEvent e) {
                 InputDialog input = new InputDialog(window.getShell(),
                         InternationalizationMessages.movie_information_input,
-                        InternationalizationMessages.movie_information_new + type, "", //$NON-NLS-3$
+                        InternationalizationMessages.movie_information_new + " " + type, "", //$NON-NLS-3$
                         new IInputValidator() {
                             @Override
                             public String isValid(String newText) {
