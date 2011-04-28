@@ -27,6 +27,7 @@ import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.ImageResource;
 import com.nmt.nmj.editor.dialog.MovieInformationDialog;
 import com.nmt.nmj.editor.exception.NmjEditorException;
+import com.nmt.nmj.editor.i8n.InternationalizationMessages;
 import com.nmt.nmj.editor.model.Video;
 
 public class WallView extends ViewPart {
@@ -85,7 +86,8 @@ public class WallView extends ViewPart {
                                 MovieInformationDialog dialog = new MovieInformationDialog(window.getShell(), video);
                                 dialog.open();
                             } catch (NmjEditorException e1) {
-                                MessageDialog.openError(window.getShell(), "Error", e1.getMessage());
+                                MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error,
+                                        e1.getMessage());
                             }
                         }
                     });
@@ -125,7 +127,7 @@ public class WallView extends ViewPart {
                 posterComposite.dispose();
             }
         } catch (NmjEditorException e) {
-            MessageDialog.openError(window.getShell(), "Error", e.getMessage());
+            MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error, e.getMessage());
         }
     }
 }

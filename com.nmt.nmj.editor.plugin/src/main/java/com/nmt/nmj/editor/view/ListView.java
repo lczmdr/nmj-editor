@@ -25,6 +25,7 @@ import org.eclipse.ui.part.ViewPart;
 
 import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.exception.NmjEditorException;
+import com.nmt.nmj.editor.i8n.InternationalizationMessages;
 import com.nmt.nmj.editor.model.Video;
 import com.nmt.nmj.editor.view.components.MovieInformationComposite;
 import com.nmt.nmj.editor.view.provider.MovieContentProvider;
@@ -35,15 +36,15 @@ public class ListView extends ViewPart {
 
     public static final String ID = "com.nmt.nmj.editor.listView";
 
-    private final String VIDEO_ID = "ID";
-    private final String VIDEO_TITLE = "Name";
-    private final String VIDEO_RELEASE_DATE = "Release Date";
-    private final String VIDEO_RUNTIME = "Runtime";
-    private final String VIDEO_RATING = "Rating";
-    private final String VIDEO_SYSTEM = "System";
-    private final String VIDEO_CODEC = "Video Codec";
-    private final String VIDEO_DIMENSIONS = "Dimensions";
-    private final String VIDEO_FPS = "FPS";
+    private final String VIDEO_ID = InternationalizationMessages.list_view_id;
+    private final String VIDEO_TITLE = InternationalizationMessages.list_view_movie_name;
+    private final String VIDEO_RELEASE_DATE = InternationalizationMessages.list_view_release_date;
+    private final String VIDEO_RUNTIME = InternationalizationMessages.list_view_runtime;
+    private final String VIDEO_RATING = InternationalizationMessages.list_view_rating;
+    private final String VIDEO_SYSTEM = InternationalizationMessages.list_view_system;
+    private final String VIDEO_CODEC = InternationalizationMessages.list_view_video_codec;
+    private final String VIDEO_DIMENSIONS = InternationalizationMessages.list_view_video_dimensions;
+    private final String VIDEO_FPS = InternationalizationMessages.list_view_video_fps;
 
     private String[] columnNames = new String[] { VIDEO_ID, VIDEO_TITLE, VIDEO_RELEASE_DATE, VIDEO_RUNTIME,
             VIDEO_RATING, VIDEO_SYSTEM, VIDEO_CODEC, VIDEO_DIMENSIONS, VIDEO_FPS };
@@ -74,15 +75,15 @@ public class ListView extends ViewPart {
         tabFolder.setLayoutData(gd);
 
         TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
-        tabItem.setText("Movies");
+        tabItem.setText(InternationalizationMessages.common_movies);
 
         tabItem.setControl(createMovieTable(tabFolder));
 
         tabItem = new TabItem(tabFolder, SWT.NULL);
-        tabItem.setText("TV Shows");
+        tabItem.setText(InternationalizationMessages.common_tv_shows);
 
         tabItem = new TabItem(tabFolder, SWT.NULL);
-        tabItem.setText("Music");
+        tabItem.setText(InternationalizationMessages.common_music);
 
         movieInformationComposite = new MovieInformationComposite(mainComposite, SWT.NONE);
         layout = new GridLayout();
@@ -171,7 +172,7 @@ public class ListView extends ViewPart {
                 movieInformationComposite.setVisible(true);
                 movieInformationComposite.pack();
             } catch (NmjEditorException e1) {
-                MessageDialog.openError(window.getShell(), "Error", e1.getMessage());
+                MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error, e1.getMessage());
             }
         }
     }
@@ -204,7 +205,7 @@ public class ListView extends ViewPart {
                 getViewSite().getActionBars().getStatusLineManager().setMessage("");
             }
         } catch (NmjEditorException e) {
-            MessageDialog.openError(window.getShell(), "Error", e.getMessage());
+            MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error, e.getMessage());
         }
     }
 

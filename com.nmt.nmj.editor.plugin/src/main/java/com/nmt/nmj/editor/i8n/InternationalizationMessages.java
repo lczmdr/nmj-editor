@@ -21,7 +21,6 @@ public class InternationalizationMessages extends NLS {
     public static String movie_information_input;
     public static String movie_information_keyword_lowercase;
     public static String movie_information_keywords;
-    public static String movie_information_movie;
     public static String movie_information_movie_title;
     public static String movie_information_movie_title_click;
     public static String movie_information_new;
@@ -32,10 +31,26 @@ public class InternationalizationMessages extends NLS {
     public static String movie_information_search_title_text;
     public static String movie_information_synopsis;
     public static String movie_information_thumbnail;
-    public static String movie_information_tv_series;
     public static String movie_information_video_type;
     public static String movie_information_wallpaper;
 
+    public static String common_movie;
+    public static String common_movies;
+    public static String common_tv_show;
+    public static String common_tv_shows;
+    public static String common_music;
+    public static String common_error;
+
+    public static String list_view_id;
+    public static String list_view_movie_name;
+    public static String list_view_release_date;
+    public static String list_view_runtime;
+    public static String list_view_rating;
+    public static String list_view_system;
+    public static String list_view_video_codec;
+    public static String list_view_video_dimensions;
+    public static String list_view_video_fps;
+    
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, InternationalizationMessages.class);
