@@ -9,6 +9,5 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.6.1",
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: lib/commons-lang-2.6.jar,
- lib/nestedvm-1.0.jar,
  lib/sqlite-jdbc-3.6.16.jar,
  .

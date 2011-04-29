@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Networked Media Jukebox Editor Plugin Tests
 Bundle-SymbolicName: com.nmt.nmj.plugin.tests;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Fragment-Host: com.nmt.nmj.plugin
 Require-Bundle: org.junit4;bundle-version="4.5.0"
-
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: com.nmt.nmj.editor.backend
