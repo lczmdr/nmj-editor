@@ -9,7 +9,7 @@ import org.eclipse.ui.PlatformUI;
 
 import com.nmt.nmj.editor.backend.JukeboxDatabaseService;
 import com.nmt.nmj.editor.exception.NmjEditorException;
-import com.nmt.nmj.editor.nls.InternationalizationMessages;
+import com.nmt.nmj.editor.nls.NlsMessages;
 
 /**
  * This class controls all aspects of the application's execution
@@ -49,7 +49,7 @@ public class Application implements IApplication {
                 databaseService.closeConnection();
             } catch (NmjEditorException e) {
                 MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-                        InternationalizationMessages.common_error, e.getMessage());
+                        NlsMessages.common_error, e.getMessage());
             }
         }
         if (!PlatformUI.isWorkbenchRunning())

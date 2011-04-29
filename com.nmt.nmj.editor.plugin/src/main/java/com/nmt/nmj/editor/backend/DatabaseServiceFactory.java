@@ -1,6 +1,5 @@
 package com.nmt.nmj.editor.backend;
 
-
 public class DatabaseServiceFactory {
 
     public static SqliteJukeboxDatabaseService createSqliteJukeboxDatabaseService(String selectedFile) {

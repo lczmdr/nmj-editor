@@ -6,7 +6,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 import com.nmt.nmj.editor.view.WallView;
 
 public class WallPerspective implements IPerspectiveFactory {
-    
+
     public static final String ID = "com.nmt.nmj.editor.plugin.wallPerspective";
 
     public void createInitialLayout(IPageLayout layout) {

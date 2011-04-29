@@ -10,7 +10,7 @@ import org.eclipse.ui.WorkbenchException;
 import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.ICommandIds;
 import com.nmt.nmj.editor.exception.NmjEditorException;
-import com.nmt.nmj.editor.nls.InternationalizationMessages;
+import com.nmt.nmj.editor.nls.NlsMessages;
 import com.nmt.nmj.editor.perspective.ListPerspective;
 import com.nmt.nmj.editor.view.ListView;
 
@@ -29,14 +29,13 @@ public class RefreshDatabaseAction extends Action {
     public void run() {
         if (window != null) {
             if (Application.getDatabaseService().isOpen()) {
-                MessageDialog.openInformation(window.getShell(), "Information",
-                        "No current database connection. First open one!");
+                MessageDialog.openInformation(window.getShell(), "Information", NlsMessages.database_closed);
                 return;
             }
             try {
                 Application.getDatabaseService().flushConnection();
             } catch (NmjEditorException e1) {
-                MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error, e1.getMessage());
+                MessageDialog.openError(window.getShell(), NlsMessages.common_error, e1.getMessage());
                 return;
             }
             try {
@@ -44,11 +43,9 @@ public class RefreshDatabaseAction extends Action {
                 ListView editorView = (ListView) window.getActivePage().showView(ListView.ID);
                 editorView.refresh();
             } catch (PartInitException e) {
-                MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error,
-                        "List view is missing");
+                MessageDialog.openError(window.getShell(), NlsMessages.common_error, "List view is missing");
             } catch (WorkbenchException e) {
-                MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error,
-                        "List perspective is missing");
+                MessageDialog.openError(window.getShell(), NlsMessages.common_error, "List perspective is missing");
             }
         }
     }

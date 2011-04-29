@@ -34,9 +34,9 @@ public class MovieInformationDialog extends Dialog {
         movieInformationComposite.setVisible(true);
         return movieInformationComposite;
     }
-    
+
     protected void createButtonsForButtonBar(Composite parent) {
-        
+
     }
 
 }

@@ -27,7 +27,7 @@ import com.nmt.nmj.editor.Application;
 import com.nmt.nmj.editor.exception.NmjEditorException;
 import com.nmt.nmj.editor.model.Movie;
 import com.nmt.nmj.editor.model.Video;
-import com.nmt.nmj.editor.nls.InternationalizationMessages;
+import com.nmt.nmj.editor.nls.NlsMessages;
 import com.nmt.nmj.editor.view.components.MovieInformationComposite;
 import com.nmt.nmj.editor.view.provider.MovieContentProvider;
 import com.nmt.nmj.editor.view.provider.MovieLabelProvider;
@@ -37,15 +37,15 @@ public class ListView extends ViewPart {
 
     public static final String ID = "com.nmt.nmj.editor.listView";
 
-    private final String VIDEO_ID = InternationalizationMessages.list_view_id;
-    private final String VIDEO_TITLE = InternationalizationMessages.list_view_movie_name;
-    private final String VIDEO_RELEASE_DATE = InternationalizationMessages.list_view_release_date;
-    private final String VIDEO_RUNTIME = InternationalizationMessages.list_view_runtime;
-    private final String VIDEO_RATING = InternationalizationMessages.list_view_rating;
-    private final String VIDEO_SYSTEM = InternationalizationMessages.list_view_system;
-    private final String VIDEO_CODEC = InternationalizationMessages.list_view_video_codec;
-    private final String VIDEO_DIMENSIONS = InternationalizationMessages.list_view_video_dimensions;
-    private final String VIDEO_FPS = InternationalizationMessages.list_view_video_fps;
+    private final String VIDEO_ID = NlsMessages.list_view_id;
+    private final String VIDEO_TITLE = NlsMessages.list_view_movie_name;
+    private final String VIDEO_RELEASE_DATE = NlsMessages.list_view_release_date;
+    private final String VIDEO_RUNTIME = NlsMessages.list_view_runtime;
+    private final String VIDEO_RATING = NlsMessages.list_view_rating;
+    private final String VIDEO_SYSTEM = NlsMessages.list_view_system;
+    private final String VIDEO_CODEC = NlsMessages.list_view_video_codec;
+    private final String VIDEO_DIMENSIONS = NlsMessages.list_view_video_dimensions;
+    private final String VIDEO_FPS = NlsMessages.list_view_video_fps;
 
     private String[] columnNames = new String[] { VIDEO_ID, VIDEO_TITLE, VIDEO_RELEASE_DATE, VIDEO_RUNTIME,
             VIDEO_RATING, VIDEO_SYSTEM, VIDEO_CODEC, VIDEO_DIMENSIONS, VIDEO_FPS };
@@ -76,15 +76,15 @@ public class ListView extends ViewPart {
         tabFolder.setLayoutData(gd);
 
         TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
-        tabItem.setText(InternationalizationMessages.common_movies);
+        tabItem.setText(NlsMessages.common_movies);
 
         tabItem.setControl(createMovieTable(tabFolder));
 
         tabItem = new TabItem(tabFolder, SWT.NULL);
-        tabItem.setText(InternationalizationMessages.common_tv_shows);
+        tabItem.setText(NlsMessages.common_tv_shows);
 
         tabItem = new TabItem(tabFolder, SWT.NULL);
-        tabItem.setText(InternationalizationMessages.common_music);
+        tabItem.setText(NlsMessages.common_music);
 
         movieInformationComposite = new MovieInformationComposite(mainComposite, SWT.NONE);
         layout = new GridLayout();
@@ -201,7 +201,7 @@ public class ListView extends ViewPart {
                 getViewSite().getActionBars().getStatusLineManager().setMessage("");
             }
         } catch (NmjEditorException e) {
-            MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error, e.getMessage());
+            MessageDialog.openError(window.getShell(), NlsMessages.common_error, e.getMessage());
         }
     }
 

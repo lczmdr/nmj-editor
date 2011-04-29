@@ -7,7 +7,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
 
 import com.nmt.nmj.editor.ICommandIds;
-import com.nmt.nmj.editor.nls.InternationalizationMessages;
+import com.nmt.nmj.editor.nls.NlsMessages;
 import com.nmt.nmj.editor.perspective.ListPerspective;
 
 public class ListViewAction extends Action {
@@ -26,7 +26,7 @@ public class ListViewAction extends Action {
         try {
             PlatformUI.getWorkbench().showPerspective(ListPerspective.ID, window);
         } catch (WorkbenchException e) {
-            MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error,
+            MessageDialog.openError(window.getShell(), NlsMessages.common_error,
                     "Error opening perspective:" + e.getMessage());
         }
     }

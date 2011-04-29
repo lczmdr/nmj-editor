@@ -14,7 +14,7 @@ import com.nmt.nmj.editor.ICommandIds;
 import com.nmt.nmj.editor.backend.DatabaseServiceFactory;
 import com.nmt.nmj.editor.backend.JukeboxDatabaseService;
 import com.nmt.nmj.editor.exception.NmjEditorException;
-import com.nmt.nmj.editor.nls.InternationalizationMessages;
+import com.nmt.nmj.editor.nls.NlsMessages;
 import com.nmt.nmj.editor.perspective.ListPerspective;
 import com.nmt.nmj.editor.view.ListView;
 
@@ -34,27 +34,26 @@ public class OpenDatabaseAction extends Action {
         if (window != null) {
             FileDialog fileDialog = new FileDialog(window.getShell(), SWT.OPEN);
             fileDialog.setFilterPath(System.getProperty("user.home"));
-            fileDialog.setText("Select the database...");
+            fileDialog.setText(NlsMessages.database_open_message);
             fileDialog.setFilterExtensions(new String[] { "*.db", "*.*" });
-            fileDialog.setFilterNames(new String[] { "Database Files (*.db)", "All Files (*.*)" });
+            fileDialog.setFilterNames(new String[] { NlsMessages.database_open_db_files,
+                    NlsMessages.database_open_all_files });
             String selectedFile = fileDialog.open();
             if (selectedFile != null) {
                 try {
-                    JukeboxDatabaseService databaseService = DatabaseServiceFactory.createSqliteJukeboxDatabaseService(selectedFile);
+                    JukeboxDatabaseService databaseService = DatabaseServiceFactory
+                            .createSqliteJukeboxDatabaseService(selectedFile);
                     Application.setDatabaseService(databaseService);
                     databaseService.openConnection();
                     PlatformUI.getWorkbench().showPerspective(ListPerspective.ID, window);
                     ListView editorView = (ListView) window.getActivePage().showView(ListView.ID);
                     editorView.refresh();
                 } catch (NmjEditorException e1) {
-                    MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error,
-                            e1.getMessage());
+                    MessageDialog.openError(window.getShell(), NlsMessages.common_error, e1.getMessage());
                 } catch (PartInitException e) {
-                    MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error,
-                            "List view is missing");
+                    MessageDialog.openError(window.getShell(), NlsMessages.common_error, "List view is missing");
                 } catch (WorkbenchException e) {
-                    MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error,
-                            "List perspective is missing");
+                    MessageDialog.openError(window.getShell(), NlsMessages.common_error, "List perspective is missing");
                 }
             }
         }

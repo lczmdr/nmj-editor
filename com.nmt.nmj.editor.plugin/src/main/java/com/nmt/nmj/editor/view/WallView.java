@@ -29,7 +29,7 @@ import com.nmt.nmj.editor.dialog.MovieInformationDialog;
 import com.nmt.nmj.editor.exception.NmjEditorException;
 import com.nmt.nmj.editor.model.Movie;
 import com.nmt.nmj.editor.model.Video;
-import com.nmt.nmj.editor.nls.InternationalizationMessages;
+import com.nmt.nmj.editor.nls.NlsMessages;
 
 public class WallView extends ViewPart {
 
@@ -122,7 +122,7 @@ public class WallView extends ViewPart {
                 posterComposite.dispose();
             }
         } catch (NmjEditorException e) {
-            MessageDialog.openError(window.getShell(), InternationalizationMessages.common_error, e.getMessage());
+            MessageDialog.openError(window.getShell(), NlsMessages.common_error, e.getMessage());
         }
     }
 }

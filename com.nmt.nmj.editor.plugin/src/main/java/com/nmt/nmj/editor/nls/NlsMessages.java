@@ -2,9 +2,9 @@ package com.nmt.nmj.editor.nls;
 
 import org.eclipse.osgi.util.NLS;
 
-public class InternationalizationMessages extends NLS {
+public class NlsMessages extends NLS {
 
-    private static final String BUNDLE_NAME = "com.nmt.nmj.editor.nls.internationalizationMessages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "com.nmt.nmj.editor.nls.nlsMessages"; //$NON-NLS-1$
 
     public static String movie_information_casting;
     public static String movie_information_casting_lowercase;
@@ -50,6 +50,11 @@ public class InternationalizationMessages extends NLS {
     public static String menu_database;
     public static String menu_switch_view;
 
+    public static String database_open_message;
+    public static String database_open_db_files;
+    public static String database_open_all_files;
+    public static String database_closed;
+
     public static String list_view_id;
     public static String list_view_movie_name;
     public static String list_view_release_date;
@@ -62,9 +67,9 @@ public class InternationalizationMessages extends NLS {
 
     static {
         // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, InternationalizationMessages.class);
+        NLS.initializeMessages(BUNDLE_NAME, NlsMessages.class);
     }
 
-    private InternationalizationMessages() {
+    private NlsMessages() {
     }
 }

@@ -15,7 +15,7 @@ import com.nmt.nmj.editor.action.ListViewAction;
 import com.nmt.nmj.editor.action.OpenDatabaseAction;
 import com.nmt.nmj.editor.action.RefreshDatabaseAction;
 import com.nmt.nmj.editor.action.WallViewAction;
-import com.nmt.nmj.editor.nls.InternationalizationMessages;
+import com.nmt.nmj.editor.nls.NlsMessages;
 
 public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
@@ -32,28 +32,28 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
     protected void makeActions(IWorkbenchWindow window) {
         exitAction = ActionFactory.QUIT.create(window);
-        exitAction.setToolTipText(InternationalizationMessages.menu_exit_tooltip);
+        exitAction.setToolTipText(NlsMessages.menu_exit_tooltip);
         register(exitAction);
 
-        openDatabaseAction = new OpenDatabaseAction(window, InternationalizationMessages.menu_open_database);
+        openDatabaseAction = new OpenDatabaseAction(window, NlsMessages.menu_open_database);
         register(openDatabaseAction);
 
-        refreshDatabaseAction = new RefreshDatabaseAction(window, InternationalizationMessages.menu_refresh);
+        refreshDatabaseAction = new RefreshDatabaseAction(window, NlsMessages.menu_refresh);
         register(refreshDatabaseAction);
 
-        closeDatabaseAction = new CloseDatabaseAction(window, InternationalizationMessages.menu_close_database);
+        closeDatabaseAction = new CloseDatabaseAction(window, NlsMessages.menu_close_database);
         register(closeDatabaseAction);
 
-        listViewAction = new ListViewAction(window, InternationalizationMessages.menu_list_view);
+        listViewAction = new ListViewAction(window, NlsMessages.menu_list_view);
         register(listViewAction);
 
-        wallViewAction = new WallViewAction(window, InternationalizationMessages.menu_wall_view);
+        wallViewAction = new WallViewAction(window, NlsMessages.menu_wall_view);
         register(wallViewAction);
     }
 
     protected void fillMenuBar(IMenuManager menuBar) {
-        MenuManager databaseMenu = new MenuManager(InternationalizationMessages.menu_database);
-        MenuManager layoutMenu = new MenuManager(InternationalizationMessages.menu_switch_view);
+        MenuManager databaseMenu = new MenuManager(NlsMessages.menu_database);
+        MenuManager layoutMenu = new MenuManager(NlsMessages.menu_switch_view);
 
         menuBar.add(databaseMenu);
         menuBar.add(layoutMenu);

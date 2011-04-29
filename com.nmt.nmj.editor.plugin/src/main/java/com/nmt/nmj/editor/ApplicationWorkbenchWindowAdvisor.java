@@ -23,10 +23,6 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         configurer.setShowCoolBar(false);
         configurer.setShowStatusLine(true);
         configurer.setShowProgressIndicator(true);
-//        configurer.setShowPerspectiveBar(true);
-//        PlatformUI.getPreferenceStore().setValue(IWorkbenchPreferenceConstants.DOCK_PERSPECTIVE_BAR, "TOP_RIGHT");
-//        PlatformUI.getPreferenceStore().setValue(IWorkbenchPreferenceConstants.PERSPECTIVE_BAR_EXTRAS,
-//                "com.nmt.nmj.editor.plugin.listPerspective, com.nmt.nmj.editor.plugin.wallPerspective");
     }
 
     @Override
