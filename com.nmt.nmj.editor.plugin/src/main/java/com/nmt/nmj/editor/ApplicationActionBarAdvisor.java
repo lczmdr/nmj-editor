@@ -25,6 +25,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     private Action closeDatabaseAction;
     private Action listViewAction;
     private Action wallViewAction;
+    private IWorkbenchAction aboutAction;
 
     public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
         super(configurer);
@@ -49,14 +50,19 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
         wallViewAction = new WallViewAction(window, NlsMessages.menu_wall_view);
         register(wallViewAction);
+
+        aboutAction = ActionFactory.ABOUT.create(window);
+        register(aboutAction);
     }
 
     protected void fillMenuBar(IMenuManager menuBar) {
         MenuManager databaseMenu = new MenuManager(NlsMessages.menu_database);
         MenuManager layoutMenu = new MenuManager(NlsMessages.menu_switch_view);
+        MenuManager helpMenu = new MenuManager(NlsMessages.menu_switch_view);
 
         menuBar.add(databaseMenu);
         menuBar.add(layoutMenu);
+        menuBar.add(helpMenu);
 
         databaseMenu.add(openDatabaseAction);
         databaseMenu.add(refreshDatabaseAction);
@@ -66,6 +72,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
         layoutMenu.add(listViewAction);
         layoutMenu.add(wallViewAction);
+
+        helpMenu.add(aboutAction);
     }
 
     // protected void fillCoolBar(ICoolBarManager coolBar) {

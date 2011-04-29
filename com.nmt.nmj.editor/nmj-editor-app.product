@@ -4,6 +4,12 @@
 <product name="nmj-editor" uid="com.nmt.nmj.editor" id="com.nmt.nmj.plugin.nmj_editor" application="com.nmt.nmj.plugin.application" version="1.0.0" useFeatures="false" includeLaunchers="true">
 
    <aboutInfo>
+      <text>
+         Networked Media Jukebox Editor.
+
+webpage: lucazamador.github.com/nmj-editor/
+source code: https://github.com/lucazamador/nmj-editor
+      </text>
    </aboutInfo>
 
    <configIni use="default">
