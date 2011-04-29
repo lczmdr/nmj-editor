@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import com.nmt.nmj.editor.model.Video;
+import com.nmt.nmj.editor.nls.NlsMessages;
 import com.nmt.nmj.editor.view.components.MovieInformationComposite;
 
 public class MovieInformationDialog extends Dialog {
@@ -36,7 +37,7 @@ public class MovieInformationDialog extends Dialog {
     }
 
     protected void createButtonsForButtonBar(Composite parent) {
-
+        this.createButton(parent, CANCEL, NlsMessages.common_cancel, false);
     }
 
 }
