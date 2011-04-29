@@ -28,20 +28,18 @@ public class RefreshDatabaseAction extends Action {
 
     public void run() {
         if (window != null) {
-            if (Application.getDatabaseService().isOpen()) {
+            if (!Application.getDatabaseService().isOpen()) {
                 MessageDialog.openInformation(window.getShell(), "Information", NlsMessages.database_closed);
                 return;
             }
             try {
                 Application.getDatabaseService().flushConnection();
-            } catch (NmjEditorException e1) {
-                MessageDialog.openError(window.getShell(), NlsMessages.common_error, e1.getMessage());
-                return;
-            }
-            try {
                 PlatformUI.getWorkbench().showPerspective(ListPerspective.ID, window);
                 ListView editorView = (ListView) window.getActivePage().showView(ListView.ID);
                 editorView.refresh();
+            } catch (NmjEditorException e1) {
+                MessageDialog.openError(window.getShell(), NlsMessages.common_error, e1.getMessage());
+                return;
             } catch (PartInitException e) {
                 MessageDialog.openError(window.getShell(), NlsMessages.common_error, "List view is missing");
             } catch (WorkbenchException e) {
