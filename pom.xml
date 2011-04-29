@@ -22,6 +22,7 @@
   <modules>
     <module>com.nmt.nmj.editor.feature</module>
     <module>com.nmt.nmj.editor.plugin</module>
+    <module>com.nmt.nmj.editor.plugin.tests</module>
     <module>com.nmt.nmj.editor</module>
   </modules>
 
