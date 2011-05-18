@@ -72,6 +72,7 @@ public class SqliteJukeboxDatabaseService implements JukeboxDatabaseService {
                 movie.setFileName(rs.getString("PATH"));
                 movie.setFps(rs.getDouble("FPS"));
                 movie.setPosterImage(createPosterFullPath(posterRoot, rs.getString("DETAIL_POSTER")));
+                movie.setThumbnailImage(createPosterFullPath(posterRoot, rs.getString("THUMBNAIL")));
                 getDetailedInformation(movie);
                 movies.add(movie);
             }

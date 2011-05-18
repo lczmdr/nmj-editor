@@ -10,4 +10,5 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: lib/commons-lang-2.6.jar,
  lib/sqlite-jdbc-3.6.16.jar,
+ lib/themoviedbapi-1.0.jar,
  .

@@ -35,6 +35,7 @@ import org.eclipse.ui.PlatformUI;
 
 import com.nmt.nmj.editor.ImageResource;
 import com.nmt.nmj.editor.dialog.CalendarDialog;
+import com.nmt.nmj.editor.dialog.MovieImagesDialog;
 import com.nmt.nmj.editor.model.Video;
 import com.nmt.nmj.editor.nls.NlsMessages;
 import com.nmt.nmj.editor.view.ListView;
@@ -42,7 +43,9 @@ import com.nmt.nmj.editor.view.ListView;
 public class MovieInformationComposite extends Composite {
 
     private Canvas posterImageCanvas;
+    private Canvas thumbnailImageCanvas;
     protected Image posterImage;
+    protected Image thumbnailImage;
     private Button updateMovieButton;
     private IWorkbenchWindow window;
     private Composite detailedInformationComposite;
@@ -87,9 +90,8 @@ public class MovieInformationComposite extends Composite {
         movieTitle.addMouseListener(new MouseAdapter() {
             public void mouseDown(MouseEvent e) {
                 InputDialog changeMovieTitle = new InputDialog(window.getShell(),
-                        NlsMessages.movie_information_movie_title,
-                        NlsMessages.movie_information_new_movie_title, movieTitle.getText(),
-                        new IInputValidator() {
+                        NlsMessages.movie_information_movie_title, NlsMessages.movie_information_new_movie_title,
+                        movieTitle.getText(), new IInputValidator() {
                             @Override
                             public String isValid(String newText) {
                                 if (newText.trim().length() == 0) {
@@ -112,7 +114,7 @@ public class MovieInformationComposite extends Composite {
 
         updateMovieButton = new Button(detailedInformationComposite, SWT.PUSH);
         updateMovieButton.setImage(new Image(window.getShell().getDisplay(), ListView.class
-                .getResourceAsStream(ImageResource.SAVE_IMAGE))); //$NON-NLS-1$
+                .getResourceAsStream(ImageResource.SAVE_IMAGE)));
         updateMovieButton.setText(NlsMessages.movie_information_save);
 
         fileNameLabel = new Label(detailedInformationComposite, SWT.WRAP);
@@ -208,18 +210,23 @@ public class MovieInformationComposite extends Composite {
 
         posterImageCanvas = new Canvas(imageCanvasComposite, SWT.NO_REDRAW_RESIZE);
         posterImageCanvas.setLayoutData(new GridData(124, 183));
+        posterImageCanvas.setToolTipText("Click to change");
         posterImageCanvas.addPaintListener(new PaintListener() {
             public void paintControl(PaintEvent e) {
                 e.gc.drawImage(posterImage, 0, 0);
             }
         });
-
-        Button changeImageButton = new Button(imageCanvasComposite, SWT.PUSH);
-        changeImageButton.setText(NlsMessages.movie_information_change_picture);
-        changeImageButton.addSelectionListener(new SelectionAdapter() {
+        posterImageCanvas.addMouseListener(new MouseAdapter() {
             @Override
-            public void widgetSelected(SelectionEvent e) {
-
+            public void mouseDown(MouseEvent e) {
+                MovieImagesDialog dialog = new MovieImagesDialog(window.getShell(), currentVideo);
+                dialog.open();
+            }
+        });
+        posterImageCanvas.addMouseMoveListener(new MouseMoveListener() {
+            @Override
+            public void mouseMove(MouseEvent e) {
+                posterImageCanvas.setCursor(new Cursor(window.getShell().getDisplay(), SWT.CURSOR_HAND));
             }
         });
 
@@ -228,9 +235,25 @@ public class MovieInformationComposite extends Composite {
         tabItem = new TabItem(tabFolder, SWT.NULL);
         tabItem.setText(NlsMessages.movie_information_thumbnail);
 
+        imageCanvasComposite = new Composite(tabFolder, SWT.BORDER);
+        imageCanvasComposite.setLayout(new GridLayout(1, false));
+        gd = new GridData(GridData.FILL_HORIZONTAL);
+        gd.heightHint = 180;
+        gd.widthHint = 140;
+        imageCanvasComposite.setLayoutData(gd);
+
+        thumbnailImageCanvas = new Canvas(imageCanvasComposite, SWT.NO_REDRAW_RESIZE);
+        thumbnailImageCanvas.setLayoutData(new GridData(124, 183));
+        thumbnailImageCanvas.addPaintListener(new PaintListener() {
+            public void paintControl(PaintEvent e) {
+                e.gc.drawImage(thumbnailImage, 0, 0);
+            }
+        });
+
+        tabItem.setControl(imageCanvasComposite);
+
         tabItem = new TabItem(tabFolder, SWT.NULL);
         tabItem.setText(NlsMessages.movie_information_wallpaper);
-
     }
 
     private org.eclipse.swt.widgets.List createListControl(Composite parent, String label, final String type) {
@@ -252,12 +275,11 @@ public class MovieInformationComposite extends Composite {
 
         Button addButton = new Button(buttons, SWT.PUSH);
         Display display = buttons.getDisplay();
-        addButton.setImage(new Image(display, ListView.class.getResourceAsStream(ImageResource.ADD_IMAGE))); //$NON-NLS-1$
+        addButton.setImage(new Image(display, ListView.class.getResourceAsStream(ImageResource.ADD_IMAGE)));
         addButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                InputDialog input = new InputDialog(window.getShell(),
-                        NlsMessages.movie_information_input,
+                InputDialog input = new InputDialog(window.getShell(), NlsMessages.movie_information_input,
                         NlsMessages.movie_information_new + " " + type, "", //$NON-NLS-3$
                         new IInputValidator() {
                             @Override
@@ -351,14 +373,30 @@ public class MovieInformationComposite extends Composite {
                 posterImageCanvas.redraw();
             } else {
                 posterImage = new Image(window.getShell().getDisplay(),
-                        ListView.class.getResourceAsStream(ImageResource.NO_POSTER_IMAGE)); //$NON-NLS-1$
+                        ListView.class.getResourceAsStream(ImageResource.NO_POSTER_IMAGE));
                 posterImageCanvas.setVisible(true);
             }
         } else {
             posterImage = new Image(window.getShell().getDisplay(),
-                    ListView.class.getResourceAsStream(ImageResource.NO_POSTER_IMAGE)); //$NON-NLS-1$
+                    ListView.class.getResourceAsStream(ImageResource.NO_POSTER_IMAGE));
             posterImageCanvas.setVisible(true);
         }
+        if (!currentVideo.getThumbnailImage().equals("")) { //$NON-NLS-1$
+            if (new File(currentVideo.getThumbnailImage()).exists()) {
+                thumbnailImage = new Image(window.getShell().getDisplay(), currentVideo.getThumbnailImage());
+                thumbnailImageCanvas.setVisible(true);
+                thumbnailImageCanvas.redraw();
+            } else {
+                thumbnailImage = new Image(window.getShell().getDisplay(),
+                        ListView.class.getResourceAsStream(ImageResource.NO_POSTER_IMAGE));
+                thumbnailImageCanvas.setVisible(true);
+            }
+        } else {
+            thumbnailImage = new Image(window.getShell().getDisplay(),
+                    ListView.class.getResourceAsStream(ImageResource.NO_POSTER_IMAGE));
+            thumbnailImageCanvas.setVisible(true);
+        }
+        fillInformationList(currentVideo.getKeywords(), keywordsList);
     }
 
     private void fillInformationList(java.util.List<String> information, org.eclipse.swt.widgets.List informationList) {

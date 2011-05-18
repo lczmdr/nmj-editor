@@ -41,6 +41,7 @@ public class NlsMessages extends NLS {
     public static String common_music;
     public static String common_error;
     public static String common_cancel;
+    public static String common_choose;
 
     public static String menu_open_database;
     public static String menu_refresh;

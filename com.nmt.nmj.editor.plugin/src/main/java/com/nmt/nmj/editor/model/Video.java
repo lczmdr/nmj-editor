@@ -19,6 +19,8 @@ public abstract class Video {
     private double fps;
     private String synopsis;
     private String posterImage;
+    private String thumbnailImage;
+    private String wallpaperImage;
     private String searchTitle;
     private List<String> genres = new ArrayList<String>();
     private List<String> directors = new ArrayList<String>();
@@ -135,6 +137,22 @@ public abstract class Video {
 
     public void setPosterImage(String posterImage) {
         this.posterImage = posterImage;
+    }
+
+    public String getThumbnailImage() {
+        return thumbnailImage;
+    }
+
+    public void setThumbnailImage(String thumbnailImage) {
+        this.thumbnailImage = thumbnailImage;
+    }
+
+    public String getWallpaperImage() {
+        return wallpaperImage;
+    }
+
+    public void setWallpaperImage(String wallpaperImage) {
+        this.wallpaperImage = wallpaperImage;
     }
 
     public String getSearchTitle() {
